@@ -7,7 +7,7 @@ Rishith Singhagra (rishithsinghagra) \
 Jackie Chen (39kie) \
 Carter Hugill (chugill)
 
-# Use cases
+# User Stories
 
 As a student / professor / visitor:
 
