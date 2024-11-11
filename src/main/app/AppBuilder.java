@@ -6,17 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import data_access.InMemoryUserDataAccessObject;
+import data_access.InMemoryRoomDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.navigation.NavigationController;
-import interface_adapter.navigation.NavigationPresenter;
 import interface_adapter.navigation.NavigationViewModel;
-import use_case.navigation.NavigationInteractor;
-import use_case.navigation.NavigationOutputData;
-import use_case.navigation.NavigationInputData;
-import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NagivationDataAccessInterface;
-import use_case.navigation.NavigationOutputBoundary;
 import view.NavigationView;
 
 /**
@@ -30,7 +23,7 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
 
-    private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final InMemoryRoomDataAccessObject userDataAccessObject = new InMemoryRoomDataAccessObject();
 
     private NavigationView navigationView;
     private NavigationViewModel navigationViewModel;
