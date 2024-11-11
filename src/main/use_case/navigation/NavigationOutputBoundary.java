@@ -1,7 +1,7 @@
 package use_case.navigation;
 
 /**
- * Output boundary for the Navigation Use Case.
+ * Output Boundary for the Navigation Use Case.
  */
 public interface NavigationOutputBoundary {
     /**
