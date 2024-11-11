@@ -5,8 +5,10 @@ package use_case.navigation;
  */
 public interface NavigationDataAccessInterface {
     /**
-     * Execute the Navigation Data Acess Use Case
-     * @param navigationInputData the input data for this use case.
+     * Checks if the given roomcode exists.
+     * @param roomcode the roomcode to look for
+     * @return true if a room with the given roomcode exists; false otherwise
      */
-    void execute(NavigationInputData navigationInputData);
+    boolean existsByName(String roomcode);
+
 }

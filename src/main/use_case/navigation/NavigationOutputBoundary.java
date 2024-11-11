@@ -1,19 +1,19 @@
 package use_case.navigation;
 
 /**
- * Output Data for the Navigation Use Case.
+ * Output boundary for the Navigation Use Case.
  */
 public class NavigationOutputBoundary {
+    /**
+     * Prepares the success view for the Navigation Use Case.
+     * @param outputData the output data
+     */
+    void prepareSuccessView(NavigationOutputData outputData);
 
-    private final String roomcode;
-    private final boolean useCaseFailed;
+    /**
+     * Prepares the failure view for the Navigation Use Case.
+     * @param errorMessage the explanation of the failure
+     */
+    void prepareFailView(String errorMessage);
 
-    public NavigationOutputData(String roomcode, boolean useCaseFailed) {
-        this.roomcode = roomcode;
-        this.useCaseFailed = useCaseFailed;
-    }
-
-    public String getRoomcode() {
-        return roomcode;
-    }
 }
