@@ -3,22 +3,22 @@ package entity;
 import java.util.List;
 
 public class Room {
-    private String number;
+    private String roomCode;
     private List<String> connectedRooms;
     private List<String> connectedCorridors;
     private float length;
 
-    public Room(String number, List<String> connectedRooms, List<String> connectedCorridors, float length) {
-        this.number = number;
+    public Room(String roomCode, List<String> connectedRooms, List<String> connectedCorridors, float length) {
+        this.roomCode = roomCode;
         this.connectedRooms = connectedRooms;
         this.connectedCorridors = connectedCorridors;
         this.length = length;
     }
-    public String getNumber() {
-        return number;
+    public String getRoomCode() {
+        return roomCode;
     }
-    public void setNumber(String number) {
-        this.number = number;
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
     }
     public List<String> getConnectedRooms() {
         return connectedRooms;
