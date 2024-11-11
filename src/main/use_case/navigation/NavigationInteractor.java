@@ -1,7 +1,7 @@
 package use_case.navigation;
 
 /**
- * The Navigation Interactor.
+ * The Navigation Interactor
  */
 public class NavigationInteractor {
     private final NavigationDataAccessInterface navigationDataAccessObject;
