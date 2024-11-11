@@ -1,6 +1,5 @@
 package use_case.navigation;
 
-import use_case.navigation.NavigationOutputData;
 /**
  * Output boundary for the Navigation Use Case.
  */
