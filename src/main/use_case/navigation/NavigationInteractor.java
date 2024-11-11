@@ -14,15 +14,15 @@ public class NavigationInteractor {
 
         @Override
         public void execute(NavigationInputData navigationInputData) {
-            final String username = navigationInputData.getUsername();
-            final String password = navigationInputData.getPassword();
-            if (!navigationDataAccessObject.existsByName(username)) {
-                navigationPresenter.prepareFailView(username + ": Room does not exist.");
+            final String departureRoomCode = navigationInputData. getDepartureRoomCode();
+            final String destinationRoomCode = navigationInputData.getgetDestinationRoomCode();
+            if (!navigationDataAccessObject.existsByName(roomcode)) {
+                navigationPresenter.prepareFailView(roomcode + ": Room does not exist.");
             }
             else {
-                    final Room room = roomDataAccessObject.get(navigationInputData.getRoomcode());
+                    final Room room = roomDataAccessObject.get(navigationInputData.getRoomCode());
 
-                    final NavigationOutputData navigationOutputData = new NavigationOutputData(room.getRoom(), false);
+                    final NavigationOutputData navigationOutputData = new NavigationOutputData(room.getRoomCode(), false);
                     navigationPresenter.prepareSuccessView(navigationOutputData);
                 }
             }
