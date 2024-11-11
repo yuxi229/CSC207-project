@@ -1,9 +1,10 @@
 package use_case.navigation;
 
+import use_case.navigation.NavigationOutputData;
 /**
  * Output boundary for the Navigation Use Case.
  */
-public class NavigationOutputBoundary {
+public interface NavigationOutputBoundary {
     /**
      * Prepares the success view for the Navigation Use Case.
      * @param outputData the output data
@@ -15,5 +16,4 @@ public class NavigationOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
-
 }
