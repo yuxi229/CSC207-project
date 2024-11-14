@@ -19,10 +19,10 @@ public class NavigationInteractor {
     public void execute(NavigationInputData navigationInputData) {
         final String departureRoomCode = navigationInputData. getDepartureRoomCode();
         final String destinationRoomCode = navigationInputData.getDestinationRoomCode();
-        if (!navigationDataAccessObject.existsByName(departureRoomCode) ) {
+        if (!navigationDataAccessObject.existsByRoomCode(departureRoomCode) ) {
                 navigationPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
             }
-        else if (!navigationDataAccessObject.existsByName(destinationRoomCode) ) {
+        else if (!navigationDataAccessObject.existsByRoomCode(destinationRoomCode) ) {
             navigationPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
         }
         else {
