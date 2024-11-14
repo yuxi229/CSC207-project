@@ -35,7 +35,7 @@ public class Room {
     public double getLength() {
         return length;
     }
-    public void setLength(float length) {
+    public void setLength(double length) {
         this.length = length;
     }
 }
