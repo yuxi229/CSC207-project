@@ -6,9 +6,9 @@ public class Room {
     private String number;
     private List<Room> connectedRooms;
     private List<Corridor> connectedCorridors;
-    private float length;
+    private double length;
 
-    public Room(String number, List<Room> connectedRooms, List<Corridor> connectedCorridors, float length) {
+    public Room(String number, List<Room> connectedRooms, List<Corridor> connectedCorridors, double length) {
         this.number = number;
         this.connectedRooms = connectedRooms;
         this.connectedCorridors = connectedCorridors;
@@ -32,7 +32,7 @@ public class Room {
     public void setConnectedCorridors(List<Corridor> connectedCorridors) {
         this.connectedCorridors = connectedCorridors;
     }
-    public float getLength() {
+    public double getLength() {
         return length;
     }
     public void setLength(float length) {
