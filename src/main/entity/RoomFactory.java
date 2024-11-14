@@ -1,16 +1,16 @@
 package entity;
 
 /**
- * Factory for creating rooms.
+ * Factory for creating Room Objects.
  */
-public class RoomFactory {
+public class RoomFactory implements LocationFactory {
     /**
      * Creates a new Room.
      *
-     * @param roomCode the roomCode of the new room
-     * @return the new user
+     * @param code the code of the new room
+     * @return the new room
      */
-    Room create(String roomCode) {
+    public Room create(String code) {
         return null;
     }
 }

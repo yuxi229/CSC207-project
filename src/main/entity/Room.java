@@ -2,16 +2,27 @@ package entity;
 
 import java.util.List;
 
-/**
- * The representation of a room in our program.
- */
-public interface Room {
 
-    /**
-     * Returns the roomCode of the user.
-     * @return the roomCode of the user.
-     */
-    String getRoomCode();
+/**
+ * A Room implementation of the Location interface.
+ */
+public class Room implements Location {
+
+    private final String roomCode;
+
+    public Room(String code) {
+        this.roomCode = code;
+    }
+
+    @Override
+    public String getCode() {
+        return roomCode;
+    }
+}
+
+
+
+
 
 //    private String roomCode;
 //    private List<Room> connectedRooms;
