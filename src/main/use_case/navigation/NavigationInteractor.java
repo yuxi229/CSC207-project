@@ -5,7 +5,7 @@ import entity.Room;
 /**
  * The Navigation Interactor
  */
-public class NavigationInteractor {
+public class NavigationInteractor implements NavigationInputBoundary{
     private final NavigationDataAccessInterface navigationDataAccessObject;
     private final NavigationOutputBoundary navigationPresenter;
 
