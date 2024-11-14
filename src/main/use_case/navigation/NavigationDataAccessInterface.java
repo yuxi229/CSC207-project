@@ -11,7 +11,7 @@ public interface NavigationDataAccessInterface {
      * @param roomCode the roomCode to look for
      * @return true if a room with the given roomCode exists; false otherwise
      */
-    boolean existsByName(String roomCode);
+    boolean existsByRoomCode(String roomCode);
 
     /**
      * Returns the room with the given roomCode.
@@ -19,11 +19,5 @@ public interface NavigationDataAccessInterface {
      * @return the room with the given roomCode
      */
     Room get(String roomCode);
-
-    /**
-     * Returns the roomCode of the curren room of the application.
-     * @return the roomCode of the current room; null indicates that no one is logged into the application.
-     */
-    String getCurrentRoomCode();
 
 }
