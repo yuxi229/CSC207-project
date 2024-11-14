@@ -2,13 +2,13 @@ package entity;
 
 import java.util.List;
 
-public class Corridor {
+public class Corridor implements Location {
     private String id;
-    private List<String> connectedRooms;
-    private List<String> connectedStairs;
+    private List<Room> connectedRooms;
+    private List<Stairs> connectedStairs;
     private double length;
 
-    public Corridor(String id, List<String> connectedRooms, List<String> connectedStairs, double length) {
+    public Corridor(String id, List<Room> connectedRooms, List<Stairs> connectedStairs, double length) {
         this.id = id;
         this.connectedRooms = connectedRooms;
         this.connectedStairs = connectedStairs;
@@ -23,19 +23,19 @@ public class Corridor {
         this.id = id;
     }
 
-    public List<String> getConnectedRooms() {
+    public List<Room> getConnectedRooms() {
         return connectedRooms;
     }
 
-    public void setConnectedRooms(List<String> connectedRooms) {
+    public void setConnectedRooms(List<Room> connectedRooms) {
         this.connectedRooms = connectedRooms;
     }
 
-    public List<String> getConnectedStairs() {
+    public List<Stairs> getConnectedStairs() {
         return connectedStairs;
     }
 
-    public void setConnectedStairs(List<String> connectedStairs) {
+    public void setConnectedStairs(List<Stairs> connectedStairs) {
         this.connectedStairs = connectedStairs;
     }
 
@@ -46,5 +46,4 @@ public class Corridor {
     public void setLength(double length) {
         this.length = length;
     }
-
 }
