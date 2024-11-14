@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Room {
     private String number;
-    private List<String> connectedRooms;
-    private List<String> connectedCorridors;
+    private List<Room> connectedRooms;
+    private List<Corridor> connectedCorridors;
     private float length;
 
-    public Room(String number, List<String> connectedRooms, List<String> connectedCorridors, float length) {
+    public Room(String number, List<Room> connectedRooms, List<Corridor> connectedCorridors, float length) {
         this.number = number;
         this.connectedRooms = connectedRooms;
         this.connectedCorridors = connectedCorridors;
@@ -20,16 +20,16 @@ public class Room {
     public void setNumber(String number) {
         this.number = number;
     }
-    public List<String> getConnectedRooms() {
+    public List<Room> getConnectedRooms() {
         return connectedRooms;
     }
-    public void setConnectedRooms(List<String> connectedRooms) {
+    public void setConnectedRooms(List<Room> connectedRooms) {
         this.connectedRooms = connectedRooms;
     }
-    public List<String> getConnectedCorridors() {
+    public List<Corridor> getConnectedCorridors() {
         return connectedCorridors;
     }
-    public void setConnectedCorridors(List<String> connectedCorridors) {
+    public void setConnectedCorridors(List<Corridor> connectedCorridors) {
         this.connectedCorridors = connectedCorridors;
     }
     public float getLength() {
