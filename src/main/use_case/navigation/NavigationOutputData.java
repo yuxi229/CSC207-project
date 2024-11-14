@@ -1,8 +1,12 @@
 package use_case.navigation;
 
+/**
+ * Output Data for the Navigation Use Case.
+ */
 public class NavigationOutputData {
     private final String roomCode;
-    private final int estimatedTime; // in minutes or seconds
+    private final int estimatedTime;
+    // in minutes or seconds
     private final boolean error;
 
     public NavigationOutputData(String roomCode, int estimatedTime, boolean error) {
