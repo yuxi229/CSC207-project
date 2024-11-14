@@ -2,7 +2,7 @@ package entity;
 
 import java.util.List;
 
-public class Corridor {
+public class Corridor implements Location {
     private String id;
     private List<Room> connectedRooms;
     private List<Stairs> connectedStairs;
