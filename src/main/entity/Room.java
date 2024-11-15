@@ -2,23 +2,34 @@ package entity;
 
 import java.util.List;
 
-/**
- * The representation of a room in our program.
- */
-public interface Room {
 
-    /**
-     * Returns the roomCode of the user.
-     * @return the roomCode of the user.
-     */
-    String getRoomCode();
+/**
+ * A Room implementation of the Location interface.
+ */
+public class Room implements Location {
+
+    private final String roomCode;
+
+    public Room(String code) {
+        this.roomCode = code;
+    }
+
+    @Override
+    public String getCode() {
+        return roomCode;
+    }
+}
+
+
+
+
 
 //    private String roomCode;
-//    private List<String> connectedRooms;
-//    private List<String> connectedCorridors;
-//    private float length;
+//    private List<Room> connectedRooms;
+//    private List<Corridor> connectedCorridors;
+//    private double length;
 //
-//    public Room(String roomCode, List<String> connectedRooms, List<String> connectedCorridors, float length) {
+//    public Room(String roomCode, List<Room> connectedRooms, List<Corridor> connectedCorridors, double length) {
 //        this.roomCode = roomCode;
 //        this.connectedRooms = connectedRooms;
 //        this.connectedCorridors = connectedCorridors;
@@ -30,22 +41,22 @@ public interface Room {
 //    public void setRoomCode(String roomCode) {
 //        this.roomCode = roomCode;
 //    }
-//    public List<String> getConnectedRooms() {
+//    public List<Room> getConnectedRooms() {
 //        return connectedRooms;
 //    }
-//    public void setConnectedRooms(List<String> connectedRooms) {
+//    public void setConnectedRooms(List<Room> connectedRooms) {
 //        this.connectedRooms = connectedRooms;
 //    }
-//    public List<String> getConnectedCorridors() {
+//    public List<Corridors> getConnectedCorridors() {
 //        return connectedCorridors;
 //    }
-//    public void setConnectedCorridors(List<String> connectedCorridors) {
+//    public void setConnectedCorridors(List<Corridors> connectedCorridors) {
 //        this.connectedCorridors = connectedCorridors;
 //    }
-//    public float getLength() {
+//    public double getLength() {
 //        return length;
 //    }
-//    public void setLength(float length) {
+//    public void setLength(double length) {
 //        this.length = length;
 //    }
 }
