@@ -1,10 +1,14 @@
 package entity;
 
+/**
+ * Implementation of Stairs.
+ */
 public class Stairs {
     private int floorFrom;
     private int floorTo;
     private String topConnection;
-    private String bottomConnection; // ID of the room or corridor at the bottom of the stairs
+    // ID of the room or corridor at the bottom of the stairs
+    private String bottomConnection;
     private double length;
 
     public Stairs(int floorFrom, int floorTo, String topConnection, String bottomConnection, double length) {

@@ -2,8 +2,8 @@ package app;
 
 import java.awt.CardLayout;
 
-import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryRoomDataAccessObject;
@@ -47,7 +47,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addNavigationUseCase() {
-       return null;
+        return null;
     }
 
     /**
@@ -60,9 +60,6 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-
         return application;
     }
-
-
 }

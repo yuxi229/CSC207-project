@@ -3,9 +3,9 @@ package use_case.navigation;
 import entity.Room;
 
 /**
- * The Navigation Interactor
+ * The Navigation Interactor.
  */
-public class NavigationInteractor implements NavigationInputBoundary{
+public class NavigationInteractor implements NavigationInputBoundary {
     private final NavigationDataAccessInterface navigationDataAccessObject;
     private final NavigationOutputBoundary navigationPresenter;
 
@@ -17,12 +17,12 @@ public class NavigationInteractor implements NavigationInputBoundary{
 
     @Override
     public void execute(NavigationInputData navigationInputData) {
-        final String departureRoomCode = navigationInputData. getDepartureRoomCode();
+        final String departureRoomCode = navigationInputData.getDepartureRoomCode();
         final String destinationRoomCode = navigationInputData.getDestinationRoomCode();
-        if (!navigationDataAccessObject.existsByRoomCode(departureRoomCode) ) {
-                navigationPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
-            }
-        else if (!navigationDataAccessObject.existsByRoomCode(destinationRoomCode) ) {
+        if (!navigationDataAccessObject.existsByRoomCode(departureRoomCode)) {
+            navigationPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
+        }
+        else if (!navigationDataAccessObject.existsByRoomCode(destinationRoomCode)) {
             navigationPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
         }
         else {
@@ -31,8 +31,6 @@ public class NavigationInteractor implements NavigationInputBoundary{
 
             final NavigationOutputData navigationOutputData = new NavigationOutputData(room.getRoomCode(), false);
             navigationPresenter.prepareSuccessView(navigationOutputData);
-                }
-            }
         }
-
+    }
 }

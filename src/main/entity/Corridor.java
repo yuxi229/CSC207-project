@@ -2,6 +2,9 @@ package entity;
 
 import java.util.List;
 
+/**
+ * Implementation of Corridor.
+ */
 public class Corridor {
     private String id;
     private List<String> connectedRooms;
