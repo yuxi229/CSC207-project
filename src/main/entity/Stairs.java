@@ -1,13 +1,17 @@
 package entity;
 
-public class Stairs implements Location {
+/**
+ * Implementation of Stairs.
+ */
+public class Stairs {
     private int floorFrom;
     private int floorTo;
-    private Location topConnection;
-    private Location bottomConnection; // ID of the room or corridor at the bottom of the stairs
+    private String topConnection;
+    // ID of the room or corridor at the bottom of the stairs
+    private String bottomConnection;
     private double length;
 
-    public Stairs(int floorFrom, int floorTo, Location topConnection, Location bottomConnection, double length) {
+    public Stairs(int floorFrom, int floorTo, String topConnection, String bottomConnection, double length) {
         this.floorFrom = floorFrom;
         this.floorTo = floorTo;
         this.topConnection = topConnection;
@@ -31,19 +35,19 @@ public class Stairs implements Location {
         this.floorTo = floorTo;
     }
 
-    public Location getTopConnection() {
+    public String getTopConnection() {
         return topConnection;
     }
 
-    public void setTopConnection(Location topConnection) {
+    public void setTopConnection(String topConnection) {
         this.topConnection = topConnection;
     }
 
-    public Location getBottomConnection() {
+    public String getBottomConnection() {
         return bottomConnection;
     }
 
-    public void setBottomConnection(Location bottomConnection) {
+    public void setBottomConnection(String bottomConnection) {
         this.bottomConnection = bottomConnection;
     }
 

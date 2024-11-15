@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import entity.Room;
 import entity.RoomFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -24,7 +21,7 @@ public class DBRoomDataAccessObject implements NavigationDataAccessInterface {
     private static final String MESSAGE = "message";
     private final RoomFactory roomFactory;
 
-    public DBRoomDataAccessObject( RoomFactory roomFactory) {
+    public DBRoomDataAccessObject(RoomFactory roomFactory) {
         this.roomFactory = roomFactory;
     }
 
@@ -38,10 +35,6 @@ public class DBRoomDataAccessObject implements NavigationDataAccessInterface {
         return null;
     }
 }
-
-
-
-
 
 //@Override
 //public boolean existsByRoomCode(String roomCode) {
