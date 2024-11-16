@@ -3,9 +3,9 @@ package use_case.navigation;
 import entity.Room;
 
 /**
- * The Navigation Interactor
+ * The Navigation Interactor.
  */
-public class NavigationInteractor implements NavigationInputBoundary{
+public class NavigationInteractor implements NavigationInputBoundary {
     private final NavigationDataAccessInterface navigationDataAccessObject;
     private final NavigationOutputBoundary navigationPresenter;
 
@@ -34,6 +34,5 @@ public class NavigationInteractor implements NavigationInputBoundary{
 //            navigationPresenter.prepareSuccessView(navigationOutputData);
 //                }
 //            }
-        }
-
+    }
 }
