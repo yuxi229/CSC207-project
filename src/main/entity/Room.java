@@ -21,9 +21,6 @@ public class Room implements Location {
 }
 
 
-
-
-
 //    private String roomCode;
 //    private List<Room> connectedRooms;
 //    private List<Corridor> connectedCorridors;
