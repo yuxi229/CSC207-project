@@ -1,7 +1,5 @@
 package data_access;
 
-package data_access;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,7 +17,7 @@ import use_case.navigation.NavigationDataAccessInterface;
 /**
  * DAO for room data implemented using a File to persist the data.
  */
-public class FileRoomDataAccessObject implements NavigationDataAccessInterface{
+public class FileRoomDataAccessObject implements NavigationDataAccessInterface {
 
     private static final String HEADER = "Departure room,Destination room";
 

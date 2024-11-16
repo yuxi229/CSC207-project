@@ -7,7 +7,7 @@ package use_case.navigation;
 public interface NavigationInputBoundary {
     /**
      * Executes the navigation use case.
-     * @param NavigationInputData the input data
+     * @param navigationInputData the input data
      */
     void execute(NavigationInputData navigationInputData);
 }

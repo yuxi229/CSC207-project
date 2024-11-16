@@ -1,10 +1,14 @@
 package entity;
 
+/**
+ * Implementation of Stairs.
+ */
 public class Stairs implements Location {
     private int floorFrom;
     private int floorTo;
     private Location topConnection;
-    private Location bottomConnection; // ID of the room or corridor at the bottom of the stairs
+    // ID of the room or corridor at the bottom of the stairs
+    private Location bottomConnection;
     private double length;
 
     public Stairs(int floorFrom, int floorTo, Location topConnection, Location bottomConnection, double length) {

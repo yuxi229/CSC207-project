@@ -17,11 +17,6 @@ public class Corridor implements Location {
     }
 }
 
-
-
-
-
-
 //package entity;
 //
 //import java.util.List;

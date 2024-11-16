@@ -10,7 +10,7 @@ import use_case.navigation.NavigationDataAccessInterface;
  * In-memory implementation of the DAO for storing navigation data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryRoomDataAccessObject implements NavigationDataAccessInterface{
+public class InMemoryRoomDataAccessObject implements NavigationDataAccessInterface {
     private final Map<String, Room> rooms = new HashMap<>();
 
     private String roomCode;
@@ -18,6 +18,11 @@ public class InMemoryRoomDataAccessObject implements NavigationDataAccessInterfa
     @Override
     public boolean existsByroomCode(String identifier) {
         return rooms.containsKey(identifier);
+    }
+
+    @Override
+    public boolean existsByRoomCode(String roomCode) {
+        return false;
     }
 
     @Override
