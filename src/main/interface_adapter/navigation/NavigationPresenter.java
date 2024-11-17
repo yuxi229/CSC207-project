@@ -4,6 +4,7 @@ import use_case.navigation.NavigationOutputBoundary;
 import use_case.navigation.NavigationOutputData;
 import view.NavigationView;
 
+
 /**
  * The Presenter for the Navigation Use Case.
  */

@@ -10,7 +10,7 @@ import data_access.InMemoryRoomDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.navigation.NavigationViewModel;
 import use_case.navigation.NagivationDataAccessInterface;
-import view.NavigationView;
+import view.InputRoomsView;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -25,7 +25,7 @@ public class AppBuilder {
 
     private final InMemoryRoomDataAccessObject userDataAccessObject = new InMemoryRoomDataAccessObject();
 
-    private NavigationView navigationView;
+    private InputRoomsView navigationView;
     private NavigationViewModel navigationViewModel;
 
     public AppBuilder() {
@@ -38,7 +38,7 @@ public class AppBuilder {
      */
     public AppBuilder addNavigationView() {
         navigationViewModel = new NavigationViewModel();
-        navigationView = new NavigationView(navigationViewModel);
+        navigationView = new InputRoomsView(navigationViewModel);
         return this;
     }
 
