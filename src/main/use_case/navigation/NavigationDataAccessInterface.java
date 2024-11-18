@@ -14,10 +14,16 @@ public interface NavigationDataAccessInterface {
     boolean existsByRoomCode(String roomCode);
 
     /**
+     * Saves the room.
+     * @param room the room to save
+     */
+    void save(Room room);
+
+    /**
      * Returns the room with the given roomCode.
      * @param roomCode the roomCode to look up
      * @return the room with the given roomCode
      */
-    Room get(String roomCode);
+    Room getRoomCode(String roomCode);
 
 }

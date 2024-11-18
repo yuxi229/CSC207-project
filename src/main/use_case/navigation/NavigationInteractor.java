@@ -16,23 +16,22 @@ public class NavigationInteractor implements NavigationInputBoundary {
     }
 
     @Override
-    public execute(NavigationInputData navigationInputData) {
-        return null;
-//        final String departureRoomCode = navigationInputData. getDepartureRoomCode();
-//        final String destinationRoomCode = navigationInputData.getDestinationRoomCode();
-//        if (!navigationDataAccessObject.existsByRoomCode(departureRoomCode) ) {
-//                navigationPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
-//            }
-//        else if (!navigationDataAccessObject.existsByRoomCode(destinationRoomCode) ) {
-//            navigationPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
-//        }
-//        else {
-//            final Room departureRoom = roomDataAccessObject.get(navigationInputData.getDepartureRoomCode());
-//            final Room destinationRoom = roomDataAccessObject.get(navigationInputData.getDestinationRoomCode());
-//
-//            final NavigationOutputData navigationOutputData = new NavigationOutputData(room.getRoomCode(), false);
-//            navigationPresenter.prepareSuccessView(navigationOutputData);
-//                }
-//            }
+    public void execute(NavigationInputData navigationInputData) {
+        final String departureRoomCode = navigationInputData.getDepartureRoomCode();
+        final String destinationRoomCode = navigationInputData.getDestinationRoomCode();
+        if (!navigationDataAccessObject.existsByRoomCode(departureRoomCode) ) {
+                navigationPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
+            }
+        else if (!navigationDataAccessObject.existsByRoomCode(destinationRoomCode) ) {
+            navigationPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
+        }
+        else {
+            final Room departureRoom = navigationDataAccessObject.getRoomCode(navigationInputData.getDepartureRoomCode());
+            final Room destinationRoom = navigationDataAccessObject.getRoomCode(navigationInputData.getDestinationRoomCode());
+
+            final NavigationOutputData navigationOutputData = new NavigationOutputData(departureRoom.getRoomCode(), destinationRoom.getRoomCode(), false);
+            navigationPresenter.prepareSuccessView(navigationOutputData);
+                }
+            }
     }
 }

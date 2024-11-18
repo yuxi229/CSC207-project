@@ -1,4 +1,0 @@
-package interface_adapter.navigation;
-
-public class NavigationController {
-}

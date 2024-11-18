@@ -8,9 +8,15 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryRoomDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.navigation.NavigationViewModel;
-import use_case.navigation.NagivationDataAccessInterface;
+import interface_adapter.inputrooms.InputRoomsPresenter;
+import interface_adapter.inputrooms.InputRoomsViewModel;
+import interface_adapter.beginnavigation.BeginNavigationViewModel;
+import use_case.navigation.NavigationInputBoundary;
+import use_case.navigation.NavigationInteractor;
+import use_case.navigation.NavigationOutputBoundary;
 import view.InputRoomsView;
+import view.BeginNavigationView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -22,11 +28,15 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
-
+    private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel
+    );
+    
     private final InMemoryRoomDataAccessObject userDataAccessObject = new InMemoryRoomDataAccessObject();
 
-    private InputRoomsView navigationView;
-    private NavigationViewModel navigationViewModel;
+    private InputRoomsView inputRoomsView;
+    private InputRoomsViewModel inputRoomsViewModel;
+    private BeginNavigationView beginNavigationView;
+    private BeginNavigationViewModel beginNavigationViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -37,8 +47,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addNavigationView() {
-        navigationViewModel = new NavigationViewModel();
-        navigationView = new InputRoomsView(navigationViewModel);
+        inputRoomsViewModel = new InputRoomsViewModel();
+        inputRoomsView = new InputRoomsView(inputRoomsViewModel);
+        cardPanel.add(inputRoomsView, inputRoomsView.getViewName());
         return this;
     }
 
@@ -47,7 +58,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addNavigationUseCase() {
-        return null;
+        final NavigationOutputBoundary navigationOutputBoundary = new InputRoomsPresenter(viewManagerModel,
+                beginNavigationViewModel, inputRoomsViewModel);
     }
 
     /**

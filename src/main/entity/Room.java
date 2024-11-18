@@ -15,7 +15,7 @@ public class Room implements Location {
     }
 
     @Override
-    public String getCode() {
+    public String getRoomCode() {
         return roomCode;
     }
 }
