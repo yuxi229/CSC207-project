@@ -8,7 +8,7 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryRoomDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.navigation.NavigationViewModel;
+import interface_adapter.inputrooms.InputRoomsViewModel;
 import use_case.navigation.NagivationDataAccessInterface;
 import view.InputRoomsView;
 
@@ -26,7 +26,7 @@ public class AppBuilder {
     private final InMemoryRoomDataAccessObject userDataAccessObject = new InMemoryRoomDataAccessObject();
 
     private InputRoomsView navigationView;
-    private NavigationViewModel navigationViewModel;
+    private InputRoomsViewModel inputRoomsViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -37,8 +37,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addNavigationView() {
-        navigationViewModel = new NavigationViewModel();
-        navigationView = new InputRoomsView(navigationViewModel);
+        inputRoomsViewModel = new InputRoomsViewModel();
+        navigationView = new InputRoomsView(inputRoomsViewModel);
         return this;
     }
 

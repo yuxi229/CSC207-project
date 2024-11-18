@@ -12,7 +12,7 @@ public class Corridor implements Location {
     }
 
     @Override
-    public String getCode() {
+    public String getRoomCode() {
         return code;
     }
 }
