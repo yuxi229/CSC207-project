@@ -1,10 +1,10 @@
-package interface_adapter.navigation;
+package interface_adapter.inputrooms;
 
 
 /**
  * The state for the Navigation View Model.
  */
-public class NavigationState {
+public class InputRoomsState {
     private String roomCode = "";
     private String roomCodeError;
     private String departureRoomCode = "";
