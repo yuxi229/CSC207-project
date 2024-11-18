@@ -68,4 +68,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
 
     }
+    }
 }
+
+

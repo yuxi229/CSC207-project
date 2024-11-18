@@ -11,8 +11,6 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.inputrooms.InputRoomsPresenter;
 import interface_adapter.inputrooms.InputRoomsViewModel;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
-import use_case.navigation.NavigationInputBoundary;
-import use_case.navigation.NavigationInteractor;
 import use_case.navigation.NavigationOutputBoundary;
 import view.InputRoomsView;
 import view.BeginNavigationView;

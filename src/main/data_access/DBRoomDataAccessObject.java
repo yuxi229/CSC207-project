@@ -1,12 +1,7 @@
 package data_access;
 
-import java.io.IOException;
-
 import entity.Room;
 import entity.RoomFactory;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import use_case.navigation.NavigationDataAccessInterface;
 
 /**

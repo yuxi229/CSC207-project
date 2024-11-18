@@ -3,7 +3,7 @@ package use_case.navigation;
 /**
  * Output Data for the Navigation Use Case.
  */
-public class NavigationOutputData {
+public final class NavigationOutputData {
     private final String departureRoomCode;
     private final String destinationRoomCode;
     // private final int estimatedTime;
