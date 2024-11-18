@@ -7,8 +7,8 @@ package interface_adapter.navigation;
 public class NavigationState {
     private String roomCode = "";
     private String roomCodeError;
-    private String departureRoomCode;
-    private String destinationRoomCode;
+    private String departureRoomCode = "";
+    private String destinationRoomCode = "";
 
     public String getRoomCode() {
         return roomCode;
@@ -19,13 +19,18 @@ public class NavigationState {
     }
 
     /**
-     * The method to set
+     * The method to set departure room the user enters.
+     * @param departureRoomCode the roomcode the user enters
      */
-    public void setDepartureRoom(String roomCode) {
+    public void setDepartureRoom(String departureRoomCode) {
         this.departureRoomCode = roomCode;
     }
 
-    public void setDestinationRoom(String roomCode) {
+    /**
+     * The method to set destination room the user enters.
+     * @param destinationRoomCode the roomcode the user enters
+     */
+    public void setDestinationRoom(String destinationRoomCode) {
         this.destinationRoomCode = roomCode;
     }
 
