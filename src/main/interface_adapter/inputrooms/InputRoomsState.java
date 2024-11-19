@@ -6,7 +6,8 @@ package interface_adapter.inputrooms;
  */
 public class InputRoomsState {
     private String roomCode = "";
-    private String roomCodeError;
+    private String departureRoomCodeError;
+    private String destinationRoomCodeError;
     private String departureRoomCode = "";
     private String destinationRoomCode = "";
 
@@ -14,8 +15,20 @@ public class InputRoomsState {
         return roomCode;
     }
 
-    public void setRoomCodeErrorError(String roomCodeError) {
-        this.roomCodeError = roomCodeError;
+    public String getDepartureRoomCodeError() {
+        return departureRoomCodeError;
+    }
+
+    public String getDestinationRoomCodeError() {
+        return destinationRoomCodeError;
+    }
+
+    public void setDepartureRoomCodeError(String departureRoomCodeError) {
+        this.departureRoomCode = departureRoomCodeError;
+    }
+
+    public void setDestinationRoomCodeError(String destinationRoomCodeError) {
+        this.destinationRoomCodeError = destinationRoomCodeError;
     }
 
     /**
