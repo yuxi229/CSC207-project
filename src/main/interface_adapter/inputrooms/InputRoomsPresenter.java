@@ -45,5 +45,3 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
         inputRoomsViewModel.firePropertyChanged();
     }
 
-}
-

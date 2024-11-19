@@ -26,12 +26,16 @@ public class NavigationInteractor implements NavigationInputBoundary {
             navigationPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
         }
         else {
-            final Room departureRoom = navigationDataAccessObject.getRoomCode(navigationInputData.getDepartureRoomCode());
-            final Room destinationRoom = navigationDataAccessObject.getRoomCode(navigationInputData.getDestinationRoomCode());
+            final Room departureRoom = navigationDataAccessObject.getRoomCode(navigationInputData
+                    .getDepartureRoomCode());
+            final Room destinationRoom = navigationDataAccessObject.getRoomCode(navigationInputData
+                    .getDestinationRoomCode());
 
-            final NavigationOutputData navigationOutputData = new NavigationOutputData(departureRoom.getRoomCode(), destinationRoom.getRoomCode(), false);
+            final NavigationOutputData navigationOutputData = new NavigationOutputData(departureRoom.getRoomCode(),
+                    destinationRoom.getRoomCode(), false);
             navigationPresenter.prepareSuccessView(navigationOutputData);
 
         }
     }
 }
+

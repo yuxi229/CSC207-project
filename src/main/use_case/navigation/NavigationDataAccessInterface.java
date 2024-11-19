@@ -26,4 +26,5 @@ public interface NavigationDataAccessInterface {
      */
     Room getRoomCode(String roomCode);
 
+    Room get(String roomCode);
 }
