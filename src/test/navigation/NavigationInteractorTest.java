@@ -6,8 +6,6 @@ import entity.Room;
 import entity.RoomFactory;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NavigationInteractorTest {
@@ -17,7 +15,7 @@ public class NavigationInteractorTest {
         NavigationDataAccessInterface roomRepository = new InMemoryRoomDataAccessObject();
 
         // For the success test, we need to add room "1100" to the data access repository before we input rooms.
-        RoomFactory factory = new LocationFactory();
+        RoomFactory factory = new RoomFactory();
         Room room = factory.create("1100");
         roomRepository.save(room);
 
@@ -25,7 +23,7 @@ public class NavigationInteractorTest {
         NavigationOutputBoundary successPresenter = new NavigationOutputBoundary() {
             @Override
             public void prepareSuccessView(NavigationOutputData user) {
-                assertEquals("1100", user.getRoomCode());
+                assertEquals("1100", room.getRoomCode());
             }
 
             @Override
