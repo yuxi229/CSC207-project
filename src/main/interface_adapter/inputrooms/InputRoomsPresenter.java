@@ -1,7 +1,6 @@
 package interface_adapter.inputrooms;
 
 import interface_adapter.ViewManagerModel;
-
 import interface_adapter.beginnavigation.BeginNavigationState;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
 import use_case.navigation.NavigationOutputBoundary;
@@ -28,9 +27,9 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
         // On success, switch to the begin navigation view.
 
         final BeginNavigationState beginNavigationState = beginNavigationViewModel.getState();
-        BeginNavigationState.setDepartureRoom(response.getDepartureRoomCode());
-        BeginNavigationState.setDestinationRoom(response.getDestinationRoomCode());
-        this.beginNavigationViewModel.setState(navigationState);
+        beginNavigationState.setDepartureRoom(response.getDepartureRoomCode());
+        beginNavigationState.setDestinationRoom(response.getDestinationRoomCode());
+        this.beginNavigationViewModel.setState(beginNavigationState);
         this.beginNavigationViewModel.firePropertyChanged();
 
         this.viewManagerModel.setState(beginNavigationViewModel.getViewName());
@@ -45,6 +44,6 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
         inputRoomsState.setDestinationRoom(error);
         inputRoomsViewModel.firePropertyChanged();
     }
-    }
+
 }
 

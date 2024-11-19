@@ -56,4 +56,4 @@ public class Room implements Location {
 //    public void setLength(double length) {
 //        this.length = length;
 //    }
-}
+
