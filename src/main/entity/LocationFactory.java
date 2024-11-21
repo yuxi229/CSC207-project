@@ -3,7 +3,7 @@ package entity;
 /**
  * Factory for creating locations.
  */
-public interface LocationFactory {
+abstract class LocationFactory {
     /**
      * Creates a new Room.
      * @param code the code of the new location

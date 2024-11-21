@@ -1,24 +1,17 @@
 package data_access;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import entity.Room;
-import entity.RoomFactory;
-import use_case.navigation.NavigationDataAccessInterface;
+import use_case.LocationDataAccessInterface;
 
 
 /**
  * DAO for room data implemented using a File to persist the data.
  */
-public class FileRoomDataAccessObject implements NavigationDataAccessInterface {
+public class FileRoomDataAccessObject implements LocationDataAccessInterface {
 
     private static final String HEADER = "Departure room,Destination room";
 

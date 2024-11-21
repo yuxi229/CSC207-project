@@ -44,4 +44,4 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
         inputRoomsState.setDestinationRoom(error);
         inputRoomsViewModel.firePropertyChanged();
     }
-
+}

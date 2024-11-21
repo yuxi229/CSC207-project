@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entity.Room;
-import use_case.navigation.NavigationDataAccessInterface;
+import use_case.LocationDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing navigation data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryRoomDataAccessObject implements NavigationDataAccessInterface {
+public class InMemoryRoomDataAccessObject implements LocationDataAccessInterface {
     private final Map<String, Room> rooms = new HashMap<>();
 
     private String roomCode;

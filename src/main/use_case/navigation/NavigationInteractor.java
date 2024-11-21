@@ -1,15 +1,16 @@
 package use_case.navigation;
 
+import use_case.LocationDataAccessInterface;
 import entity.Room;
 
 /**
  * The Navigation Interactor.
  */
 public class NavigationInteractor implements NavigationInputBoundary {
-    private final NavigationDataAccessInterface navigationDataAccessObject;
+    private final LocationDataAccessInterface navigationDataAccessObject;
     private final NavigationOutputBoundary navigationPresenter;
 
-    public NavigationInteractor(NavigationDataAccessInterface navigationDataAccessInterface,
+    public NavigationInteractor(LocationDataAccessInterface navigationDataAccessInterface,
                                 NavigationOutputBoundary navigationOutputBoundary) {
         this.navigationDataAccessObject = navigationDataAccessInterface;
         this.navigationPresenter = navigationOutputBoundary;
