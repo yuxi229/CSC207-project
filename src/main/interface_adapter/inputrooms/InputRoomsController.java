@@ -25,6 +25,3 @@ public class InputRoomsController {
         navigationUseCaseInteractor.execute(navigationInputData);
     }
 }
-
-
-
