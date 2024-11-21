@@ -39,9 +39,17 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         final InputRoomsState inputRoomsState = inputRoomsViewModel.getState();
-        // TODO how to make sure both departure and destination errors considered
-        inputRoomsState.setDepartureRoom(error);
-        inputRoomsState.setDestinationRoom(error);
+        if (error.contains("departure")) {
+            inputRoomsState.setDepartureRoom(error);
+        }
+        else if (error.contains("destination")) {
+            inputRoomsState.setDestinationRoom(error);
+        }
+        else {
+            inputRoomsState.setDepartureRoom(error);
+            inputRoomsState.setDestinationRoom(error);
+        }
         inputRoomsViewModel.firePropertyChanged();
     }
+}
 

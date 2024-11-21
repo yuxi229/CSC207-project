@@ -156,4 +156,3 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
             this.inputRoomsController = inputRoomsController;
         }
 }
-

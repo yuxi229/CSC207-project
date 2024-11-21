@@ -14,7 +14,6 @@ import entity.Room;
 import entity.RoomFactory;
 import use_case.navigation.NavigationDataAccessInterface;
 
-
 /**
  * DAO for room data implemented using a File to persist the data.
  */
