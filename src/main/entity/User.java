@@ -7,14 +7,10 @@ import java.util.Map;
 /**
  * Implementation of User.
  */
-class User extends Location {
+class User {
     private ArrayList<Room> roomList = new ArrayList<>();
     private Map<String, String> nameToCodeMap = new HashMap<>();
     private Map<String, String> codeToNameMap = new HashMap<>();
-
-    public User(String id) {
-        super(id);
-    }
 
     public void addRoom(Room room) {
         roomList.add(room);
