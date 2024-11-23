@@ -15,7 +15,6 @@ public class InMemoryRoomDataAccessObject implements NavigationDataAccessInterfa
 
     private String roomCode;
 
-    @Override
     public boolean existsByroomCode(String identifier) {
         return rooms.containsKey(identifier);
     }
@@ -26,6 +25,15 @@ public class InMemoryRoomDataAccessObject implements NavigationDataAccessInterfa
     }
 
     @Override
+    public void save(Room room) {
+
+    }
+
+    @Override
+    public Room getRoomCode(String roomCode) {
+        return null;
+    }
+
     public Room get(String roomCode) {
         return rooms.get(roomCode);
     }

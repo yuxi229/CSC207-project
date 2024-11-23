@@ -1,12 +1,7 @@
 package data_access;
 
-import java.io.IOException;
-
 import entity.Room;
 import entity.RoomFactory;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import use_case.navigation.NavigationDataAccessInterface;
 
 /**
@@ -31,6 +26,15 @@ public class DBRoomDataAccessObject implements NavigationDataAccessInterface {
     }
 
     @Override
+    public void save(Room room) {
+
+    }
+
+    @Override
+    public Room getRoomCode(String roomCode) {
+        return null;
+    }
+
     public Room get(String roomCode) {
         return null;
     }

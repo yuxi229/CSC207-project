@@ -1,17 +1,10 @@
 package data_access;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import entity.Room;
-import entity.RoomFactory;
 import use_case.navigation.NavigationDataAccessInterface;
 
 /**
@@ -31,6 +24,15 @@ public class FileRoomDataAccessObject implements NavigationDataAccessInterface {
     }
 
     @Override
+    public void save(Room room) {
+
+    }
+
+    @Override
+    public Room getRoomCode(String roomCode) {
+        return null;
+    }
+
     public Room get(String roomCode) {
         return null;
     }

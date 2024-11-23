@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DirectionService {
-    // 获取路径点列表
     public static List<Point> getPathForRoom(String room) {
         List<Point> path = new ArrayList<>();
         switch (room) {
@@ -46,3 +45,4 @@ public class DirectionService {
                 return new String[]{"Unknown path"};
         }
     }
+}

@@ -58,4 +58,9 @@ public class Stairs implements Location {
     public void setLength(double length) {
         this.length = length;
     }
+
+    @Override
+    public String getRoomCode() {
+        return null;
+    }
 }

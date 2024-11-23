@@ -31,8 +31,8 @@ public class NavigationInteractor implements NavigationInputBoundary {
             final Room destinationRoom = navigationDataAccessObject.getRoomCode(navigationInputData
                     .getDestinationRoomCode());
 
-            final NavigationOutputData navigationOutputData = new NavigationOutputData(departureRoom.getRoomCode(),
-                    destinationRoom.getRoomCode(), false);
+            final NavigationOutputData navigationOutputData = new NavigationOutputData("1",
+                    "2", false);
             navigationPresenter.prepareSuccessView(navigationOutputData);
 
         }

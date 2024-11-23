@@ -25,7 +25,7 @@ import interface_adapter.inputrooms.InputRoomsState;
 import interface_adapter.inputrooms.InputRoomsViewModel;
 
 /**
- * The View for when the user is inputting destination room and viewing the map.
+ * The View for when the user is inputting the destination room and viewing the map.
  */
 public class InputRoomsView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -36,16 +36,16 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
     private final JLabel noDestinationRoomErrorField = new JLabel();
 
     private final JButton beginNavigation;
-    private final MapPanel mapPanel; // 自定义地图面板
+    private final MapPanel mapPanel;
     private InputRoomsController inputRoomsController;
 
-    private final Map<String, Room> roomMap; // 房间数据映射
+    private final Map<String, Room> roomMap; // Room data mapping
 
     public InputRoomsView(InputRoomsViewModel inputRoomsViewModel) {
         this.inputRoomsViewModel = inputRoomsViewModel;
         this.inputRoomsViewModel.addPropertyChangeListener(this);
 
-        // 初始化房间映射
+        // Initialize the map
         this.roomMap = initializeRooms();
 
         final JLabel title = new JLabel("Enter Destination Room");
@@ -57,26 +57,24 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
         beginNavigation = new JButton("Begin Navigation");
         buttons.add(beginNavigation);
 
-        // 地图面板
         mapPanel = new MapPanel("map.jpg");
 
-        // 按钮点击事件
         beginNavigation.addActionListener(e -> {
             String destinationRoomId = destinationRoomField.getText();
-            Room startRoom = roomMap.get("Entrance"); // 默认从入口出发
+            Room startRoom = roomMap.get("Entrance"); // Default starting point is the entrance
             Room destinationRoom = roomMap.get(destinationRoomId);
 
             if (startRoom != null && destinationRoom != null) {
-                // 使用路径规划服务获取路径
+                // Use the pathfinding service to get the path
                 List<Point> path = PathFinder.findPath(startRoom, destinationRoom);
-                mapPanel.setPath(path); // 更新地图
+                mapPanel.setPath(path); // Update the map
             } else {
                 System.err.println("Invalid room selection: " + destinationRoomId);
                 noDestinationRoomErrorField.setText("Invalid room ID: " + destinationRoomId);
             }
         });
 
-        // 文本框监听事件
+        // Text field listener
         destinationRoomField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
@@ -101,30 +99,30 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
             }
         });
 
-        // 布局设置
+        // Layout settings
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // 添加组件
+        // Add components
         this.add(title);
         this.add(destinationRoomCode);
         this.add(noDestinationRoomErrorField);
         this.add(buttons);
-        this.add(mapPanel); // 添加地图面板
+        this.add(mapPanel); // Add map panel
     }
 
     /**
-     * 初始化房间数据
+     * Initialize room data
      */
     private Map<String, Room> initializeRooms() {
         Map<String, Room> rooms = new HashMap<>();
-        // 示例房间数据（实际数据根据需要调整）
+        // Example room data (adjust as needed)
         rooms.put("Entrance", new Room("Entrance", new Point(50, 50)));
         rooms.put("Room 101", new Room("Room 101", new Point(100, 150)));
         rooms.put("Room 102", new Room("Room 102", new Point(200, 150)));
         rooms.put("Room 201", new Room("Room 201", new Point(100, 300)));
         rooms.put("Room 202", new Room("Room 202", new Point(200, 300)));
 
-        // 建立房间连接（邻接关系）
+        // Establish room connections (adjacency relationships)
         rooms.get("Entrance").addNeighbor(rooms.get("Room 101"));
         rooms.get("Room 101").addNeighbor(rooms.get("Room 102"));
         rooms.get("Room 101").addNeighbor(rooms.get("Room 201"));

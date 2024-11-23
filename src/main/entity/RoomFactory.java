@@ -10,7 +10,7 @@ public class RoomFactory implements LocationFactory {
      * @param code the code of the new room
      * @return the new room
      */
-    public Room create(String code) {
+    public User create(String code) {
         return null;
     }
 }
