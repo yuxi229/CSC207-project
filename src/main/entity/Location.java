@@ -3,11 +3,23 @@ package entity;
 /**
  * The representation of a location in our program.
  */
-public interface Location {
+abstract class Location {
+    private String id;
 
-    /**
-     * Returns the code of the location.
-     * @return the code of the location.
-     */
-    String getRoomCode();
+    public Location(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
+
+// public interface Location {
+//
+//    /**
+//     * Returns the code of the location.
+//     * @return the code of the location.
+//     */
+//    String getRoomCode();
+//}
