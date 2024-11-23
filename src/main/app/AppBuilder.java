@@ -30,7 +30,7 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel
     );
-    
+
     private final InMemoryRoomDataAccessObject userDataAccessObject = new InMemoryRoomDataAccessObject();
 
     private InputRoomsView inputRoomsView;
@@ -60,6 +60,7 @@ public class AppBuilder {
     public AppBuilder addNavigationUseCase() {
         final NavigationOutputBoundary navigationOutputBoundary = new InputRoomsPresenter(viewManagerModel,
                 beginNavigationViewModel, inputRoomsViewModel);
+        return this;
     }
 
     /**
