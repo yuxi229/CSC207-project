@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Get the list of path points
 public class DirectionService {
     public static List<Point> getPathForRoom(String room) {
         List<Point> path = new ArrayList<>();
