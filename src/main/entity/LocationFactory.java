@@ -5,10 +5,9 @@ package entity;
  */
 abstract class LocationFactory {
     /**
-     * Creates a new Room.
-     * @param code the code of the new location
-     * @return the new location
+     * Create a location.
+     * @param id The id of the location.
+     * @return The location.
      */
-    User create(String code);
-
+    public abstract Location create(String id);
 }
