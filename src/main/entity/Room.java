@@ -1,33 +1,98 @@
 package entity;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
-    private String id;
-    private Point center;
-    private List<Room> neighbors;
+/**
+ * A Room implementation that inherits the Location class
+ */
 
-    public Room(String id, Point center) {
-        this.id = id;
-        this.center = center;
-        this.neighbors = new ArrayList<>();
+class Room extends Location {
+    private String roomCode;
+    private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
+    private ArrayList<Floor> floors = new ArrayList<>();
+
+    public Room(String id, String roomCode) {
+        super(id);
+        this.roomCode = roomCode;
     }
 
-    public String getId() {
-        return id;
+    public String getRoomCode() {
+        return roomCode;
     }
 
-    public Point getCenter() {
-        return center;
+    void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
     }
 
-    public List<Room> getNeighbors() {
-        return neighbors;
+    public ArrayList<Corridor> getConnectedCorridors() {
+        return connectedCorridors;
     }
 
-    public void addNeighbor(Room neighbor) {
-        this.neighbors.add(neighbor);
+    private void addConnectedCorridor(Corridor corridor) {
+        connectedCorridors.add(corridor);
+    }
+
+    public ArrayList<Floor> getFloors() {
+        return floors;
+    }
+
+    private void addFloor(Floor floor) {
+        floors.add(floor);
     }
 }
+
+//import java.util.List;
+//
+//**
+// * A Room implementation of the Location interface.
+// */
+//public class Room implements Location {
+//
+//    private final String roomCode;
+//
+//    public Room(String code) {
+//        this.roomCode = code;
+//    }
+//
+//    @Override
+//    public String getRoomCode() {
+//        return roomCode;
+//    }
+//}
+
+//    private String roomCode;
+//    private List<Room> connectedRooms;
+//    private List<Corridor> connectedCorridors;
+//    private double length;
+//
+//    public Room(String roomCode, List<Room> connectedRooms, List<Corridor> connectedCorridors, double length) {
+//        this.roomCode = roomCode;
+//        this.connectedRooms = connectedRooms;
+//        this.connectedCorridors = connectedCorridors;
+//        this.length = length;
+//    }
+//    public String getRoomCode() {
+//        return roomCode;
+//    }
+//    public void setRoomCode(String roomCode) {
+//        this.roomCode = roomCode;
+//    }
+//    public List<Room> getConnectedRooms() {
+//        return connectedRooms;
+//    }
+//    public void setConnectedRooms(List<Room> connectedRooms) {
+//        this.connectedRooms = connectedRooms;
+//    }
+//    public List<Corridors> getConnectedCorridors() {
+//        return connectedCorridors;
+//    }
+//    public void setConnectedCorridors(List<Corridors> connectedCorridors) {
+//        this.connectedCorridors = connectedCorridors;
+//    }
+//    public double getLength() {
+//        return length;
+//    }
+//    public void setLength(double length) {
+//        this.length = length;
+//    }
