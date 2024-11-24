@@ -1,41 +1,35 @@
 package use_case.navigation;
 
-import use_case.LocationDataAccessInterface;
 import entity.Room;
 
 /**
  * The Navigation Interactor.
  */
 public class NavigationInteractor implements NavigationInputBoundary {
-    private final LocationDataAccessInterface navigationDataAccessObject;
-    private final NavigationOutputBoundary navigationPresenter;
+    private final NavigationDataAccessInterface naviDAO;
+    private final NavigationOutputBoundary naviPresenter;
 
-    public NavigationInteractor(LocationDataAccessInterface navigationDataAccessInterface,
-                                NavigationOutputBoundary navigationOutputBoundary) {
-        this.navigationDataAccessObject = navigationDataAccessInterface;
-        this.navigationPresenter = navigationOutputBoundary;
+    public NavigationInteractor(NavigationDataAccessInterface naviDAO,
+                                NavigationOutputBoundary naviPresenter) {
+        this.naviDAO = naviDAO;
+        this.naviPresenter = naviPresenter;
     }
 
     @Override
-    public void execute(NavigationInputData navigationInputData) {
-        final String departureRoomCode = navigationInputData.getDepartureRoomCode();
-        final String destinationRoomCode = navigationInputData.getDestinationRoomCode();
-        if (!navigationDataAccessObject.existsByRoomCode(departureRoomCode)) {
-            navigationPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
+    public void execute(NavigationInputData inputData) {
+        final String departureRoomCode = inputData.getDepartureRoomCode();
+        final String destinationRoomCode = inputData.getDestinationRoomCode();
+        if (!naviDAO.roomExists(departureRoomCode)) {
+            naviPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
         }
-        else if (!navigationDataAccessObject.existsByRoomCode(destinationRoomCode)) {
-            navigationPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
+        else if (!naviDAO.roomExists(destinationRoomCode)) {
+            naviPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
         }
         else {
-            final Room departureRoom = navigationDataAccessObject.getRoomCode(navigationInputData
-                    .getDepartureRoomCode());
-            final Room destinationRoom = navigationDataAccessObject.getRoomCode(navigationInputData
-                    .getDestinationRoomCode());
-
-            final NavigationOutputData navigationOutputData = new NavigationOutputData(departureRoom.getRoomCode(),
-                    destinationRoom.getRoomCode(), false);
-            navigationPresenter.prepareSuccessView(navigationOutputData);
-
+            NavigationOutputData output = new NavigationOutputData();
+            PathFinder pathFinder = new GraphPathFinder(naviDAO); //TODO: Discuss loading the data somewhere else
+            output.setPath(pathFinder.getPath(departureRoomCode, destinationRoomCode));
+            naviPresenter.prepareSuccessView(output);
         }
     }
 }
