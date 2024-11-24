@@ -39,25 +39,3 @@ public class DBRoomDataAccessObject implements NavigationDataAccessInterface {
         return null;
     }
 }
-
-//@Override
-//public boolean existsByRoomCode(String roomCode) {
-//    final OkHttpClient client = new OkHttpClient().newBuilder()
-//            .build();
-//    final Request request = new Request.Builder()
-//            .url(String.format("http://vm003.teach.cs.toronto.edu:20112/checkIfUserExists?username=%s", username))
-//            .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
-//            .build();
-//    try {
-//        final Response response = client.newCall(request).execute();
-//
-//        final JSONObject responseBody = new JSONObject(response.body().string());
-//
-//        return responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE;
-//    }
-//    catch (IOException | JSONException ex) {
-//        throw new RuntimeException(ex);
-//    }
-//}
-//
-//}
