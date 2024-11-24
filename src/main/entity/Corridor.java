@@ -12,8 +12,13 @@ class Corridor extends Location {
     private Floor floor;
     private double length;
 
-    public Corridor(String id) {
+    Corridor(String id, ArrayList<Room> roomList, ArrayList<Stairs> stairsList,
+             Floor floor, double length) {
         super(id);
+        this.roomList = roomList;
+        this.stairsList = stairsList;
+        this.floor = floor;
+        this.length = length;
     }
 
     public Floor getFloor() {

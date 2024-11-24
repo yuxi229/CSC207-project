@@ -11,8 +11,12 @@ class Floor extends Location {
     private ArrayList<Stairs> stairsList = new ArrayList<>();
     private ArrayList<Corridor> corridorsList = new ArrayList<>();
 
-    public Floor(String id) {
+    Floor(String id, ArrayList<Room> roomsList, ArrayList<Stairs> stairsList,
+          ArrayList<Corridor> corridorsList) {
         super(id);
+        this.roomsList = roomsList;
+        this.stairsList = stairsList;
+        this.corridorsList = corridorsList;
     }
 
     public ArrayList<Room> getRoomsList() {
