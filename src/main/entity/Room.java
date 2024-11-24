@@ -7,7 +7,7 @@ import java.util.List;
  * A Room implementation that inherits the Location class
  */
 
-class Room extends Location {
+public class Room extends Location {
     private String roomCode;
     private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
     private ArrayList<Floor> floors = new ArrayList<>();

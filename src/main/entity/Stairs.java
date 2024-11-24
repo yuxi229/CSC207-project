@@ -4,7 +4,7 @@ package entity;
  * A Stair implementation that inherits location.
  */
 
-class Stairs extends Location {
+public class Stairs extends Location {
     private Floor lowerFloor;
     private Floor upperFloor;
     private Corridor lowerCorridor;

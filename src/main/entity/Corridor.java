@@ -6,9 +6,10 @@ import java.util.List;
 /**
  * A Corridor implementation that inherits the Location class.
  */
-class Corridor extends Location {
+public class Corridor extends Location {
     private ArrayList<Room> roomList = new ArrayList<>();
     private ArrayList<Stairs> stairsList = new ArrayList<>();
+    private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
     private Floor floor;
     private double length;
 
@@ -38,6 +39,16 @@ class Corridor extends Location {
 
     private void setRoomList(ArrayList<Room> roomList) {
         this.roomList = roomList;
+    }
+
+    public List<Stairs> getStairsList() {
+        //TODO: Edit this method
+        return stairsList;
+    }
+
+    public List<Corridor> getConnectedCorridors() {
+        //TODO: Edit this method
+        return connectedCorridors;
     }
 }
 

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A floor implementation that inherits Location.
  */
 
-class Floor extends Location {
+public class Floor extends Location {
     private ArrayList<Room> roomsList = new ArrayList<>();
     private ArrayList<Stairs> stairsList = new ArrayList<>();
     private ArrayList<Corridor> corridorsList = new ArrayList<>();
