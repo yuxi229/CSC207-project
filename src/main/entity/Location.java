@@ -10,6 +10,7 @@ public abstract class Location {
 
     public Location(String id) {
         this.id = id;
+        // TODO: Implement constructor
     }
 
     public String getId() {

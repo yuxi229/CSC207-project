@@ -16,6 +16,7 @@ public class Stairs extends Location {
 
     public Stairs(String id) {
         super(id);
+        // TODO: Implement constructor
     }
 
     @Override

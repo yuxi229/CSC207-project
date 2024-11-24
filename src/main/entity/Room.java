@@ -15,6 +15,7 @@ public class Room extends Location {
     public Room(String id, String roomCode) {
         super(id);
         this.roomCode = roomCode;
+        // TODO: Implement constructor
     }
 
     public String getRoomCode() {

@@ -13,6 +13,7 @@ public class Floor {
     private ArrayList<Location> locationsList = new ArrayList<>();
 
     public Floor(String id) {
+        // TODO: Implement constructor
     }
 
     public String getFloorId() {

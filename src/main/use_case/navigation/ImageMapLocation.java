@@ -1,10 +1,10 @@
 package use_case.navigation;
 
 public class ImageMapLocation implements MapLocation {
-    private String locationID;
-    private double x;
-    private double y;
-    private int floor;
+    private final String locationID;
+    private final double x;
+    private final double y;
+    private final int floor;
 
     public ImageMapLocation(String locationID, double x, double y, int floor) {
         this.locationID = locationID;
@@ -36,8 +36,6 @@ public class ImageMapLocation implements MapLocation {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof ImageMapLocation)) {
-            return false;
-        } else if (o == null) {
             return false;
         } else {
                 ImageMapLocation other = (ImageMapLocation) o;

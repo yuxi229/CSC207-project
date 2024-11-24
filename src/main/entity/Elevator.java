@@ -12,6 +12,7 @@ public class Elevator extends Location {
 
     public Elevator(String id) {
         super(id);
+        // TODO: Implement constructor
     }
 
     @Override

@@ -15,6 +15,7 @@ public class Corridor extends Location {
 
     public Corridor(String id) {
         super(id);
+        // TODO: Implement constructor
     }
 
     public double getLength() {
