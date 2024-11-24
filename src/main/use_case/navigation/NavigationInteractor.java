@@ -1,17 +1,18 @@
 package use_case.navigation;
 
-import entity.Room;
+import use_case.LocationDataAccessInterface;
 
 /**
  * The Navigation Interactor.
  */
+
 public class NavigationInteractor implements NavigationInputBoundary {
-    private final NavigationDataAccessInterface naviDAO;
+    private final LocationDataAccessInterface locationDAO;
     private final NavigationOutputBoundary naviPresenter;
 
-    public NavigationInteractor(NavigationDataAccessInterface naviDAO,
+    public NavigationInteractor(LocationDataAccessInterface locationDAO,
                                 NavigationOutputBoundary naviPresenter) {
-        this.naviDAO = naviDAO;
+        this.locationDAO = locationDAO;
         this.naviPresenter = naviPresenter;
     }
 
@@ -19,16 +20,20 @@ public class NavigationInteractor implements NavigationInputBoundary {
     public void execute(NavigationInputData inputData) {
         final String departureRoomCode = inputData.getDepartureRoomCode();
         final String destinationRoomCode = inputData.getDestinationRoomCode();
-        if (!naviDAO.roomExists(departureRoomCode)) {
+
+        // Check if the rooms exist
+        if (!locationDAO.roomExists(departureRoomCode)) {
             naviPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
         }
-        else if (!naviDAO.roomExists(destinationRoomCode)) {
+        else if (!locationDAO.roomExists(destinationRoomCode)) {
             naviPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
         }
+
+        // If both rooms exist, find the shortest path between them
         else {
-            NavigationOutputData output = new NavigationOutputData();
-            PathFinder pathFinder = new GraphPathFinder(naviDAO); //TODO: Discuss loading the data somewhere else
-            output.setPath(pathFinder.getPath(departureRoomCode, destinationRoomCode));
+            PathFinder pathFinder = new GraphPathFinder(locationDAO); //TODO: Discuss pre-loading this data somewhere
+            NavigationOutputData output = new NavigationOutputData(
+                    pathFinder.getPath(departureRoomCode, destinationRoomCode));
             naviPresenter.prepareSuccessView(output);
         }
     }

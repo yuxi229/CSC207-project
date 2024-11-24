@@ -1,19 +1,36 @@
 package use_case.navigation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Output Data for the Navigation Use Case.
  */
 public class NavigationOutputData {
-    private List<String> path;
+    private List<MapLocation> pathLocations;
 
-    public void setPath(List<String> path) {
-        // Copy all elements from the input list to the path list.
-        this.path = List.copyOf(path);
+    /**
+     * Constructor for the NavigationOutputData.
+     */
+    public NavigationOutputData(List<MapLocation> pathLocations) {
+        this.pathLocations = pathLocations;
     }
 
-    public List<String> getPath() {
-        return path;
+    /**
+     * Return a list of the ids of the locations in the path.
+     */
+    public List<String> getPathIDs() {
+        List<String> pathIDs = new ArrayList<>();
+        for (MapLocation location : pathLocations) {
+            pathIDs.add(location.getLocationID());
+        }
+        return pathIDs;
+    }
+
+    /**
+     * Return the path as a list of MapLocation objects.
+     */
+    public List<MapLocation> getLocation(String id) {
+        return List.copyOf(pathLocations);
     }
 }

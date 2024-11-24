@@ -2,17 +2,18 @@ package use_case.navigation;
 
 import java.util.List;
 
-import entity.Corridor;
-import entity.Room;
-import entity.Stairs;
+import entity.*;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import use_case.LocationDataAccessInterface;
 
 public class GraphPathFinder implements PathFinder {
-    private SimpleWeightedGraph<String, DefaultWeightedEdge> map = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
+    private SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map
+            = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
+    private LocationDataAccessInterface database;
     private static final double DEFAULT_WEIGHT = 1.0;
 
     /**
@@ -23,52 +24,97 @@ public class GraphPathFinder implements PathFinder {
 
     /**
      * Constructor that initializes the pathfinder with the given data.
-     * @param inMemoryDAO
+     * @param locationDAO
      */
-    public GraphPathFinder(NavigationDataAccessInterface inMemoryDAO) {
-        loadData(inMemoryDAO);
+    public GraphPathFinder(LocationDataAccessInterface locationDAO) {
+        this.database = locationDAO;
+        loadData(database);
     }
 
     /**
      * Initializes the pathfinder with the given data.
-     * @param inMemoryDAO
+     * @param locationDAO
      */
     @Override
-    public void loadData(NavigationDataAccessInterface inMemoryDAO) {
-        List<Corridor> corridors = inMemoryDAO.getCorridors();
+    public void loadData(LocationDataAccessInterface locationDAO) {
+        database = locationDAO;
+        List<Floor> floors = database.getFloors();
+        for (Floor floor: floors) {
+            buildFloor(floor);
+        }
+        linkFloors();
+    }
 
-        // Loop through all corridors and add them to the graph
-        for (Corridor corridor : corridors) {
-            map.addVertex(corridor.getId());
-
-            // Connect the corridor to rooms
-            for (Room room : corridor.getRoomList()) {
-                //TODO: Decide on weight strategy in meeting
-                addLocation(room.getId(), corridor.getId(), DEFAULT_WEIGHT);
-            }
-
-            // Connect the corridor to other corridors
-            for (Corridor otherCorridor : corridor.getConnectedCorridors()) {
-                //TODO: Decide on weight strategy in meeting
-                addLocation(otherCorridor.getId(), corridor.getId(), DEFAULT_WEIGHT);
-            }
-
-            // Connect the corridor to stairs
-            for (Stairs stair : corridor.getStairsList()) {
-                //TODO: Decide on weight strategy in meeting
-                addLocation(stair.getId(), corridor.getId(), DEFAULT_WEIGHT);
+    /**
+     * Go through all the locations on the floor and link them together.
+     * @param floor the floor to build the graph for
+     */
+    private void buildFloor(Floor floor) {
+        // Loop through all the locations on the floor
+        for (Location location1 : floor.getLocationsList()) {
+            MapLocation mapLocation1 = database.getMapLocation(location1.getId(), floor.getFloorId());
+            // Link the location to all the locations it is connected to
+            for (Location location2 : location1.getConnected()) {
+                MapLocation mapLocation2 = database.getMapLocation(location2.getId(), floor.getFloorId());
+                linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2));
             }
         }
     }
 
-    private void addLocation(String locationID, String corridorID, Double weight) {
-        if (!map.containsVertex(locationID)){
-            map.addVertex(locationID);
+    /**
+     * Go through all the locations that span multiple floors and link them together.
+     */
+    private void linkFloors() {
+        for (Location location : database.getLocations()) {
+            List<Floor> floorsConnected = location.getFloors();
+            // If the location is on multiple floors, link its map locations on the different floors
+            if (floorsConnected.size() > 1) {
+                int curIDX = 0;
+                while (curIDX < floorsConnected.size() - 1) {
+                    Floor floor1 = floorsConnected.get(curIDX);
+                    Floor floor2 = floorsConnected.get(curIDX + 1);
+                    MapLocation mapLocation1 = database.getMapLocation(location.getId(), floor1.getFloorId());
+                    MapLocation mapLocation2 = database.getMapLocation(location.getId(), floor2.getFloorId());
+                    linkLocations(mapLocation1, mapLocation2, calculateWeight(location, location));
+                    curIDX++;
+                }
+            }
         }
-        DefaultWeightedEdge edge = map.addEdge(corridorID, locationID);
+    }
+
+    /**
+     * Links two map locations together with the given weight.
+     * @param location1
+     * @param location2
+     * @param weight
+     */
+    private void linkLocations(MapLocation location1, MapLocation location2, Double weight) {
+        // No duplicate vertices will be added because the vertices are stored in a set
+        if (!map.containsVertex(location1)){
+            map.addVertex(location1);
+        } else if (!map.containsVertex(location2)){
+            map.addVertex(location2);
+        }
+        DefaultWeightedEdge edge = map.addEdge(location1, location2);
         map.setEdgeWeight(edge, weight);
     }
 
+    /**
+     * Calculates the weight between two locations.
+     * @param location1
+     * @param location2
+     * @return
+     */
+    private double calculateWeight(Location location1, Location location2) {
+        //TODO: Decide on weight strategy in meeting
+        return DEFAULT_WEIGHT;
+    }
+
+    private MapLocation roomCodeToMapLocation(String roomCode) {
+        Room room = database.getRoom(roomCode);
+        String floorID = room.getFloors().get(0).getFloorId(); //Pick the first floor the room is on
+        return database.getMapLocation(room.getId(), floorID);
+    }
 
     /**
      * Returns the path from the start room to the end room as a list of ids.
@@ -77,10 +123,11 @@ public class GraphPathFinder implements PathFinder {
      * @return
      */
     @Override
-    public List<String> getPath(String startRoomCode, String endRoomCode) {
+    public List<MapLocation> getPath(String startRoomCode, String endRoomCode) {
         // Use Dijkstra's algorithm to find the shortest path. Change algorithm if needed.
-        DijkstraShortestPath<String, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(map);
-        GraphPath route = dijkstraAlg.getPath(startRoomCode, endRoomCode);
+        DijkstraShortestPath<MapLocation, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(map);
+        GraphPath<MapLocation, DefaultWeightedEdge> route =
+                dijkstraAlg.getPath(roomCodeToMapLocation(startRoomCode), roomCodeToMapLocation(endRoomCode));
         return route.getVertexList();
     }
 }
