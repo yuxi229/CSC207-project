@@ -1,21 +1,62 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * A Corridor implementation of the Location interface.
+ * A Corridor implementation that inherits the Location class.
  */
-public class Corridor implements Location {
+class Corridor extends Location {
+    private ArrayList<Room> roomList = new ArrayList<>();
+    private ArrayList<Stairs> stairsList = new ArrayList<>();
+    private Floor floor;
+    private double length;
 
-    private final String code;
-
-    public Corridor(String code) {
-        this.code = code;
+    public Corridor(String id) {
+        super(id);
     }
 
-    @Override
-    public String getRoomCode() {
-        return code;
+    public Floor getFloor() {
+        return floor;
+    }
+
+    private void setFloor(Floor floor) {
+        this.floor = floor;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    private void setLength(double length) {
+        this.length = length;
+    }
+
+    public ArrayList<Room> getRoomList() {
+        return roomList;
+    }
+
+    private void setRoomList(ArrayList<Room> roomList) {
+        this.roomList = roomList;
     }
 }
+
+//**
+// * A Corridor implementation of the Location interface.
+// */
+//public class Corridor implements Location {
+//
+//    private final String code;
+//
+//    public Corridor(String code) {
+//        this.code = code;
+//    }
+//
+//    @Override
+//    public String getRoomCode() {
+//        return code;
+//    }
+//}
 
 //package entity;
 //
