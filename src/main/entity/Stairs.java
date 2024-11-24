@@ -53,13 +53,8 @@ class Stairs extends Location {
 
     public void setLength(double length) {
         this.length = length;
-    }
+    }}
 
-    @Override
-    public String getRoomCode() {
-        return null;
-    }
-}
 
 //**
 // * Implementation of Stairs.
