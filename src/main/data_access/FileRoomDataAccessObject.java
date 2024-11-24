@@ -7,7 +7,6 @@ import java.util.Map;
 import entity.Room;
 import use_case.LocationDataAccessInterface;
 
-
 /**
  * DAO for room data implemented using a File to persist the data.
  */

@@ -1,25 +1,65 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * A Room implementation of the Location interface.
+ * A Room implementation that inherits the Location class
  */
-public class Room implements Location {
 
-    private final String roomCode;
+class Room extends Location {
+    private String roomCode;
+    private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
+    private ArrayList<Floor> floors = new ArrayList<>();
 
-    public Room(String code) {
-        this.roomCode = code;
+    public Room(String id, String roomCode) {
+        super(id);
+        this.roomCode = roomCode;
     }
 
-    @Override
     public String getRoomCode() {
         return roomCode;
     }
+
+    void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
+
+    public ArrayList<Corridor> getConnectedCorridors() {
+        return connectedCorridors;
+    }
+
+    private void addConnectedCorridor(Corridor corridor) {
+        connectedCorridors.add(corridor);
+    }
+
+    public ArrayList<Floor> getFloors() {
+        return floors;
+    }
+
+    private void addFloor(Floor floor) {
+        floors.add(floor);
+    }
 }
 
+//import java.util.List;
+//
+//**
+// * A Room implementation of the Location interface.
+// */
+//public class Room implements Location {
+//
+//    private final String roomCode;
+//
+//    public Room(String code) {
+//        this.roomCode = code;
+//    }
+//
+//    @Override
+//    public String getRoomCode() {
+//        return roomCode;
+//    }
+//}
 
 //    private String roomCode;
 //    private List<Room> connectedRooms;
