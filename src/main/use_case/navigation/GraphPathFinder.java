@@ -24,7 +24,7 @@ public class GraphPathFinder implements PathFinder {
 
     /**
      * Constructor that initializes the pathfinder with the given data.
-     * @param locationDAO
+     * @param locationDAO the data access object to use
      */
     public GraphPathFinder(LocationDataAccessInterface locationDAO) {
         this.database = locationDAO;
@@ -33,7 +33,7 @@ public class GraphPathFinder implements PathFinder {
 
     /**
      * Initializes the pathfinder with the given data.
-     * @param locationDAO
+     * @param locationDAO the data access object to use
      */
     @Override
     public void loadData(LocationDataAccessInterface locationDAO) {
@@ -84,9 +84,6 @@ public class GraphPathFinder implements PathFinder {
 
     /**
      * Links two map locations together with the given weight.
-     * @param location1
-     * @param location2
-     * @param weight
      */
     private void linkLocations(MapLocation location1, MapLocation location2, Double weight) {
         // No duplicate vertices will be added because the vertices are stored in a set
@@ -101,9 +98,6 @@ public class GraphPathFinder implements PathFinder {
 
     /**
      * Calculates the weight between two locations.
-     * @param location1
-     * @param location2
-     * @return
      */
     private double calculateWeight(Location location1, Location location2) {
         //TODO: Decide on weight strategy in meeting
@@ -120,7 +114,7 @@ public class GraphPathFinder implements PathFinder {
      * Returns the path from the start room to the end room as a list of ids.
      * @param startRoomCode valid room code for starting room
      * @param endRoomCode valid room code for ending room
-     * @return
+     * @return A list of MapLocation objects representing the path.
      */
     @Override
     public List<MapLocation> getPath(String startRoomCode, String endRoomCode) {

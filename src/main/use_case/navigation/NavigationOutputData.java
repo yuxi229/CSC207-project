@@ -7,7 +7,7 @@ import java.util.List;
  * Output Data for the Navigation Use Case.
  */
 public class NavigationOutputData {
-    private List<MapLocation> pathLocations;
+    private final List<MapLocation> pathLocations;
 
     /**
      * Constructor for the NavigationOutputData.
