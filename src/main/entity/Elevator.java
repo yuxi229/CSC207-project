@@ -5,31 +5,26 @@ import java.util.List;
 /**
  * Implementation of Elevator.
  */
-public class Elevator {
-    // List of floor numbers the elevator can access
-    private List<Integer> floorsConnected;
-    // Represents the number of floors spanned by this elevator
-    private int length;
+public class Elevator extends Location {
+    private List<Floor> floors;
+    private List<Corridor> connectedCorridors;
+    private double length;
 
-    // Constructor
-    public Elevator(List<Integer> floorsConnected, int length) {
-        this.floorsConnected = floorsConnected;
-        this.length = length;
+    public Elevator(String id) {
+        super(id);
     }
 
-    public List<Integer> getFloorsConnected() {
-        return floorsConnected;
+    @Override
+    public List<Floor> getFloors() {
+        return List.copyOf(floors);
     }
 
-    public void setFloorsConnected(List<Integer> floorsConnected) {
-        this.floorsConnected = floorsConnected;
+    @Override
+    public List<Location> getConnected() {
+        return List.copyOf(connectedCorridors);
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 }
