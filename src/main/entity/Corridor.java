@@ -45,12 +45,8 @@ public class Corridor extends Location {
         return List.copyOf(stairsList);
     }
 
-    public List<Corridor> getConnectedCorridors() {
-        return List.copyOf(connectedCorridors);
-    }
-
     @Override
-    public List<Location> getConnected() {
+    public List<Location> getConnectedLocations() {
         final ArrayList<Location> connected = new ArrayList<>();
         connected.addAll(roomList);
         connected.addAll(stairsList);
@@ -58,7 +54,3 @@ public class Corridor extends Location {
         return connected;
     }
 }
-
-
-
-

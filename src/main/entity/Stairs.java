@@ -30,8 +30,13 @@ public class Stairs extends Location {
     }
 
     @Override
-    public List<Location> getConnected() {
-        ArrayList<Location> connected = new ArrayList<>();
+    public String getId(String id) {
+        return id;
+    }
+
+    @Override
+    public List<Location> getConnectedLocations() {
+        final ArrayList<Location> connected = new ArrayList<>();
         connected.add(lowerCorridor);
         connected.add(upperCorridor);
         return connected;

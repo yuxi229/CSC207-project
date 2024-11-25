@@ -15,7 +15,6 @@ public class Room extends Location {
         super(id);
         this.corridorsList = corridorsList;
         this.floorsList = floorsList;
-        // TODO: Implement constructor
     }
 
     public String getRoomCode() {
@@ -36,7 +35,9 @@ public class Room extends Location {
     }
 
     @Override
-    public List<Location> getConnected() {
-        return List.copyOf(connectedCorridors);
+    public List<Location> getConnectedLocations() {
+        final ArrayList<Location> connected = new ArrayList<>();
+        connected.addAll(corridorsList);
+        return connected;
     }
 }

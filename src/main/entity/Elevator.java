@@ -37,8 +37,12 @@ public class Elevator extends Location {
     }
 
     @Override
-    public List<Location> getConnected() {
-        return null;
+    public List<Location> getConnectedLocations() {
+        final ArrayList<Location> connected = new ArrayList<>();
+        connected.addAll(roomList);
+        connected.addAll(stairsList);
+        // didn't add floors as they are no longer a Location entity.
+        return connected;
     }
 
     public double getLength() {
