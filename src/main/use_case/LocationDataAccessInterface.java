@@ -63,11 +63,11 @@ public interface LocationDataAccessInterface {
      */
     Corridor getCorridor(String id);
 
-    /**
-     * Store a list of Locations into the data access object
-     * @param locations: a list of locations to store
-     */
-    void loadLocations(List<Location> locations);
+//    /**
+//     * Store a list of Locations into the data access object
+//     * @param locations: a list of locations to store
+//     */
+//    void loadLocations(List<Location> locations);
 
 
     /**

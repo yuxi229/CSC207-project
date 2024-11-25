@@ -4,7 +4,7 @@ public interface MapLocation {
     String getLocationID();
     double getX();
     double getY();
-    int getFloor();
+    String getFloorID();
     @Override
     boolean equals(Object o);
 }

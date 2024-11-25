@@ -4,13 +4,13 @@ public class ImageMapLocation implements MapLocation {
     private final String locationID;
     private final double x;
     private final double y;
-    private final int floor;
+    private final String floorID;
 
-    public ImageMapLocation(String locationID, double x, double y, int floor) {
+    public ImageMapLocation(String locationID, double x, double y, String floorID) {
         this.locationID = locationID;
         this.x = x;
         this.y = y;
-        this.floor = floor;
+        this.floorID = floorID;
     }
 
     @Override
@@ -29,8 +29,8 @@ public class ImageMapLocation implements MapLocation {
     }
 
     @Override
-    public int getFloor() {
-        return floor;
+    public String getFloorID() {
+        return floorID;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ImageMapLocation implements MapLocation {
                 return this.locationID.equals(other.locationID)
                         && this.x == other.x
                         && this.y == other.y
-                        && this.floor == other.floor;
+                        && this.floorID.equals(other.floorID);
             }
         }
 }
