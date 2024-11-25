@@ -11,9 +11,15 @@ public class Floor {
     private String floorID;
     private ArrayList<Room> roomsList = new ArrayList<>();
     private ArrayList<Location> locationsList = new ArrayList<>();
+    private ArrayList<Stairs> stairsList = new ArrayList<>();
+    private ArrayList<Corridor> corridorList = new ArrayList<>();
 
-    public Floor(String id) {
-        // TODO: Implement constructor
+    Floor(String id, ArrayList<Room> roomsList, ArrayList<Stairs> stairsList,
+          ArrayList<Corridor> corridorsList) {
+        super(id);
+        this.roomsList = roomsList;
+        this.stairsList = stairsList;
+        this.corridorsList = corridorsList;
     }
 
     public String getFloorId() {
