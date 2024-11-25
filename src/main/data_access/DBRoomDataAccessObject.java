@@ -1,18 +1,13 @@
 package data_access;
 
-import java.io.IOException;
-
 import entity.Room;
 import entity.RoomFactory;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import use_case.navigation.NavigationDataAccessInterface;
+import use_case.LocationDataAccessInterface;
 
 /**
  * The DAO for room data.
  */
-public class DBRoomDataAccessObject implements NavigationDataAccessInterface {
+public class DBRoomDataAccessObject implements LocationDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_JSON = "application/json";
