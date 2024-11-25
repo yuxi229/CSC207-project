@@ -12,7 +12,7 @@ public class Floor {
     private ArrayList<Room> roomsList = new ArrayList<>();
     private ArrayList<Location> locationsList = new ArrayList<>();
     private ArrayList<Stairs> stairsList = new ArrayList<>();
-    private ArrayList<Corridor> corridorList = new ArrayList<>();
+    private ArrayList<Corridor> corridorsList = new ArrayList<>();
 
     Floor(String id, ArrayList<Room> roomsList, ArrayList<Stairs> stairsList,
           ArrayList<Corridor> corridorsList) {
