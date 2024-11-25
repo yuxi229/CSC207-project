@@ -3,7 +3,7 @@ package entity;
 /**
  * Factory for creating Room Objects.
  */
-public class RoomFactory implements LocationFactory {
+public class RoomFactory extends LocationFactory {
     /**
      * Creates a new Room.
      *

@@ -1,25 +1,23 @@
 package entity;
 
+import java.util.List;
+
 /**
  * The representation of a location in our program.
  */
-abstract class Location {
-    private String id;
+public abstract class Location {
+    private final String id;
 
     public Location(String id) {
         this.id = id;
+        // TODO: Implement constructor
     }
 
     public String getId() {
         return id;
     }
-}
 
-// public interface Location {
-//
-//    /**
-//     * Returns the code of the location.
-//     * @return the code of the location.
-//     */
-//    String getRoomCode();
-//}
+    public abstract List<Floor> getFloors();
+
+    public abstract List<Location> getConnected();
+}
