@@ -69,14 +69,14 @@ public class GraphPathFinder implements PathFinder {
             List<Floor> floorsConnected = location.getFloors();
             // If the location is on multiple floors, link its map locations on the different floors
             if (floorsConnected.size() > 1) {
-                int curIDX = 0;
-                while (curIDX < floorsConnected.size() - 1) {
-                    Floor floor1 = floorsConnected.get(curIDX);
-                    Floor floor2 = floorsConnected.get(curIDX + 1);
-                    MapLocation mapLocation1 = database.getMapLocation(location.getId(), floor1.getFloorId());
-                    MapLocation mapLocation2 = database.getMapLocation(location.getId(), floor2.getFloorId());
-                    linkLocations(mapLocation1, mapLocation2, calculateWeight(location, location));
-                    curIDX++;
+                for (Floor floor1 : floorsConnected) {
+                    for (Floor floor2 : floorsConnected) {
+                        if (!floor1.getFloorId().equals(floor2.getFloorId())) {
+                            MapLocation mapLocation1 = database.getMapLocation(location.getId(), floor1.getFloorId());
+                            MapLocation mapLocation2 = database.getMapLocation(location.getId(), floor2.getFloorId());
+                            linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
+                        }
+                    }
                 }
             }
         }
