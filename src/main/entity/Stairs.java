@@ -1,10 +1,13 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A Stair implementation that inherits location.
  */
 
-class Stairs extends Location {
+public class Stairs extends Location {
     private Floor lowerFloor;
     private Floor upperFloor;
     private Corridor lowerCorridor;
@@ -13,6 +16,20 @@ class Stairs extends Location {
 
     public Stairs(String id) {
         super(id);
+        // TODO: Implement constructor
+    }
+
+    @Override
+    public List<Floor> getFloors() {
+        return List.of(lowerFloor, upperFloor);
+    }
+
+    @Override
+    public List<Location> getConnected() {
+        ArrayList<Location> connected = new ArrayList<>();
+        connected.add(lowerCorridor);
+        connected.add(upperCorridor);
+        return connected;
     }
 
     public Floor getLowerFloor() {

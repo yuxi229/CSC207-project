@@ -7,7 +7,7 @@ import java.util.List;
  * A Room implementation that inherits the Location class
  */
 
-class Room extends Location {
+public class Room extends Location {
     private String roomCode;
     private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
     private ArrayList<Floor> floors = new ArrayList<>();
@@ -15,29 +15,23 @@ class Room extends Location {
     public Room(String id, String roomCode) {
         super(id);
         this.roomCode = roomCode;
+        // TODO: Implement constructor
     }
 
     public String getRoomCode() {
         return roomCode;
     }
 
-    void setRoomCode(String roomCode) {
-        this.roomCode = roomCode;
+    public List<Corridor> getConnectedCorridors() {
+        return List.copyOf(connectedCorridors);
     }
 
-    public ArrayList<Corridor> getConnectedCorridors() {
-        return connectedCorridors;
+    public List<Floor> getFloors() {
+        return List.copyOf(floors);
     }
 
-    private void addConnectedCorridor(Corridor corridor) {
-        connectedCorridors.add(corridor);
-    }
-
-    public ArrayList<Floor> getFloors() {
-        return floors;
-    }
-
-    private void addFloor(Floor floor) {
-        floors.add(floor);
+    @Override
+    public List<Location> getConnected() {
+        return List.copyOf(connectedCorridors);
     }
 }

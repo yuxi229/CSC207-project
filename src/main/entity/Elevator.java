@@ -1,33 +1,31 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A implementation of Elevator that inherits the Location class.
+ * Implementation of Elevator.
  */
 public class Elevator extends Location {
-    private ArrayList<Integer> floorsConnected;
-    private int length;
+    private List<Floor> floors;
+    private List<Corridor> connectedCorridors;
+    private double length;
 
-    public Elevator(String id, ArrayList<Integer> floorsConnected, int length) {
+    public Elevator(String id) {
         super(id);
-        this.floorsConnected = floorsConnected;
-        this.length = length;
+        // TODO: Implement constructor
     }
 
-    public ArrayList<Integer> getFloorsConnected() {
-        return floorsConnected;
+    @Override
+    public List<Floor> getFloors() {
+        return List.copyOf(floors);
     }
 
-    public void setFloorsConnected(ArrayList<Integer> floorsConnected) {
-        this.floorsConnected = floorsConnected;
+    @Override
+    public List<Location> getConnected() {
+        return List.copyOf(connectedCorridors);
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 }
