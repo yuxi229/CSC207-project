@@ -27,6 +27,8 @@ public class DBRoomDataAccessObject implements NavigationDataAccessInterface {
 
     @Override
     public boolean existsByRoomCode(String roomCode) {
+
+
         return false;
     }
 

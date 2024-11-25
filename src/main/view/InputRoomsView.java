@@ -46,8 +46,8 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
         final JLabel title = new JLabel("Enter Rooms");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel departureRoomCode = new LabelTextPanel(new JLabel("Departure Room", departureRoomField);
-        final LabelTextPanel destinationRoomCode = new LabelTextPanel(new JLabel("Destination Room", destinationRoomField);
+        final LabelTextPanel departureRoomCode = new LabelTextPanel(new JLabel("Departure Room", departureRoomField));
+        final LabelTextPanel destinationRoomCode = new LabelTextPanel(new JLabel("Destination Room", destinationRoomField));
 
         final JPanel buttons = new JPanel();
         startFromEntrance = new JButton("Start From Entrance");
