@@ -1,34 +1,36 @@
 package use_case.navigation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Output Data for the Navigation Use Case.
  */
-public final class NavigationOutputData {
-    private final String departureRoomCode;
-    private final String destinationRoomCode;
-    // private final int estimatedTime;
-    private final boolean useCaseFailed;
+public class NavigationOutputData {
+    private final List<MapLocation> pathLocations;
 
-    public NavigationOutputData(String departureRoomCode, String destinationRoomCode, boolean useCaseFailed) {
-        this.departureRoomCode = departureRoomCode;
-        this.destinationRoomCode = destinationRoomCode;
-        // this.estimatedTime = estimatedTime;
-        this.useCaseFailed = useCaseFailed;
+    /**
+     * Constructor for the NavigationOutputData.
+     */
+    public NavigationOutputData(List<MapLocation> pathLocations) {
+        this.pathLocations = pathLocations;
     }
 
-    public String getDepartureRoomCode() {
-        return departureRoomCode;
+    /**
+     * Return a list of the ids of the locations in the path.
+     */
+    public List<String> getPathIDs() {
+        List<String> pathIDs = new ArrayList<>();
+        for (MapLocation location : pathLocations) {
+            pathIDs.add(location.getLocationID());
+        }
+        return pathIDs;
     }
 
-    public String getDestinationRoomCode() {
-        return destinationRoomCode;
+    /**
+     * Return the path as a list of MapLocation objects.
+     */
+    public List<MapLocation> getLocation(String id) {
+        return List.copyOf(pathLocations);
     }
-
-    //    public int getEstimatedTime() {
-    //        return estimatedTime;
-    //    }
-
-    //    public boolean isError() {
-    //        return useCaseFailed;
-    //    }
 }

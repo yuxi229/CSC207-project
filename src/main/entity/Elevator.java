@@ -6,6 +6,7 @@ import java.util.List;
  * Implementation of Elevator.
  */
 public class Elevator extends Location {
+
     // List of floor numbers the elevator can access
     private List<Integer> floorsConnected;
     // Represents the number of floors spanned by this elevator
@@ -19,19 +20,17 @@ public class Elevator extends Location {
         this.length = length;
     }
 
-    public List<Integer> getFloorsConnected() {
-        return floorsConnected;
+    @Override
+    public List<Floor> getFloors() {
+        return List.copyOf(floors);
     }
 
-    public void setFloorsConnected(List<Integer> floorsConnected) {
-        this.floorsConnected = floorsConnected;
+    @Override
+    public List<Location> getConnected() {
+        return List.copyOf(connectedCorridors);
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 }
