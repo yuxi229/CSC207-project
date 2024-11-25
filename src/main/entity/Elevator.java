@@ -6,13 +6,18 @@ import java.util.List;
  * Implementation of Elevator.
  */
 public class Elevator extends Location {
-    private List<Floor> floors;
-    private List<Corridor> connectedCorridors;
-    private double length;
 
-    public Elevator(String id) {
+    // List of floor numbers the elevator can access
+    private List<Integer> floorsConnected;
+    // Represents the number of floors spanned by this elevator
+    private int length;
+
+    // Constructor
+
+    public Elevator(String id, List<Integer> floorsConnected, int length) {
         super(id);
-        // TODO: Implement constructor
+        this.floorsConnected = floorsConnected;
+        this.length = length;
     }
 
     @Override
