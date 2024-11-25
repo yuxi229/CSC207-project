@@ -15,11 +15,3 @@ abstract class Location {
     }
 }
 
-// public interface Location {
-//
-//    /**
-//     * Returns the code of the location.
-//     * @return the code of the location.
-//     */
-//    String getRoomCode();
-//}
