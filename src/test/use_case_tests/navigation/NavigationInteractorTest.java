@@ -1,4 +1,4 @@
-package use_case.navigation;
+package use_case_tests.navigation;
 
 import data_access.InMemoryRoomDataAccessObject;
 import use_case.LocationDataAccessInterface;
