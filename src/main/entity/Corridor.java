@@ -6,12 +6,12 @@ import java.util.List;
 /**
  * A Corridor implementation that inherits the Location class.
  */
-public class Corridor extends Location {
+public class Corridor extends AbstractLocation {
     private ArrayList<Room> roomList = new ArrayList<>();
     private ArrayList<Stairs> stairsList = new ArrayList<>();
     private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
-    private Floor floor;
-    private double length;
+    private final Floor floor;
+    private final double length;
 
     Corridor(String id, ArrayList<Room> roomList, ArrayList<Stairs> stairsList,
              Floor floor, double length) {
@@ -20,17 +20,6 @@ public class Corridor extends Location {
         this.stairsList = stairsList;
         this.floor = floor;
         this.length = length;
-
-    }
-
-    @Override
-    public String getId(String id) {
-        return id;
-    }
-
-    @Override
-    public List<Floor> getFloors() {
-        return List.of(floor);
     }
 
     public double getLength() {
@@ -46,8 +35,13 @@ public class Corridor extends Location {
     }
 
     @Override
-    public List<Location> getConnectedLocations() {
-        final ArrayList<Location> connected = new ArrayList<>();
+    public List<Floor> getFloors() {
+        return List.of(floor);
+    }
+
+    @Override
+    public List<AbstractLocation> getConnectedLocations() {
+        final ArrayList<AbstractLocation> connected = new ArrayList<>();
         connected.addAll(roomList);
         connected.addAll(stairsList);
         connected.addAll(connectedCorridors);

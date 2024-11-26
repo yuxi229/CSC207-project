@@ -32,7 +32,7 @@ public interface LocationDataAccessInterface {
      * @param id the id to look up
      * @return the location with the given id
      */
-    Location getLocation(String id);
+    AbstractLocation getLocation(String id);
 
     /**
      * Returns the room with the given roomCode.
@@ -80,7 +80,7 @@ public interface LocationDataAccessInterface {
      * Returns the list of locations in the data access object
      * @return a list of locations
      */
-    List<Location> getLocations();
+    List<AbstractLocation> getLocations();
 
     /**
      * Returns the map location of the location with the given id and on the given floor

@@ -2,6 +2,7 @@ package data_access;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import entity.*;
 import use_case.LocationDataAccessInterface;
@@ -11,22 +12,22 @@ import use_case.navigation.MapLocation;
  * In-memory implementation of the DAO for storing navigation data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryLocationDAO implements LocationDataAccessInterface {
-    private final HashMap<String, Location> locationMap = new HashMap<>();
-    private final HashMap<String, Room> roomCodeToRoom = new HashMap<>();
-    private final HashMap<String, Floor> floorIdToFloor = new HashMap<>();
-    private final HashMap<String, HashMap<String, MapLocation>> mapLocationLookup = new HashMap<>();
+public class InMemoryLocationDao implements LocationDataAccessInterface {
+    private final Map<String, AbstractLocation> locationMap = new HashMap<>();
+    private final Map<String, Room> roomCodeToRoom = new HashMap<>();
+    private final Map<String, Floor> floorIdToFloor = new HashMap<>();
+    private final Map<String, Map<String, MapLocation>> mapLocationLookup = new HashMap<>();
 
-    public InMemoryLocationDAO() {
+    public InMemoryLocationDao() {
     }
 
-    public InMemoryLocationDAO(List<Location> locations, List<MapLocation> mapLocations) {
+    public InMemoryLocationDao(List<AbstractLocation> locations, List<MapLocation> mapLocations) {
         loadLocations(locations);
         loadMapLocations(mapLocations);
     }
 
-    private void loadLocations(List<Location> locations) {
-        for (Location location : locations) {
+    private void loadLocations(List<AbstractLocation> locations) {
+        for (AbstractLocation location : locations) {
             // Add location to locationMap
             locationMap.put(location.getId(), location);
 
@@ -63,7 +64,7 @@ public class InMemoryLocationDAO implements LocationDataAccessInterface {
     }
 
     @Override
-    public Location getLocation(String id) {
+    public AbstractLocation getLocation(String id) {
         return locationMap.get(id);
     }
 
@@ -79,18 +80,26 @@ public class InMemoryLocationDAO implements LocationDataAccessInterface {
 
     @Override
     public Stairs getStair(String id) {
+        Stairs result;
         if (locationMap.containsKey(id) && locationMap.get(id) instanceof Stairs) {
-            return (Stairs) locationMap.get(id);
+            result = (Stairs) locationMap.get(id);
+        } else {
+            //TODO: Raise an appropriate Error
+            result = null;
         }
-        return null;
+        return result;
     }
 
     @Override
     public Corridor getCorridor(String id) {
+        Corridor result;
         if (locationMap.containsKey(id) && locationMap.get(id) instanceof Corridor) {
-            return (Corridor) locationMap.get(id);
+            result = (Corridor) locationMap.get(id);
+        } else {
+            //TODO: Raise an appropriate Error
+            result = null;
         }
-        return null;
+        return result;
     }
 
     @Override
@@ -99,7 +108,7 @@ public class InMemoryLocationDAO implements LocationDataAccessInterface {
     }
 
     @Override
-    public List<Location> getLocations() {
+    public List<AbstractLocation> getLocations() {
         return List.copyOf(locationMap.values());
     }
 

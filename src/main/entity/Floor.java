@@ -8,18 +8,22 @@ import java.util.List;
  */
 
 public class Floor {
-    private String floorID;
-    private ArrayList<Room> roomsList = new ArrayList<>();
-    private ArrayList<Location> locationsList = new ArrayList<>();
-    private ArrayList<Stairs> stairsList = new ArrayList<>();
-    private ArrayList<Corridor> corridorsList = new ArrayList<>();
+    private final String floorID;
+    private final List<Room> roomsList;
+    private final List<Stairs> stairsList;
+    private final List<Corridor> corridorsList;
+    private final List<AbstractLocation> locationsList;
 
-    Floor(String id, ArrayList<Room> roomsList, ArrayList<Stairs> stairsList,
-          ArrayList<Corridor> corridorsList) {
-        super(id);
+    Floor(String id, List<Room> roomsList, List<Stairs> stairsList, List<Corridor> corridorsList) {
+        this.floorID = id;
         this.roomsList = roomsList;
         this.stairsList = stairsList;
         this.corridorsList = corridorsList;
+
+        locationsList = new ArrayList<>();
+        locationsList.addAll(roomsList);
+        locationsList.addAll(stairsList);
+        locationsList.addAll(corridorsList);
     }
 
     public String getFloorId() {
@@ -28,15 +32,33 @@ public class Floor {
 
     /**
      * Get a list of all rooms on the floor.
+     * @return a list of all rooms on the floor.
      */
     public List<Room> getRoomsList() {
-        return roomsList;
+        return List.copyOf(roomsList);
+    }
+
+    /**
+     * Get a list of all stairs on the floor.
+     * @return a list of all stairs on the floor.
+     */
+    public List<Stairs> getStairsList() {
+        return List.copyOf(stairsList);
+    }
+
+    /**
+     * Get a list of all corridors on the floor.
+     * @return a list of all corridors on the floor.
+     */
+    public List<Corridor> getCorridorsList() {
+        return List.copyOf(corridorsList);
     }
 
     /**
      * Get a list of all locations on the floor.
+     * @return a list of all locations on the floor.
      */
-    public List<Location> getLocationsList() {
-        return locationsList;
+    public List<AbstractLocation> getLocationsList() {
+        return List.copyOf(locationsList);
     }
 }
