@@ -5,7 +5,11 @@ package entity;
  */
 public abstract class AbstractLocationFactory {
 
-    // Abstract method to be implemented by specific factories
+    /**
+     *  Abstract method to be implemented by specific factories.
+     * @param id the id of the location
+     * @return the location created
+     */
     public abstract Location createLocation(String id);
 
 }
