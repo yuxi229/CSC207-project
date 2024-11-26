@@ -20,7 +20,7 @@ class User {
 
     public void changeRoomName(Room room, String newName) {
         String oldCode = room.getRoomCode();
-        room.setRoomCode(newName);
+        room.getId(newName);
         nameToCodeMap.remove(oldCode);
         codeToNameMap.remove(oldCode);
         nameToCodeMap.put(newName, newName);
