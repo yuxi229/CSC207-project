@@ -14,7 +14,5 @@ public class RoomFactory {
      * @param floorsList the list of floors connected to the new room.
      * @return the new room
      */
-    public Room create(String id, ArrayList<Corridor> corridorsList, ArrayList<Floor> floorsList) {
-        return new Room(id, corridorsList, floorsList);
     }
 }
