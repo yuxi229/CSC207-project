@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory for creating Elevators.
@@ -8,16 +8,13 @@ import java.util.ArrayList;
 public class ElevatorFactory {
 
     /**
-     * Creates a new User.
-     * @param id the id of the new corridor
-     * @param roomList the list of rooms linked to the new corridor
-     * @param stairsList the list of stairs linked to the new corridor
-     * @param floors the list of floors linked to the new corridor
-     * @param length the length of the new corridor
-     * @return the new corridor.
+     * Creates a new Elevator.
+     * @param id the id of the Elevator
+     * @param corridorList the list of Corridors connected to the Elevator
+     * @param length the length of the Elevator
+     * @return the new Elevator
      */
-    public Elevator createElevator(String id, ArrayList<Room> roomList, ArrayList<Stairs> stairsList,
-                                   ArrayList<Floor> floors, double length) {
-        return new Elevator(id, roomList, stairsList, floors, length);
+    public AbstractLocation createLocation(String id, List<Corridor> corridorList, double length) {
+        return new Elevator(id, corridorList, length);
     }
 }

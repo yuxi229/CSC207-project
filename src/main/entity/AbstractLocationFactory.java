@@ -10,6 +10,6 @@ public abstract class AbstractLocationFactory {
      * @param id the id of the location
      * @return the location created
      */
-    public abstract Location createLocation(String id);
+    public abstract AbstractLocation createLocation(String id);
 
 }

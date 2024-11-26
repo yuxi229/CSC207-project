@@ -7,7 +7,7 @@ import java.util.List;
  * A Stair implementation that inherits location.
  */
 
-public class Stairs extends Location {
+public class Stairs extends AbstractLocation {
     private Floor lowerFloor;
     private Floor upperFloor;
     private Corridor lowerCorridor;
@@ -30,13 +30,8 @@ public class Stairs extends Location {
     }
 
     @Override
-    public String getId(String id) {
-        return id;
-    }
-
-    @Override
-    public List<Location> getConnectedLocations() {
-        final ArrayList<Location> connected = new ArrayList<>();
+    public List<AbstractLocation> getConnectedLocations() {
+        final ArrayList<AbstractLocation> connected = new ArrayList<>();
         connected.add(lowerCorridor);
         connected.add(upperCorridor);
         return connected;

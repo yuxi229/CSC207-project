@@ -12,7 +12,7 @@ import use_case.navigation.MapLocation;
  * NOT persist data between runs of the program.
  */
 public class InMemoryLocationDAO implements LocationDataAccessInterface {
-    private final HashMap<String, Location> locationMap = new HashMap<>();
+    private final HashMap<String, AbstractLocation> locationMap = new HashMap<>();
     private final HashMap<String, Room> roomCodeToRoom = new HashMap<>();
     private final HashMap<String, Floor> floorIdToFloor = new HashMap<>();
     private final HashMap<String, HashMap<String, MapLocation>> mapLocationLookup = new HashMap<>();
@@ -20,13 +20,13 @@ public class InMemoryLocationDAO implements LocationDataAccessInterface {
     public InMemoryLocationDAO() {
     }
 
-    public InMemoryLocationDAO(List<Location> locations, List<MapLocation> mapLocations) {
+    public InMemoryLocationDAO(List<AbstractLocation> locations, List<MapLocation> mapLocations) {
         loadLocations(locations);
         loadMapLocations(mapLocations);
     }
 
-    private void loadLocations(List<Location> locations) {
-        for (Location location : locations) {
+    private void loadLocations(List<AbstractLocation> locations) {
+        for (AbstractLocation location : locations) {
             // Add location to locationMap
             locationMap.put(location.getId(), location);
 
@@ -63,7 +63,7 @@ public class InMemoryLocationDAO implements LocationDataAccessInterface {
     }
 
     @Override
-    public Location getLocation(String id) {
+    public AbstractLocation getLocation(String id) {
         return locationMap.get(id);
     }
 
@@ -99,7 +99,7 @@ public class InMemoryLocationDAO implements LocationDataAccessInterface {
     }
 
     @Override
-    public List<Location> getLocations() {
+    public List<AbstractLocation> getLocations() {
         return List.copyOf(locationMap.values());
     }
 

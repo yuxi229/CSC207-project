@@ -6,19 +6,18 @@ import java.util.List;
 /**
  * A Room implementation that inherits the Location class.
  */
-public class Room extends Location {
-    private String id;
-    private ArrayList<Corridor> corridorsList = new ArrayList<>();
-    private ArrayList<Floor> floorsList = new ArrayList<>();
+public class Room extends AbstractLocation {
+    private final List<Corridor> corridorsList;
+    private final List<Floor> floorsList;
 
-    public Room(String id, ArrayList<Corridor> corridorsList, ArrayList<Floor> floorsList) {
+    public Room(String id, List<Corridor> corridorsList, List<Floor> floorsList) {
         super(id);
         this.corridorsList = corridorsList;
         this.floorsList = floorsList;
     }
 
     public String getRoomCode() {
-        return id;
+        return this.getId();
     }
 
     public List<Corridor> getConnectedCorridors() {
@@ -30,14 +29,7 @@ public class Room extends Location {
     }
 
     @Override
-    public String getId(String id) {
-        return id;
-    }
-
-    @Override
-    public List<Location> getConnectedLocations() {
-        final ArrayList<Location> connected = new ArrayList<>();
-        connected.addAll(corridorsList);
-        return connected;
+    public List<AbstractLocation> getConnectedLocations() {
+        return new ArrayList<>(corridorsList);
     }
 }
