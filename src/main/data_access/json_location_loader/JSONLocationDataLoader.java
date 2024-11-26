@@ -3,7 +3,7 @@ package data_access.json_location_loader;
 import java.util.ArrayList;
 import java.util.List;
 
-import data_access.InMemoryLocationDAO;
+import data_access.InMemoryLocationDao;
 import entity.AbstractLocation;
 import use_case.navigation.MapLocation;
 
@@ -35,7 +35,7 @@ public class JSONLocationDataLoader {
      * Returns the InMemoryLocationDAO object.
      * @return an InMemoryLocationDAO object that contains the location data in the JSON string.
      */
-    public InMemoryLocationDAO getLocationDao() {
-        return new InMemoryLocationDAO(locationList, mapLocationList);
+    public InMemoryLocationDao getLocationDao() {
+        return new InMemoryLocationDao(locationList, mapLocationList);
     }
 }

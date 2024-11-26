@@ -51,10 +51,10 @@ public class GraphPathFinder implements PathFinder {
      */
     private void buildFloor(Floor floor) {
         // Loop through all the locations on the floor
-        for (Location location1 : floor.getLocationsList()) {
+        for (AbstractLocation location1 : floor.getLocationsList()) {
             MapLocation mapLocation1 = database.getMapLocation(location1.getId(), floor.getFloorId());
             // Link the location to all the locations it is connected to
-            for (Location location2 : location1.getConnected()) {
+            for (AbstractLocation location2 : location1.getConnectedLocations()) {
                 MapLocation mapLocation2 = database.getMapLocation(location2.getId(), floor.getFloorId());
                 linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2));
             }
@@ -65,7 +65,7 @@ public class GraphPathFinder implements PathFinder {
      * Go through all the locations that span multiple floors and link them together.
      */
     private void linkFloors() {
-        for (Location location : database.getLocations()) {
+        for (AbstractLocation location : database.getLocations()) {
             List<Floor> floorsConnected = location.getFloors();
             // If the location is on multiple floors, link its map locations on the different floors
             if (floorsConnected.size() > 1) {
@@ -99,7 +99,7 @@ public class GraphPathFinder implements PathFinder {
     /**
      * Calculates the weight between two locations.
      */
-    private double calculateWeight(Location location1, Location location2) {
+    private double calculateWeight(AbstractLocation location1, AbstractLocation location2) {
         //TODO: Decide on weight strategy in meeting
         return DEFAULT_WEIGHT;
     }
