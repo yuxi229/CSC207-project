@@ -1,22 +1,16 @@
 package app;
 
-import java.awt.CardLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-
-import data_access.InMemoryRoomDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
 import interface_adapter.inputrooms.InputRoomsPresenter;
 import interface_adapter.inputrooms.InputRoomsViewModel;
-import use_case.navigation.NavigationInputBoundary;
-import use_case.navigation.NavigationInteractor;
 import use_case.navigation.NavigationOutputBoundary;
 import view.BeginNavigationView;
 import view.InputRoomsView;
 import view.ViewManager;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -30,8 +24,6 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel
     );
-
-    private final InMemoryRoomDataAccessObject userDataAccessObject = new InMemoryRoomDataAccessObject();
 
     private InputRoomsView inputRoomsView;
     private InputRoomsViewModel inputRoomsViewModel;
