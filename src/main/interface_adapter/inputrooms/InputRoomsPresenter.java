@@ -27,8 +27,8 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
         // On success, switch to the begin navigation view.
 
         final BeginNavigationState beginNavigationState = beginNavigationViewModel.getState();
-        beginNavigationState.setDepartureRoom(response.getDepartureRoomCode());
-        beginNavigationState.setDestinationRoom(response.getDestinationRoomCode());
+//        beginNavigationState.setDepartureRoom(response.getDepartureRoomCode());
+//        beginNavigationState.setDestinationRoom(response.getDestinationRoomCode());
         this.beginNavigationViewModel.setState(beginNavigationState);
         this.beginNavigationViewModel.firePropertyChanged();
 

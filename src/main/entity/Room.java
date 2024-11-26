@@ -4,34 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Room implementation that inherits the Location class
+ * A Room implementation that inherits the Location class.
  */
-
 public class Room extends Location {
-    private String roomCode;
-    private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
-    private ArrayList<Floor> floors = new ArrayList<>();
+    private String id;
+    private ArrayList<Corridor> corridorsList = new ArrayList<>();
+    private ArrayList<Floor> floorsList = new ArrayList<>();
 
-    public Room(String id, String roomCode) {
+    public Room(String id, ArrayList<Corridor> corridorsList, ArrayList<Floor> floorsList) {
         super(id);
-        this.roomCode = roomCode;
-        // TODO: Implement constructor
+        this.corridorsList = corridorsList;
+        this.floorsList = floorsList;
     }
 
     public String getRoomCode() {
-        return roomCode;
+        return id;
     }
 
     public List<Corridor> getConnectedCorridors() {
-        return List.copyOf(connectedCorridors);
+        return List.copyOf(corridorsList);
     }
 
     public List<Floor> getFloors() {
-        return List.copyOf(floors);
+        return List.copyOf(floorsList);
     }
 
     @Override
-    public List<Location> getConnected() {
-        return List.copyOf(connectedCorridors);
+    public String getId(String id) {
+        return id;
+    }
+
+    @Override
+    public List<Location> getConnectedLocations() {
+        final ArrayList<Location> connected = new ArrayList<>();
+        connected.addAll(corridorsList);
+        return connected;
     }
 }

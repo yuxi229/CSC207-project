@@ -19,5 +19,7 @@ public abstract class Location {
 
     public abstract List<Floor> getFloors();
 
-    public abstract List<Location> getConnected();
+    public abstract String getId(String id);
+
+    public abstract List<Location> getConnectedLocations();
 }
