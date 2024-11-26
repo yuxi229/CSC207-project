@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,26 +9,40 @@ import java.util.List;
 public class Elevator extends Location {
 
     // List of floor numbers the elevator can access
-    private List<Integer> floorsConnected;
+    private ArrayList<Room> roomList;
+    private ArrayList<Stairs> stairsList;
+    private ArrayList<Floor> floorsList;
     // Represents the number of floors spanned by this elevator
-    private int length;
+    private double length;
 
     // Constructor
 
-    public Elevator(String id, List<Integer> floorsConnected, int length) {
+    public Elevator(String id, ArrayList<Room> roomList, ArrayList<Stairs> stairsList,
+                    ArrayList<Floor> floorsList, double length) {
         super(id);
-        this.floorsConnected = floorsConnected;
+        this.roomList = roomList;
+        this.stairsList = stairsList;
+        this.floorsList = floorsList;
         this.length = length;
     }
 
     @Override
     public List<Floor> getFloors() {
-        return List.copyOf(floors);
+        return List.of();
     }
 
     @Override
-    public List<Location> getConnected() {
-        return List.copyOf(connectedCorridors);
+    public String getId(String id) {
+        return id;
+    }
+
+    @Override
+    public List<Location> getConnectedLocations() {
+        final ArrayList<Location> connected = new ArrayList<>();
+        connected.addAll(roomList);
+        connected.addAll(stairsList);
+        // didn't add floors as they are no longer a Location entity.
+        return connected;
     }
 
     public double getLength() {

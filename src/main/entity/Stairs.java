@@ -14,9 +14,14 @@ public class Stairs extends Location {
     private Corridor upperCorridor;
     private double length;
 
-    public Stairs(String id) {
+    public Stairs(String id, Floor lowerFloor, Floor upperFloor, Corridor lowerCorridor,
+                  Corridor upperCorridor, double length) {
         super(id);
-        // TODO: Implement constructor
+        this.lowerFloor = lowerFloor;
+        this.upperFloor = upperFloor;
+        this.lowerCorridor = lowerCorridor;
+        this.upperCorridor = upperCorridor;
+        this.length = length;
     }
 
     @Override
@@ -25,8 +30,13 @@ public class Stairs extends Location {
     }
 
     @Override
-    public List<Location> getConnected() {
-        ArrayList<Location> connected = new ArrayList<>();
+    public String getId(String id) {
+        return id;
+    }
+
+    @Override
+    public List<Location> getConnectedLocations() {
+        final ArrayList<Location> connected = new ArrayList<>();
         connected.add(lowerCorridor);
         connected.add(upperCorridor);
         return connected;
