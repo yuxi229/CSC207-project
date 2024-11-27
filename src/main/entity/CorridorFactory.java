@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory for creating Corridors.
@@ -17,8 +17,8 @@ public class CorridorFactory {
      * @param length the length of the new corridor
      * @return the new corridor.
      */
-    public Corridor createCorridor(String id, ArrayList<String> roomList, ArrayList<String> stairsList,
-                                   ArrayList<String> corridorsList, String floorId, double length) {
+    public Corridor createCorridor(String id, List<String> roomList, List<String> stairsList,
+                                   List<String> corridorsList, String floorId, double length) {
         return new Corridor(id, roomList, stairsList, corridorsList, floorId, length);
     }
 }
