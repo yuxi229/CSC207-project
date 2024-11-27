@@ -38,11 +38,11 @@ public class GraphPathFinder implements PathFinder {
 
     /**
      * Initializes the pathfinder with the given data.
-     * @param locationDao the data access object to use
+     * @param inMemoryDao the data access object to use
      */
     @Override
-    public void loadData(LocationDataAccessInterface locationDao) {
-        database = locationDao;
+    public void loadData(LocationDataAccessInterface inMemoryDao) {
+        database = inMemoryDao;
         for (Floor floor: database.getFloors()) {
             buildFloor(floor);
         }
