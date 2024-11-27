@@ -1,15 +1,18 @@
 package use_case.navigation;
 
-import data_access.LocationDataAccessInterface;
-
 import java.util.List;
 
+import data_access.LocationDataAccessInterface;
+
+/**
+ * A pathfinder that can find the shortest path between two rooms.
+ */
 public interface PathFinder {
     /**
      * Initializes the pathfinder with the given data.
-     * @param inMemoryDAO The data access object to use.
+     * @param inMemoryDao The data access object to use.
      */
-    void loadData(LocationDataAccessInterface inMemoryDAO);
+    void loadData(LocationDataAccessInterface inMemoryDao);
 
     /**
      * Returns the path from the start room to the end room as a list of ids.

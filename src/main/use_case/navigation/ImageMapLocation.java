@@ -9,10 +9,10 @@ public class ImageMapLocation implements MapLocation {
     private final double y;
     private final String floorID;
 
-    public ImageMapLocation(String locationID, double x, double y, String floorID) {
+    public ImageMapLocation(String locationID, double imgX, double imgY, String floorID) {
         this.locationID = locationID;
-        this.x = x;
-        this.y = y;
+        this.x = imgX;
+        this.y = imgY;
         this.floorID = floorID;
     }
 
