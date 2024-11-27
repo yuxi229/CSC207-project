@@ -3,7 +3,6 @@ package data_access.location_loader_json;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import entity.AbstractLocation;
 import use_case.MapLocation;
 

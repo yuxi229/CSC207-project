@@ -15,7 +15,7 @@ public class ElevatorFactory {
      * @param length the length of the Elevator
      * @return the new Elevator
      */
-    public AbstractLocation createElevator(String id, List<String> corridorList, List<String> floorsList,
+    public Elevator createElevator(String id, List<String> corridorList, List<String> floorsList,
                                            double length) {
         return new Elevator(id, corridorList, floorsList, length);
     }
