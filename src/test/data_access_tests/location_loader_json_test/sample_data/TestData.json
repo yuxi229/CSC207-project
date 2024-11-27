@@ -1,0 +1,18 @@
+{ "rooms": {"R1": {"ID": "R1", "Floor" : 2, "imgX" : 0, "imgY" : 3, "Connected" : ["C1"]},
+            "R2": {"ID": "R2", "Floor" : 2, "imgX" : 11, "imgY" : 3, "Connected" : ["C1", "C4"]},
+            "R3": {"ID": "R3", "Floor" : 2, "imgX" : 3, "imgY" : 9, "Connected" : ["C2", "C3"]},
+            "R4": {"ID": "R4", "Floor" : 2, "imgX" : 12, "imgY" : 6, "Connected" : ["C4"]},
+            "R5": {"ID": "R5", "Floor" : 2, "imgX" : 1, "imgY" : 14, "Connected" : ["C6"]}},
+  "corridors" : {"C1":  {"ID": "C1", "Floor" : 2, "imgX" : 7, "imgY" : 4, "Connected" : ["R1", "R2", "C2, C4"]},
+                 "C2":  {"ID": "C2", "Floor" : 2, "imgX" : 4, "imgY" : 7, "Connected" : ["R3", "C1", "C3"]},
+                 "C3":  {"ID": "C3", "Floor" : 2, "imgX" : 7, "imgY" : 9, "Connected" : ["R3", "C2", "C4", "C5"]},
+                 "C4":  {"ID": "C4", "Floor" : 2, "imgX" : 11, "imgY" : 7,
+                   "Connected" : ["R2", "R4", "C1", "C3", "C5"]},
+                 "C5":  {"ID": "C5", "Floor" : 2, "imgX" : 11, "imgY" : 11, "Connected" : ["C3", "C4", "C6", "C7"]},
+                 "C6":  {"ID": "C6", "Floor" : 2, "imgX" : 6, "imgY" : 13, "Connected" : ["R5", "C5", "C7"]},
+                 "C7":  {"ID": "C7", "Floor" : 2, "imgX" : 12, "imgY" : 13, "Connected" : ["C5", "C6"]}},
+  "stairs": {"S1": {"ID": "S1", "FloorStart" : 1, "FloorEnd" : 2, "f1X" : 0, "f1Y" : 0, "f2X" : 12, "f2Y" : 11,
+    "Connected" : ["C01","C5"]},
+             "S2": {"ID": "S2", "FloorStart" : 2, "FloorEnd" : 3, "f1X" : 9, "f1Y" : 11, "f2X" : 0, "f2Y" : 0,
+               "Connected" : ["C5", "C0001"]}}
+}
