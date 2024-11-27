@@ -70,16 +70,16 @@ public class GraphPathFinder implements PathFinder {
      */
     private void linkFloors() {
         for (AbstractLocation location : database.getLocations()) {
-            final List<Floor> floorsConnected = location.getFloors();
+            final List<String> floorsConnected = location.getFloors();
             // If the location is on multiple floors, link its map locations on the different floors
             if (floorsConnected.size() > 1) {
-                for (Floor floor1 : floorsConnected) {
-                    for (Floor floor2 : floorsConnected) {
-                        if (!floor1.getFloorId().equals(floor2.getFloorId())) {
+                for (String floor1Id : floorsConnected) {
+                    for (String floor2Id : floorsConnected) {
+                        if (!floor1Id.equals(floor2Id)) {
                             final MapLocation mapLocation1 = database
-                                    .getMapLocation(location.getId(), floor1.getFloorId());
+                                    .getMapLocation(location.getId(), floor1Id);
                             final MapLocation mapLocation2 = database
-                                    .getMapLocation(location.getId(), floor2.getFloorId());
+                                    .getMapLocation(location.getId(), floor2Id);
                             linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
                         }
                     }
@@ -120,7 +120,7 @@ public class GraphPathFinder implements PathFinder {
     private MapLocation roomCodeToMapLocation(String roomCode) {
         final Room room = database.getRoom(roomCode);
         // Pick the first floor the room is on
-        final String floorID = room.getFloors().get(0).getFloorId();
+        final String floorID = room.getFloors().get(0);
         return database.getMapLocation(room.getId(), floorID);
     }
 

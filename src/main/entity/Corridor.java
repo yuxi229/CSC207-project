@@ -35,7 +35,7 @@ public class Corridor extends AbstractLocation {
     }
 
     @Override
-    public List<Floor> getFloors() {
+    public List<String> getFloors() {
         return List.of(floor);
     }
 

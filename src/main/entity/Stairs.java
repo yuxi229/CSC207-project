@@ -25,8 +25,8 @@ public class Stairs extends AbstractLocation {
     }
 
     @Override
-    public List<Floor> getFloors() {
-        return List.of(lowerFloor, upperFloor);
+    public List<String> getFloors() {
+        return List.of(lowerFloor.getFloorId(), upperFloor.getFloorId());
     }
 
     @Override
