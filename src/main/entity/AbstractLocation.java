@@ -17,14 +17,14 @@ public abstract class AbstractLocation {
     }
 
     /**
-     * Returns which floors this location is on.
+     * Gets the floors this location is on.
      * @return Returns a list of floor ids of floors this location is on.
      */
     public abstract List<String> getFloors();
 
     /**
-     * Returns a list of locations connected to this location.
-     * @return a list of locations connected to this location.
+     * Gets the locations connected to this location.
+     * @return a list of ids of the locations connected to this location.
      */
-    public abstract List<AbstractLocation> getConnectedLocations();
+    public abstract List<String> getConnectedLocations();
 }

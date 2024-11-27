@@ -10,17 +10,17 @@ import java.util.List;
 public class Stairs extends AbstractLocation {
     private final String lowerFloorId;
     private final String upperFloorId;
-    private final Corridor lowerCorridor;
-    private final Corridor upperCorridor;
+    private final String lowerCorridorId;
+    private final String upperCorridorId;
     private final double length;
 
-    public Stairs(String id, String lowerFloorId, String upperFloorId, Corridor lowerCorridor,
-                  Corridor upperCorridor, double length) {
+    public Stairs(String id, String lowerFloorId, String upperFloorId, String lowerCorridorId,
+                  String upperCorridorId, double length) {
         super(id);
         this.lowerFloorId = lowerFloorId;
         this.upperFloorId = upperFloorId;
-        this.lowerCorridor = lowerCorridor;
-        this.upperCorridor = upperCorridor;
+        this.lowerCorridorId = lowerCorridorId;
+        this.upperCorridorId = upperCorridorId;
         this.length = length;
     }
 
@@ -30,10 +30,10 @@ public class Stairs extends AbstractLocation {
     }
 
     @Override
-    public List<AbstractLocation> getConnectedLocations() {
-        final ArrayList<AbstractLocation> connected = new ArrayList<>();
-        connected.add(lowerCorridor);
-        connected.add(upperCorridor);
+    public List<String> getConnectedLocations() {
+        final ArrayList<String> connected = new ArrayList<>();
+        connected.add(lowerCorridorId);
+        connected.add(upperCorridorId);
         return connected;
     }
 
@@ -45,12 +45,12 @@ public class Stairs extends AbstractLocation {
         return upperFloorId;
     }
 
-    public Corridor getLowerCorridor() {
-        return lowerCorridor;
+    public String getLowerCorridorId() {
+        return lowerCorridorId;
     }
 
-    public Corridor getUpperCorridor() {
-        return upperCorridor;
+    public String getUpperCorridorId() {
+        return upperCorridorId;
     }
 
     public double getLength() {
