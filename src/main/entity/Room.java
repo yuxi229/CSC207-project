@@ -8,12 +8,12 @@ import java.util.List;
  */
 public class Room extends AbstractLocation {
     private final List<Corridor> corridorsList;
-    private final List<Floor> floorsList;
+    private final List<String> floorIdsList;
 
-    public Room(String id, List<Corridor> corridorsList, List<Floor> floorsList) {
+    public Room(String id, List<Corridor> corridorsList, List<String> floorIdsList) {
         super(id);
         this.corridorsList = corridorsList;
-        this.floorsList = floorsList;
+        this.floorIdsList = floorIdsList;
     }
 
     public String getRoomCode() {
@@ -25,7 +25,7 @@ public class Room extends AbstractLocation {
     }
 
     public List<String> getFloors() {
-        return List.copyOf(floorsList);
+        return List.copyOf(floorIdsList);
     }
 
     @Override
