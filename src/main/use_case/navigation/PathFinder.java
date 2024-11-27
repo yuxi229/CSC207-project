@@ -1,6 +1,6 @@
-package main.use_case.navigation;
+package use_case.navigation;
 
-import main.use_case.LocationDataAccessInterface;
+import use_case.LocationDataAccessInterface;
 
 import java.util.List;
 

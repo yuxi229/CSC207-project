@@ -1,4 +1,4 @@
-package main.use_case.navigation;
+package use_case.navigation;
 
 /**
  * Output Boundary for the Navigation Use Case.

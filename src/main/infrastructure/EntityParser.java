@@ -1,6 +1,6 @@
-package main.infrastructure;
+package infrastructure;
 
-import main.entity.*;
+import entity.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

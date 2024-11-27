@@ -1,4 +1,4 @@
-package main.entity;
+package entity;
 
 /**
  * Base class for locations that span multiple floors (e.g., Stairs, Elevators).

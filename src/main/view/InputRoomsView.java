@@ -16,9 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import main.interface_adapter.inputrooms.InputRoomsController;
-import main.interface_adapter.inputrooms.InputRoomsState;
-import main.interface_adapter.inputrooms.InputRoomsViewModel;
+import interface_adapter.inputrooms.InputRoomsController;
+import interface_adapter.inputrooms.InputRoomsState;
+import interface_adapter.inputrooms.InputRoomsViewModel;
 
 /**
  * The View for when the user is inputting departure and destination rooms into the program.

@@ -1,12 +1,12 @@
-package main.data_access;
+package data_access;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import main.entity.*;
-import main.use_case.LocationDataAccessInterface;
-import main.use_case.navigation.MapLocation;
+import entity.*;
+import use_case.LocationDataAccessInterface;
+import use_case.navigation.MapLocation;
 
 /**
  * In-memory implementation of the DAO for storing navigation data.

@@ -1,4 +1,4 @@
-package main.use_case.navigation;
+package use_case.navigation;
 
 /**
  * Input Boundary for actions which are related to logging in.

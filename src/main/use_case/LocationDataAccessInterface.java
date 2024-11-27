@@ -1,7 +1,7 @@
-package main.use_case;
+package use_case;
 
-import main.entity.*;
-import main.use_case.navigation.MapLocation;
+import entity.*;
+import use_case.navigation.MapLocation;
 
 import java.util.List;
 

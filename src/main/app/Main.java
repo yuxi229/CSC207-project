@@ -1,17 +1,17 @@
-package main.app;
+package app;
 
-import main.infrastructure.EntityParser;
-import main.data_access.InMemoryLocationDao;
-import main.infrastructure.APIClientImpl;
-import main.interfaces.APIClient;
+import infrastructure.EntityParser;
+import data_access.InMemoryLocationDao;
+import infrastructure.APIClientImpl;
+import interfaces.APIClient;
 
-import main.use_case.LocationDataAccessInterface;
-import main.use_case.navigation.MapLocation;
+import use_case.LocationDataAccessInterface;
+import use_case.navigation.MapLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import main.entity.*;
+import entity.*;
 
 import javax.swing.JFrame;
 

@@ -1,7 +1,7 @@
-package main.interface_adapter.inputrooms;
+package interface_adapter.inputrooms;
 
-import main.use_case.navigation.NavigationInputBoundary;
-import main.use_case.navigation.NavigationInputData;
+import use_case.navigation.NavigationInputBoundary;
+import use_case.navigation.NavigationInputData;
 
 /**
  * The controller for the Login Use Case.

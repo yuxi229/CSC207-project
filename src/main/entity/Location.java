@@ -1,4 +1,4 @@
-package main.entity;
+package entity;
 
 /**
  * Base class for all location types (Room, Corridor, etc.).

@@ -1,4 +1,4 @@
-package main.use_case.navigation;
+package use_case.navigation;
 
 public class ImageMapLocation implements MapLocation {
     private final String locationID;
