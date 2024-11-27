@@ -1,5 +1,8 @@
 package use_case.navigation;
 
+/**
+ * A class that represents a location on the map.
+ */
 public class ImageMapLocation implements MapLocation {
     private final String locationID;
     private final double x;
@@ -35,14 +38,18 @@ public class ImageMapLocation implements MapLocation {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof ImageMapLocation)) {
-            return false;
-        } else {
-                ImageMapLocation other = (ImageMapLocation) o;
-                return this.locationID.equals(other.locationID)
-                        && this.x == other.x
-                        && this.y == other.y
-                        && this.floorID.equals(other.floorID);
-            }
+        boolean result = false;
+        if (o instanceof ImageMapLocation) {
+            final ImageMapLocation other = (ImageMapLocation) o;
+            result = this.locationID.equals(other.locationID)
+                    && this.x == other.x && this.y == other.y && this.floorID.equals(other.floorID);
         }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        final String toString = locationID + String.valueOf(x) + String.valueOf(y) + floorID;
+        return toString.hashCode();
+    }
 }
