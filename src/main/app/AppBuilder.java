@@ -4,11 +4,11 @@ import interface_adapter.inputrooms.InputRoomsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
 import interface_adapter.inputrooms.InputRoomsPresenter;
-import main.view.TextPromptPanel;
+import view.TextPromptPanel;
 import use_case.navigation.NavigationOutputBoundary;
-import main.view.BeginNavigationView;
-import main.view.InputRoomsView;
-import main.view.ViewManager;
+import view.BeginNavigationView;
+import view.InputRoomsView;
+import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
