@@ -19,7 +19,7 @@ public class Elevator extends AbstractLocation {
     }
 
     @Override
-    public List<Floor> getFloors() {
+    public List<String> getFloors() {
         return List.of();
     }
 

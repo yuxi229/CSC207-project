@@ -24,9 +24,10 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
     public InMemoryLocationDao() {
     }
 
-    public InMemoryLocationDao(List<AbstractLocation> locations, List<MapLocation> mapLocations) {
+    public InMemoryLocationDao(List<AbstractLocation> locations, List<MapLocation> mapLocations, List<Floor> floors) {
         loadLocations(locations);
         loadMapLocations(mapLocations);
+        loadFloors(floors);
     }
 
     private void loadLocations(List<AbstractLocation> locations) {
@@ -38,12 +39,6 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
             if (location instanceof Room) {
                 roomCodeToRoom.put(((Room) location).getRoomCode(), (Room) location);
             }
-            // Add floors to floorIdToFloor
-            for (Floor floor : location.getFloors()) {
-                if (!floorIdToFloor.containsKey(floor.getFloorId())) {
-                    floorIdToFloor.put(floor.getFloorId(), floor);
-                }
-            }
         }
     }
 
@@ -53,6 +48,12 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
                 mapLocationLookup.put(mapLocation.getLocationID(), new HashMap<>());
             }
             mapLocationLookup.get(mapLocation.getLocationID()).put(mapLocation.getFloorID(), mapLocation);
+        }
+    }
+
+    private void loadFloors(List<Floor> floors) {
+        for (Floor floor : floors) {
+            floorIdToFloor.put(floor.getFloorId(), floor);
         }
     }
 

@@ -17,10 +17,10 @@ public abstract class AbstractLocation {
     }
 
     /**
-     * Returns a list of floors this location is on.
-     * @return a list of floors this location is on.
+     * Returns which floors this location is on.
+     * @return Returns a list of floor ids of floors this location is on.
      */
-    public abstract List<Floor> getFloors();
+    public abstract List<String> getFloors();
 
     /**
      * Returns a list of locations connected to this location.
