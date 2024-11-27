@@ -1,4 +1,4 @@
-package interface_adapter.inputrooms;
+package main.interface_adapter.inputrooms;
 
 /**
  * The state for the Navigation View Model.

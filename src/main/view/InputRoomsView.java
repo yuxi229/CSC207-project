@@ -5,10 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,11 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import entity.Room;
-import interface_adapter.beginnavigation.BeginNavigationState;
-import interface_adapter.inputrooms.InputRoomsController;
-import interface_adapter.inputrooms.InputRoomsState;
-import interface_adapter.inputrooms.InputRoomsViewModel;
+import main.interface_adapter.inputrooms.InputRoomsController;
+import main.interface_adapter.inputrooms.InputRoomsState;
+import main.interface_adapter.inputrooms.InputRoomsViewModel;
 
 /**
  * The View for when the user is inputting departure and destination rooms into the program.

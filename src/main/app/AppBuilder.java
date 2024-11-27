@@ -1,10 +1,10 @@
-package app;
+package main.app;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
-import interface_adapter.inputrooms.InputRoomsPresenter;
-import interface_adapter.inputrooms.InputRoomsViewModel;
-import use_case.navigation.NavigationOutputBoundary;
+import main.interface_adapter.inputrooms.InputRoomsPresenter;
+import main.interface_adapter.inputrooms.InputRoomsViewModel;
+import main.use_case.navigation.NavigationOutputBoundary;
 import view.BeginNavigationView;
 import view.InputRoomsView;
 import view.ViewManager;

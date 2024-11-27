@@ -3,12 +3,12 @@ package main.entity;
 import java.util.List;
 
 /**
- * Represents an elevator that spans multiple floors.
+ * Represents a stair that spans multiple floors.
  */
-public class Elevator extends MultiFloorLocation {
+public class Stair extends MultiFloorLocation {
     private List<String> connected; // List of connected location IDs
 
-    public Elevator(String id, int size, int floorStart, int floorEnd, int startX, int startY, int endX, int endY, List<String> connected) {
+    public Stair(String id, int size, int floorStart, int floorEnd, int startX, int startY, int endX, int endY, List<String> connected) {
         super(id, size, floorStart, floorEnd, startX, startY, endX, endY);
         this.connected = connected;
     }
@@ -17,7 +17,7 @@ public class Elevator extends MultiFloorLocation {
 
     @Override
     public String toString() {
-        return "Elevator{" +
+        return "Stair{" +
                 "connected=" + connected +
                 "} " + super.toString();
     }

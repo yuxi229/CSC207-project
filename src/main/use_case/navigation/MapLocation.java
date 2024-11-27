@@ -1,4 +1,4 @@
-package use_case.navigation;
+package main.use_case.navigation;
 
 public interface MapLocation {
     String getLocationID();

@@ -1,4 +1,4 @@
-package use_case.navigation;
+package main.use_case.navigation;
 
 /**
  * The Input Data for the Navigation Use Case.

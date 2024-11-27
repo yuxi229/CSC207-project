@@ -3,12 +3,12 @@ package main.entity;
 import java.util.List;
 
 /**
- * Represents a corridor in the building.
+ * Represents a valve in the building.
  */
-public class Corridor extends Location {
-    private List<String> connected;
+public class Valve extends Location {
+    private List<String> connected; // List of connected location IDs
 
-    public Corridor(String id, int size, int floor, int imgXpos, int imgYpos, List<String> connected) {
+    public Valve(String id, int size, int floor, int imgXpos, int imgYpos, List<String> connected) {
         super(id, size, floor, imgXpos, imgYpos);
         this.connected = connected;
     }
@@ -17,7 +17,7 @@ public class Corridor extends Location {
 
     @Override
     public String toString() {
-        return "Corridor{" +
+        return "Valve{" +
                 "connected=" + connected +
                 "} " + super.toString();
     }

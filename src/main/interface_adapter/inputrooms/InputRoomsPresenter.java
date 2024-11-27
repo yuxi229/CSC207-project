@@ -1,10 +1,10 @@
-package interface_adapter.inputrooms;
+package main.interface_adapter.inputrooms;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.beginnavigation.BeginNavigationState;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
-import use_case.navigation.NavigationOutputBoundary;
-import use_case.navigation.NavigationOutputData;
+import main.use_case.navigation.NavigationOutputBoundary;
+import main.use_case.navigation.NavigationOutputData;
 
 /**
  * The Presenter for the Navigation Use Case.

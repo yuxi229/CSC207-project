@@ -1,14 +1,14 @@
-package use_case.navigation;
+package main.use_case.navigation;
 
 import java.util.List;
 
-import entity.*;
+import main.entity.*;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import use_case.LocationDataAccessInterface;
+import main.use_case.LocationDataAccessInterface;
 
 public class GraphPathFinder implements PathFinder {
     private SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map

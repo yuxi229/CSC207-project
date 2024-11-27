@@ -1,35 +1,28 @@
-package entity;
+package main.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Room implementation that inherits the Location class.
+ * Represents a room in the building.
  */
-public class Room extends AbstractLocation {
-    private final List<Corridor> corridorsList;
-    private final List<Floor> floorsList;
+public class Room extends Location {
+    private boolean restricted;      // Whether access is restricted
+    private List<String> connected; // List of connected location IDs
 
-    public Room(String id, List<Corridor> corridorsList, List<Floor> floorsList) {
-        super(id);
-        this.corridorsList = corridorsList;
-        this.floorsList = floorsList;
+    public Room(String id, int size, int floor, int imgXpos, int imgYpos, boolean restricted, List<String> connected) {
+        super(id, size, floor, imgXpos, imgYpos);
+        this.restricted = restricted;
+        this.connected = connected;
     }
 
-    public String getRoomCode() {
-        return this.getId();
-    }
-
-    public List<Corridor> getConnectedCorridors() {
-        return List.copyOf(corridorsList);
-    }
-
-    public List<Floor> getFloors() {
-        return List.copyOf(floorsList);
-    }
+    public boolean isRestricted() { return restricted; }
+    public List<String> getConnected() { return connected; }
 
     @Override
-    public List<AbstractLocation> getConnectedLocations() {
-        return new ArrayList<>(corridorsList);
+    public String toString() {
+        return "Room{" +
+                "restricted=" + restricted +
+                ", connected=" + connected +
+                "} " + super.toString();
     }
 }

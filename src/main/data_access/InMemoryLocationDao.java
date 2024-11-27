@@ -1,119 +1,121 @@
-package data_access;
+package main.data_access;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import entity.*;
-import use_case.LocationDataAccessInterface;
-import use_case.navigation.MapLocation;
+import main.entity.*;
+import main.use_case.LocationDataAccessInterface;
+import main.use_case.navigation.MapLocation;
 
 /**
- * In-memory implementation of the DAO for storing navigation data. This implementation does
- * NOT persist data between runs of the program.
+ * In-memory implementation of the DAO for storing navigation data.
+ * This implementation does NOT persist data between runs of the program.
  */
 public class InMemoryLocationDao implements LocationDataAccessInterface {
-    private final Map<String, AbstractLocation> locationMap = new HashMap<>();
-    private final Map<String, Room> roomCodeToRoom = new HashMap<>();
-    private final Map<String, Floor> floorIdToFloor = new HashMap<>();
-    private final Map<String, Map<String, MapLocation>> mapLocationLookup = new HashMap<>();
+
+    private final Map<String, Location> singleFloorLocationMap = new HashMap<>();
+    private final Map<String, MultiFloorLocation> multiFloorLocationMap = new HashMap<>();
+    private final Map<String, Room> roomMap = new HashMap<>();
+    private final Map<String, Corridor> corridorMap = new HashMap<>();
+    private final Map<String, Washroom> washroomMap = new HashMap<>();
+    private final Map<String, Valve> valveMap = new HashMap<>();
+    private final Map<String, Stair> stairMap = new HashMap<>();
+    private final Map<String, Elevator> elevatorMap = new HashMap<>();
 
     public InMemoryLocationDao() {
     }
 
-    public InMemoryLocationDao(List<AbstractLocation> locations, List<MapLocation> mapLocations) {
-        loadLocations(locations);
-        loadMapLocations(mapLocations);
+    public InMemoryLocationDao(List<Location> locations, List<MultiFloorLocation> multiFloorLocations) {
+        loadSingleFloorLocations(locations);
+        loadMultiFloorLocations(multiFloorLocations);
     }
 
-    private void loadLocations(List<AbstractLocation> locations) {
-        for (AbstractLocation location : locations) {
-            // Add location to locationMap
-            locationMap.put(location.getId(), location);
+    private void loadSingleFloorLocations(List<Location> locations) {
+        for (Location location : locations) {
+            singleFloorLocationMap.put(location.getId(), location);
 
-            // Add rooms to roomCodeToRoom
             if (location instanceof Room) {
-                roomCodeToRoom.put(((Room) location).getRoomCode(), (Room) location);
-            }
-            // Add floors to floorIdToFloor
-            for (Floor floor : location.getFloors()) {
-                if (!floorIdToFloor.containsKey(floor.getFloorId())) {
-                    floorIdToFloor.put(floor.getFloorId(), floor);
-                }
+                roomMap.put(location.getId(), (Room) location);
+            } else if (location instanceof Corridor) {
+                corridorMap.put(location.getId(), (Corridor) location);
+            } else if (location instanceof Washroom) {
+                washroomMap.put(location.getId(), (Washroom) location);
+            } else if (location instanceof Valve) {
+                valveMap.put(location.getId(), (Valve) location);
             }
         }
     }
 
-    private void loadMapLocations(List<MapLocation> mapLocations) {
-        for (MapLocation mapLocation : mapLocations) {
-            if (!mapLocationLookup.containsKey(mapLocation.getLocationID())) {
-                mapLocationLookup.put(mapLocation.getLocationID(), new HashMap<>());
+    private void loadMultiFloorLocations(List<MultiFloorLocation> multiFloorLocations) {
+        for (MultiFloorLocation location : multiFloorLocations) {
+            multiFloorLocationMap.put(location.getId(), location);
+
+            if (location instanceof Stair) {
+                stairMap.put(location.getId(), (Stair) location);
+            } else if (location instanceof Elevator) {
+                elevatorMap.put(location.getId(), (Elevator) location);
             }
-            mapLocationLookup.get(mapLocation.getLocationID()).put(mapLocation.getFloorID(), mapLocation);
         }
     }
 
     @Override
     public boolean roomExists(String roomCode) {
-        return roomCodeToRoom.containsKey(roomCode);
+        return roomMap.containsKey(roomCode);
     }
 
     @Override
     public boolean idExists(String id) {
-        return locationMap.containsKey(id);
+        return singleFloorLocationMap.containsKey(id) || multiFloorLocationMap.containsKey(id);
     }
 
     @Override
-    public AbstractLocation getLocation(String id) {
-        return locationMap.get(id);
+    public Location getLocation(String id) {
+        return singleFloorLocationMap.get(id);
+    }
+
+    @Override
+    public MultiFloorLocation getMultiFloorLocation(String id) {
+        return multiFloorLocationMap.get(id);
     }
 
     @Override
     public Room getRoom(String roomCode) {
-        return roomCodeToRoom.get(roomCode);
-    }
-
-    @Override
-    public Floor getFloor(String id) {
-        return floorIdToFloor.get(id);
-    }
-
-    @Override
-    public Stairs getStair(String id) {
-        Stairs result;
-        if (locationMap.containsKey(id) && locationMap.get(id) instanceof Stairs) {
-            result = (Stairs) locationMap.get(id);
-        } else {
-            //TODO: Raise an appropriate Error
-            result = null;
-        }
-        return result;
+        return roomMap.get(roomCode);
     }
 
     @Override
     public Corridor getCorridor(String id) {
-        Corridor result;
-        if (locationMap.containsKey(id) && locationMap.get(id) instanceof Corridor) {
-            result = (Corridor) locationMap.get(id);
-        } else {
-            //TODO: Raise an appropriate Error
-            result = null;
-        }
-        return result;
+        return corridorMap.get(id);
     }
 
     @Override
-    public List<Floor> getFloors() {
-        return List.copyOf(floorIdToFloor.values());
+    public Washroom getWashroom(String id) {
+        return washroomMap.get(id);
     }
 
     @Override
-    public List<AbstractLocation> getLocations() {
-        return List.copyOf(locationMap.values());
+    public Valve getValve(String id) {
+        return valveMap.get(id);
     }
 
     @Override
-    public MapLocation getMapLocation(String id, String floorID) {
-        return mapLocationLookup.get(id).get(floorID);
+    public Stair getStair(String id) {
+        return stairMap.get(id);
+    }
+
+    @Override
+    public Elevator getElevator(String id) {
+        return elevatorMap.get(id);
+    }
+
+    @Override
+    public List<Location> getSingleFloorLocations() {
+        return List.copyOf(singleFloorLocationMap.values());
+    }
+
+    @Override
+    public List<MultiFloorLocation> getMultiFloorLocations() {
+        return List.copyOf(multiFloorLocationMap.values());
     }
 }
