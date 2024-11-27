@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A floor implementation that inherits Location.
+ * A floor implementation.
  */
 
 public class Floor {

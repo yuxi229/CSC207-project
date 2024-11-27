@@ -79,15 +79,15 @@ As a student / professor / visitor:
     - The system gives the user a top-down view of a map and the arrows to the destination
     - If the starting and ending location are on different floors, the system indicates an arrow to an elevator/stairs and displays both floors
 
-**I want to be able to select which floor of the building I’m viewing (Yuxi)**
+**I want to be able to select which floorId of the building I’m viewing (Yuxi)**
 
 - The user chooses from all available floors
     - The user clicks on a dropdown button which shows all the floors in the building
     - The user clicks on one of the options
-    - The system displays a top-down view of the floor map
+    - The system displays a top-down view of the floorId map
 
 
-**I want to be able to freely look at a labelled floor plan without any destination in mind. (Simon)**
+**I want to be able to freely look at a labelled floorId plan without any destination in mind. (Simon)**
 
 - The user enters a spectator mode through a toggle
     - The system displays all floors that the user is able to scroll through
