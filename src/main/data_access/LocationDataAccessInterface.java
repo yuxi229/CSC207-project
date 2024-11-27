@@ -7,7 +7,7 @@ import entity.Corridor;
 import entity.Floor;
 import entity.Room;
 import entity.Stairs;
-import use_case.navigation.MapLocation;
+import use_case.MapLocation;
 
 /**
  * The Navigation Data Access Use Case.
