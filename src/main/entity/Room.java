@@ -1,16 +1,15 @@
 package entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A Room implementation that inherits the Location class.
  */
 public class Room extends AbstractLocation {
-    private final List<Corridor> corridorsList;
+    private final List<String> corridorsList;
     private final List<String> floorIdsList;
 
-    public Room(String id, List<Corridor> corridorsList, List<String> floorIdsList) {
+    public Room(String id, List<String> corridorsList, List<String> floorIdsList) {
         super(id);
         this.corridorsList = corridorsList;
         this.floorIdsList = floorIdsList;
@@ -20,7 +19,7 @@ public class Room extends AbstractLocation {
         return this.getId();
     }
 
-    public List<Corridor> getConnectedCorridors() {
+    public List<String> getConnectedCorridors() {
         return List.copyOf(corridorsList);
     }
 
@@ -30,7 +29,7 @@ public class Room extends AbstractLocation {
     }
 
     @Override
-    public List<AbstractLocation> getConnectedLocations() {
-        return new ArrayList<>(corridorsList);
+    public List<String> getConnectedLocations() {
+        return getConnectedCorridors();
     }
 }

@@ -6,11 +6,11 @@ import java.util.List;
  * Implementation of Elevator.
  */
 public class Elevator extends AbstractLocation {
-    private final List<Corridor> connectedCorridors;
+    private final List<String> connectedCorridors;
     private final List<String> connectedFloors;
     private final double length;
 
-    public Elevator(String id, List<Corridor> connectedCorridors,
+    public Elevator(String id, List<String> connectedCorridors,
                     List<String> connectedFloors, double length) {
         super(id);
         this.connectedCorridors = connectedCorridors;
@@ -24,7 +24,7 @@ public class Elevator extends AbstractLocation {
     }
 
     @Override
-    public List<AbstractLocation> getConnectedLocations() {
+    public List<String> getConnectedLocations() {
         return List.copyOf(connectedCorridors);
     }
 
