@@ -1,6 +1,6 @@
 package use_case.navigation;
 
-import use_case.LocationDataAccessInterface;
+import data_access.LocationDataAccessInterface;
 
 /**
  * The Navigation Interactor.

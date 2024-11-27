@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import entity.*;
-import use_case.LocationDataAccessInterface;
+import entity.AbstractLocation;
+import entity.Corridor;
+import entity.Floor;
+import entity.Room;
+import entity.Stairs;
 import use_case.navigation.MapLocation;
 
 /**
@@ -80,11 +83,12 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
 
     @Override
     public Stairs getStair(String id) {
-        Stairs result;
+        final Stairs result;
         if (locationMap.containsKey(id) && locationMap.get(id) instanceof Stairs) {
             result = (Stairs) locationMap.get(id);
-        } else {
-            //TODO: Raise an appropriate Error
+        }
+        else {
+            // TODO: Raise an appropriate Error
             result = null;
         }
         return result;
@@ -92,11 +96,12 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
 
     @Override
     public Corridor getCorridor(String id) {
-        Corridor result;
+        final Corridor result;
         if (locationMap.containsKey(id) && locationMap.get(id) instanceof Corridor) {
             result = (Corridor) locationMap.get(id);
-        } else {
-            //TODO: Raise an appropriate Error
+        }
+        else {
+            // TODO: Raise an appropriate Error
             result = null;
         }
         return result;
