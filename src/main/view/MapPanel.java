@@ -2,9 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.util.List;
 
 public class MapPanel extends JPanel {
@@ -26,12 +24,18 @@ public class MapPanel extends JPanel {
 
         // Add mouse wheel listener for zooming
         addMouseWheelListener(e -> {
-            double delta = 0.1; // Zoom step
-            if (e.getPreciseWheelRotation() < 0) {
-                scale += delta; // Zoom in
-            } else {
-                scale = Math.max(0.1, scale - delta); // Zoom out, minimum scale 0.1
+            double zoomStep = 0.005; // Adjusted zoom step for finer control
+            double rotation = e.getPreciseWheelRotation();
+
+            // Adjust scale based on trackpad or mouse wheel rotation
+            if (rotation < 0) {
+                // Zoom in
+                scale = Math.min(scale + zoomStep, 5.0); // Limit maximum zoom to 5.0
+            } else if (rotation > 0) {
+                // Zoom out
+                scale = Math.max(0.3, scale - zoomStep); // Ensure minimum scale is 0.3
             }
+
             repaint();
         });
 
@@ -79,22 +83,22 @@ public class MapPanel extends JPanel {
             int imageWidth = (int) (mapImage.getWidth(this) * scale);
             int imageHeight = (int) (mapImage.getHeight(this) * scale);
 
-            // Center the image with panning offset
+            // Calculate where the image should be drawn with offsets
             int x = (getWidth() - imageWidth) / 2 + imageOffset.x;
             int y = (getHeight() - imageHeight) / 2 + imageOffset.y;
 
-            // Draw the scaled image
+            // Draw the scaled map image
             g2d.drawImage(mapImage, x, y, imageWidth, imageHeight, this);
 
-            // Draw the path
+            // Draw the path, if available
             if (path != null) {
                 g2d.setColor(Color.BLUE);
                 g2d.setStroke(new BasicStroke(3));
                 for (int i = 0; i < path.size() - 1; i++) {
-                    Point p1 = scalePoint(path.get(i), x, y, imageWidth, imageHeight);
-                    Point p2 = scalePoint(path.get(i + 1), x, y, imageWidth, imageHeight);
+                    Point p1 = scalePointToMap(path.get(i), x, y, imageWidth, imageHeight);
+                    Point p2 = scalePointToMap(path.get(i + 1), x, y, imageWidth, imageHeight);
                     g2d.drawLine(p1.x, p1.y, p2.x, p2.y);
-                    drawArrowHead(g2d, p1, p2); // Draw an arrowhead at the end of each path segment
+                    drawArrowHead(g2d, p1, p2); // Draw arrows
                 }
             }
         }
@@ -104,8 +108,8 @@ public class MapPanel extends JPanel {
      * Draws an arrowhead.
      */
     private void drawArrowHead(Graphics2D g2d, Point from, Point to) {
-        double arrowLength = 33; // Arrow length
-        double arrowWidth = 50;  // Arrow width
+        double arrowLength = 20 * scale; // Arrow length scaled to match zoom
+        double arrowWidth = 10 * scale;  // Arrow width scaled to match zoom
         double theta = Math.atan2(to.y - from.y, to.x - from.x); // Calculate the angle of direction
 
         // Two side points of the arrowhead
@@ -121,12 +125,14 @@ public class MapPanel extends JPanel {
     }
 
     /**
-     * Scales a point based on the image's original and scaled dimensions.
+     * Scales a point to the map dimensions and applies panning/zooming adjustments.
      */
-    private Point scalePoint(Point original, int offsetX, int offsetY, int scaledWidth, int scaledHeight) {
-        double xRatio = scaledWidth / (double) mapImage.getWidth(this);
-        double yRatio = scaledHeight / (double) mapImage.getHeight(this);
+    private Point scalePointToMap(Point original, int offsetX, int offsetY, int scaledWidth, int scaledHeight) {
+        // Calculate scale factors based on the original image size
+        double xRatio = (double) scaledWidth / mapImage.getWidth(this);
+        double yRatio = (double) scaledHeight / mapImage.getHeight(this);
 
+        // Adjust original coordinates to scaled dimensions
         int scaledX = (int) (original.x * xRatio) + offsetX;
         int scaledY = (int) (original.y * yRatio) + offsetY;
 
