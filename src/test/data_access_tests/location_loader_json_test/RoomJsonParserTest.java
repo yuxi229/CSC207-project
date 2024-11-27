@@ -21,13 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RoomJsonParserTest {
     private static final String TEST_JSON_FILE_PATH
             = "src/test/data_access_tests/location_loader_json_test/sample_data/TestData.json";
-    private static String jsonString;
     private static JsonNode rooms;
-    private static Map<String, RoomJsonParser> idToParser = new HashMap<>();
-    private static Map<String, Room> idToRoom = new HashMap<>();
-    private static Map<String, MapLocation> idToRoomLocation = new HashMap<>();
-    private static Map<String, List<String>> idToFloorIds = new HashMap<>();
-    private static RoomFactory factory = new RoomFactory();
+    private static final Map<String, RoomJsonParser> idToParser = new HashMap<>();
+    private static final Map<String, Room> idToRoom = new HashMap<>();
+    private static final Map<String, MapLocation> idToRoomLocation = new HashMap<>();
+    private static final Map<String, List<String>> idToFloorIds = new HashMap<>();
+    private static final RoomFactory factory = new RoomFactory();
 
     @BeforeAll
     static void setUpParsers() throws IOException {
