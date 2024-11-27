@@ -101,7 +101,7 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
 
             private void documentListenerHelper() {
                 final InputRoomsState currentState = inputRoomsViewModel.getState();
-                currentState.setDepartureRoom(departureRoomField.getText());
+                currentState.setDepartureRoomCode(departureRoomField.getText());
                 inputRoomsViewModel.setState(currentState);
             }
 
@@ -127,7 +127,7 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
 
             private void documentListenerHelper() {
                 final InputRoomsState currentState = inputRoomsViewModel.getState();
-                currentState.setDepartureRoom(destinationRoomField.getText());
+                currentState.setDepartureRoomCode(destinationRoomField.getText());
                 inputRoomsViewModel.setState(currentState);
             }
 
@@ -174,8 +174,8 @@ public class InputRoomsView extends JPanel implements ActionListener, PropertyCh
     }
 
     private void setFields(InputRoomsState state) {
-        destinationRoomField.setText(state.getRoomCode());
-        departureRoomField.setText(state.getRoomCode());
+        destinationRoomField.setText(state.getDestinationRoomCodeRoomCode());
+        departureRoomField.setText(state.getDepartureRoomCodeRoomCode());
     }
 
     public String getViewName() {

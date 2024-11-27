@@ -4,15 +4,17 @@ package interface_adapter.inputrooms;
  * The state for the Navigation View Model.
  */
 public class InputRoomsState {
-    private String roomCode = "";
-    private String departureRoomCodeError;
-    private String destinationRoomCodeError;
     private String departureRoomCode = "";
+    private String departureRoomCodeError;
     private String destinationRoomCode = "";
+    private String destinationRoomCodeError;
 
-    public String getRoomCode() {
-        return roomCode;
+
+    public String getDepartureRoomCodeRoomCode() {
+        return departureRoomCode;
     }
+
+    public String getDestinationRoomCodeRoomCode() { return destinationRoomCode; }
 
     public String getDepartureRoomCodeError() {
         return departureRoomCodeError;
@@ -20,6 +22,14 @@ public class InputRoomsState {
 
     public String getDestinationRoomCodeError() {
         return destinationRoomCodeError;
+    }
+
+    public void setDepartureRoomCode(String departureRoomCode) {
+        this.departureRoomCode = departureRoomCode;
+    }
+
+    public void setDestinationRoomCode(String destinationRoomCode) {
+        this.destinationRoomCode = destinationRoomCode;
     }
 
     public void setDepartureRoomCodeError(String departureRoomCodeError) {
@@ -30,20 +40,5 @@ public class InputRoomsState {
         this.destinationRoomCodeError = destinationRoomCodeError;
     }
 
-    /**
-     * The method to set departure room the user enters.
-     * @param departureRoomCode the roomcode the user enters
-     */
-    public void setDepartureRoom(String departureRoomCode) {
-        this.departureRoomCode = roomCode;
-    }
-
-    /**
-     * The method to set destination room the user enters.
-     * @param destinationRoomCode the roomcode the user enters
-     */
-    public void setDestinationRoom(String destinationRoomCode) {
-        this.destinationRoomCode = roomCode;
-    }
 
 }

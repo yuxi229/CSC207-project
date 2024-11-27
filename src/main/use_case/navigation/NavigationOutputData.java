@@ -8,12 +8,14 @@ import java.util.List;
  */
 public class NavigationOutputData {
     private final List<MapLocation> pathLocations;
+    private final boolean useCaseFailed;
 
     /**
      * Constructor for the NavigationOutputData.
      */
-    public NavigationOutputData(List<MapLocation> pathLocations) {
+    public NavigationOutputData(List<MapLocation> pathLocations, boolean useCaseFailed) {
         this.pathLocations = pathLocations;
+        this.useCaseFailed = useCaseFailed;
     }
 
     /**
@@ -32,5 +34,10 @@ public class NavigationOutputData {
      */
     public List<MapLocation> getLocation(String id) {
         return List.copyOf(pathLocations);
+    }
+
+
+    public boolean isUseCaseFailed() {
+        return useCaseFailed;
     }
 }

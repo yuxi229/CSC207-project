@@ -22,18 +22,18 @@ public class NavigationInteractor implements NavigationInputBoundary {
         final String destinationRoomCode = inputData.getDestinationRoomCode();
 
         // Check if the rooms exist
-        if (!locationDAO.roomExists(departureRoomCode)) {
-            naviPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
+        if (!locationDAO.roomExists(departureRoomCode)){
+            naviPresenter.prepareFailView( "Departure room does not exist.");
         }
         else if (!locationDAO.roomExists(destinationRoomCode)) {
-            naviPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
+            naviPresenter.prepareFailView("Destination room does not exist.");
         }
 
         // If both rooms exist, find the shortest path between them
         else {
             PathFinder pathFinder = new GraphPathFinder(locationDAO); //TODO: Discuss pre-loading this data somewhere
             NavigationOutputData output = new NavigationOutputData(
-                    pathFinder.getPath(departureRoomCode, destinationRoomCode));
+                    pathFinder.getPath(departureRoomCode, destinationRoomCode), false);
             naviPresenter.prepareSuccessView(output);
         }
     }
