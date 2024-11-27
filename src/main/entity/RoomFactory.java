@@ -11,10 +11,10 @@ public class RoomFactory {
      *
      * @param id            the id of the new room
      * @param corridorsList the list of corridors connected to the new room.
-     * @param floorsList    the list of floors connected to the new room.
+     * @param floorIdsList    the list of floors connected to the new room.
      * @return the new room
      */
-    public Room createRoom(String id, List<Corridor> corridorsList, List<Floor> floorsList) {
-        return new Room(id, corridorsList, floorsList);
+    public Room createRoom(String id, List<Corridor> corridorsList, List<String> floorIdsList) {
+        return new Room(id, corridorsList, floorIdsList);
     }
 }
