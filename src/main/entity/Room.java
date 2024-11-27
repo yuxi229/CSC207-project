@@ -24,6 +24,7 @@ public class Room extends AbstractLocation {
         return List.copyOf(corridorsList);
     }
 
+    @Override
     public List<String> getFloors() {
         return List.copyOf(floorIdsList);
     }

@@ -8,17 +8,17 @@ import java.util.List;
  */
 
 public class Stairs extends AbstractLocation {
-    private Floor lowerFloor;
-    private Floor upperFloor;
-    private Corridor lowerCorridor;
-    private Corridor upperCorridor;
-    private double length;
+    private final String lowerFloorId;
+    private final String upperFloorId;
+    private final Corridor lowerCorridor;
+    private final Corridor upperCorridor;
+    private final double length;
 
-    public Stairs(String id, Floor lowerFloor, Floor upperFloor, Corridor lowerCorridor,
+    public Stairs(String id, String lowerFloorId, String upperFloorId, Corridor lowerCorridor,
                   Corridor upperCorridor, double length) {
         super(id);
-        this.lowerFloor = lowerFloor;
-        this.upperFloor = upperFloor;
+        this.lowerFloorId = lowerFloorId;
+        this.upperFloorId = upperFloorId;
         this.lowerCorridor = lowerCorridor;
         this.upperCorridor = upperCorridor;
         this.length = length;
@@ -26,7 +26,7 @@ public class Stairs extends AbstractLocation {
 
     @Override
     public List<String> getFloors() {
-        return List.of(lowerFloor.getFloorId(), upperFloor.getFloorId());
+        return List.of(lowerFloorId, upperFloorId);
     }
 
     @Override
@@ -37,43 +37,23 @@ public class Stairs extends AbstractLocation {
         return connected;
     }
 
-    public Floor getLowerFloor() {
-        return lowerFloor;
+    public String getLowerFloorId() {
+        return lowerFloorId;
     }
 
-    public void setLowerFloor(Floor lowerFloor) {
-        this.lowerFloor = lowerFloor;
-    }
-
-    public Floor getUpperFloor() {
-        return upperFloor;
-    }
-
-    public void setUpperFloor(Floor upperFloor) {
-        this.upperFloor = upperFloor;
+    public String getUpperFloorId() {
+        return upperFloorId;
     }
 
     public Corridor getLowerCorridor() {
         return lowerCorridor;
     }
 
-    public void setLowerCorridor(Corridor lowerCorridor) {
-        this.lowerCorridor = lowerCorridor;
-    }
-
     public Corridor getUpperCorridor() {
         return upperCorridor;
     }
 
-    public void setUpperCorridor(Corridor upperCorridor) {
-        this.upperCorridor = upperCorridor;
-    }
-
     public double getLength() {
         return length;
-    }
-
-    public void setLength(double length) {
-        this.length = length;
     }
 }

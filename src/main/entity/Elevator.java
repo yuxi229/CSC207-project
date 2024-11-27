@@ -7,20 +7,20 @@ import java.util.List;
  */
 public class Elevator extends AbstractLocation {
     private final List<Corridor> connectedCorridors;
+    private final List<String> connectedFloors;
     private final double length;
 
-    // Constructor
-
     public Elevator(String id, List<Corridor> connectedCorridors,
-                    double length) {
+                    List<String> connectedFloors, double length) {
         super(id);
         this.connectedCorridors = connectedCorridors;
+        this.connectedFloors = connectedFloors;
         this.length = length;
     }
 
     @Override
     public List<String> getFloors() {
-        return List.of();
+        return List.copyOf(connectedFloors);
     }
 
     @Override

@@ -10,15 +10,15 @@ public class Corridor extends AbstractLocation {
     private ArrayList<Room> roomList = new ArrayList<>();
     private ArrayList<Stairs> stairsList = new ArrayList<>();
     private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
-    private final Floor floor;
+    private final String floorId;
     private final double length;
 
     Corridor(String id, ArrayList<Room> roomList, ArrayList<Stairs> stairsList,
-             Floor floor, double length) {
+             String floorId, double length) {
         super(id);
         this.roomList = roomList;
         this.stairsList = stairsList;
-        this.floor = floor;
+        this.floorId = floorId;
         this.length = length;
     }
 
@@ -36,7 +36,7 @@ public class Corridor extends AbstractLocation {
 
     @Override
     public List<String> getFloors() {
-        return List.of(floor);
+        return List.of(floorId);
     }
 
     @Override
