@@ -1,4 +1,4 @@
-package use_case.navigation;
+package use_case;
 
 /**
  * A class that represents a location on the map.

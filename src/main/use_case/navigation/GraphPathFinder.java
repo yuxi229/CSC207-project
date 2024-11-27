@@ -11,6 +11,7 @@ import data_access.LocationDataAccessInterface;
 import entity.AbstractLocation;
 import entity.Floor;
 import entity.Room;
+import use_case.MapLocation;
 
 /**
  * A class that finds the shortest path between two locations on the map.

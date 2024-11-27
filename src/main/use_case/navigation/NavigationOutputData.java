@@ -1,5 +1,7 @@
 package use_case.navigation;
 
+import use_case.MapLocation;
+
 import java.util.ArrayList;
 import java.util.List;
 

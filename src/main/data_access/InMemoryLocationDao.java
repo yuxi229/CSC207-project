@@ -9,7 +9,7 @@ import entity.Corridor;
 import entity.Floor;
 import entity.Room;
 import entity.Stairs;
-import use_case.navigation.MapLocation;
+import use_case.MapLocation;
 
 /**
  * In-memory implementation of the DAO for storing navigation data. This implementation does
