@@ -14,7 +14,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final JTextField departureRoomField = new JTextField(15);
     private final JTextField destinationRoomField = new JTextField(15);
     private final MapPanel mapPanel;
-    private final BeginNavigationView beginNavigationView;
+    private BeginNavigationView beginNavigationView;
     private final HashMap<String, List<Point>> fixedRoute = new HashMap<>();
     private final TextPromptPanel textPromptPanel;
 
@@ -40,6 +40,26 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         this.setBackground(new Color(245, 245, 245)); // Soft light grey
 
         // Header Panel
+        JPanel headerPanel = createHeaderPanel();
+        this.add(headerPanel, BorderLayout.NORTH);
+
+        // Left panel for user input
+        JPanel leftPanel = createLeftPanel();
+        this.add(leftPanel, BorderLayout.WEST);
+
+        // Map panel for rendering routes
+        mapPanel = new MapPanel("map.jpg");
+        mapPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        mapPanel.setLayout(new BorderLayout());
+
+        // Add "Displaying Bahen Centre" title to MapPanel
+        JPanel mapTitlePanel = createMapTitlePanel();
+        mapPanel.add(mapTitlePanel, BorderLayout.NORTH);
+
+        this.add(mapPanel, BorderLayout.CENTER);
+    }
+
+    private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(new Color(48, 63, 159)); // Soft blue
         headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -48,82 +68,104 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         headerLabel.setForeground(Color.WHITE);
         headerPanel.add(headerLabel);
-        this.add(headerPanel, BorderLayout.NORTH);
 
-        // Left panel for user input
+        return headerPanel;
+    }
+
+    private JPanel createLeftPanel() {
         JPanel leftPanel = new JPanel();
+        leftPanel.setPreferredSize(new Dimension(300, 0)); // Restrict width
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         leftPanel.setBackground(Color.WHITE);
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Adjusted spacing for aesthetics
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         JLabel title = new JLabel("Where To?");
         title.setFont(new Font("Arial", Font.BOLD, 20));
         title.setForeground(new Color(48, 63, 159));
-        title.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel departureLabel = new JLabel("Departure Room");
-        departureLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        departureRoomField.setMaximumSize(new Dimension(400, 30)); // Adjusted size
-        departureRoomField.setBackground(new Color(240, 240, 240));
-        departureRoomField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        styleTextField(departureRoomField); // Apply styling to the input field
 
         JLabel destinationLabel = new JLabel("Destination Room");
-        destinationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        destinationRoomField.setMaximumSize(new Dimension(400, 30)); // Adjusted size
-        destinationRoomField.setBackground(new Color(240, 240, 240));
-        destinationRoomField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        styleTextField(destinationRoomField); // Apply styling to the input field
 
-        // Initialize BeginNavigationView and pass fixedRoute
-        beginNavigationView = new BeginNavigationView(this, fixedRoute);
+        beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
 
-        // Text Prompt Label
-        JLabel textPromptLabel = new JLabel("Text Prompt");
-        textPromptLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        textPromptLabel.setForeground(new Color(48, 63, 159));
-        textPromptLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // Set a preferred size for the TextPromptPanel
+        textPromptPanel.setPreferredSize(new Dimension(500, 100)); // Adjust height as needed
+        textPromptPanel.setMaximumSize(new Dimension(500, 100)); // Prevent expansion
 
-        // Assemble left panel
         leftPanel.add(title);
-        leftPanel.add(Box.createVerticalStrut(10)); // Reduced gap
+        leftPanel.add(Box.createVerticalStrut(10));
         leftPanel.add(departureLabel);
         leftPanel.add(departureRoomField);
-        leftPanel.add(Box.createVerticalStrut(10)); // Reduced gap
+        leftPanel.add(Box.createVerticalStrut(10));
         leftPanel.add(destinationLabel);
         leftPanel.add(destinationRoomField);
         leftPanel.add(Box.createVerticalStrut(20));
-        leftPanel.add(beginNavigationView.getButton()); // Add the button from BeginNavigationView
-        leftPanel.add(Box.createVerticalStrut(10));
-        leftPanel.add(textPromptLabel); // Add the label for text prompt
-        leftPanel.add(Box.createVerticalStrut(10));
-        leftPanel.add(textPromptPanel); // Add the TextPromptPanel to the left panel
+        leftPanel.add(beginNavigationView.getButton()); // Add the button
+        leftPanel.add(Box.createVerticalStrut(20));
+        leftPanel.add(new JLabel("Text Prompt")); // Label for the TextPromptPanel
+        leftPanel.add(Box.createVerticalStrut(5));
+        leftPanel.add(textPromptPanel); // Add the TextPromptPanel
 
-        // Map panel for the right side
-        mapPanel = new MapPanel("map.jpg");
-        mapPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-        mapPanel.setLayout(new BorderLayout());
+        return leftPanel;
+    }
 
-        // Map title bar
+
+    private JPanel createMapTitlePanel() {
         JPanel mapTitlePanel = new JPanel();
-        mapTitlePanel.setBackground(new Color(245, 245, 245)); // Light grey
-        mapTitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        mapTitlePanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        mapTitlePanel.setBackground(new Color(245, 245, 245)); // Light grey background
+        mapTitlePanel.setLayout(new BorderLayout()); // Use BorderLayout to align content
+        mapTitlePanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Add padding
 
+        // Label for "Displaying"
         JLabel displayingLabel = new JLabel("Displaying ");
         displayingLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         displayingLabel.setForeground(new Color(150, 150, 150));
 
+        // Label for "Bahen Centre"
         JLabel bahenLabel = new JLabel("Bahen Centre");
         bahenLabel.setFont(new Font("Arial", Font.BOLD, 14));
         bahenLabel.setForeground(new Color(48, 63, 159));
 
-        mapTitlePanel.add(displayingLabel);
-        mapTitlePanel.add(bahenLabel);
+        // Use a FlowLayout to group "Displaying" and "Bahen Centre"
+        JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Align fully left, no gaps
+        textPanel.setBackground(new Color(245, 245, 245)); // Match background color
+        textPanel.add(displayingLabel);
+        textPanel.add(bahenLabel);
 
-        mapPanel.add(mapTitlePanel, BorderLayout.NORTH);
+        // Add the textPanel to the left side of mapTitlePanel
+        mapTitlePanel.add(textPanel, BorderLayout.WEST);
 
-        // Assemble the main layout
-        this.add(leftPanel, BorderLayout.WEST);
-        this.add(mapPanel, BorderLayout.CENTER);
+        return mapTitlePanel;
+    }
+
+    private void styleTextField(JTextField textField) {
+        textField.setFont(new Font("Arial", Font.PLAIN, 14));
+        textField.setForeground(Color.BLACK);
+        textField.setBackground(new Color(240, 240, 240)); // Light grey background
+        textField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)), // Light grey border
+                BorderFactory.createEmptyBorder(5, 10, 5, 10))); // Padding inside the field
+        textField.setMaximumSize(new Dimension(400, 30)); // Fixed size
+    }
+
+    private void onBeginNavigation() {
+        String fromRoom = getDepartureRoom();
+        String toRoom = getDestinationRoom();
+
+        // Mock findPath logic using fixedRoute
+        List<Point> path = fixedRoute.get(fromRoom + "-" + toRoom);
+        if (path == null) {
+            JOptionPane.showMessageDialog(this,
+                    "No route found from " + fromRoom + " to " + toRoom,
+                    "Route Not Found",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        mapPanel.setPath(path); // Update the map with the mock path
     }
 
     public String getDepartureRoom() {
@@ -135,12 +177,16 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     }
 
     public void updatePath(List<Point> path) {
-        mapPanel.setPath(path);
+        mapPanel.setPath(path); // Update the map with the given path
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Handle property change events from InputRoomsViewModel
+        if ("path".equals(evt.getPropertyName())) {
+            // Handle property change event from ViewModel
+            List<Point> path = (List<Point>) evt.getNewValue();
+            updatePath(path);
+        }
     }
 
     public String getViewName() {
