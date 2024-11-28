@@ -6,7 +6,6 @@ import interface_adapter.beginnavigation.BeginNavigationViewModel;
 import interface_adapter.inputrooms.InputRoomsPresenter;
 import view.TextPromptPanel;
 import use_case.navigation.NavigationOutputBoundary;
-import view.BeginNavigationView;
 import view.InputRoomsView;
 import view.ViewManager;
 
@@ -16,8 +15,6 @@ import java.awt.*;
 /**
  * The AppBuilder class is responsible for putting together the pieces of
  * our CA architecture; piece by piece.
- * <p/>
- * This is done by adding each View and then adding related Use Cases.
  */
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -27,7 +24,6 @@ public class AppBuilder {
 
     private InputRoomsView inputRoomsView;
     private InputRoomsViewModel inputRoomsViewModel;
-    private BeginNavigationViewModel beginNavigationViewModel;
     private TextPromptPanel textPromptPanel;
 
     public AppBuilder() {
@@ -35,18 +31,21 @@ public class AppBuilder {
     }
 
     public AppBuilder addNavigationView() {
+        // Initialize dependencies
         inputRoomsViewModel = new InputRoomsViewModel();
-        beginNavigationViewModel = new BeginNavigationViewModel();
         textPromptPanel = new TextPromptPanel();
 
+        // Pass both InputRoomsViewModel and TextPromptPanel to InputRoomsView
         inputRoomsView = new InputRoomsView(inputRoomsViewModel, textPromptPanel);
+
+        // Add InputRoomsView to card panel
         cardPanel.add(inputRoomsView, inputRoomsView.getViewName());
         return this;
     }
 
     public AppBuilder addNavigationUseCase() {
         final NavigationOutputBoundary navigationOutputBoundary = new InputRoomsPresenter(
-                viewManagerModel, beginNavigationViewModel, inputRoomsViewModel);
+                viewManagerModel, new BeginNavigationViewModel(), inputRoomsViewModel);
         return this;
     }
 

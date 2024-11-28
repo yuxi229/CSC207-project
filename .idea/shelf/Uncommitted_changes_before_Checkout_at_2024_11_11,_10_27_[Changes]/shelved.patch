@@ -1,0 +1,36 @@
+Index: src/main/use_case/navigation/NavigationOutputData.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package use_case.navigation;\n\npublic class NavigationOutputData {\n}\n
+===================================================================
+diff --git a/src/main/use_case/navigation/NavigationOutputData.java b/src/main/use_case/navigation/NavigationOutputData.java
+--- a/src/main/use_case/navigation/NavigationOutputData.java	(revision 0323c699fcfbe757fb5a90f95928c93bfff31a20)
++++ b/src/main/use_case/navigation/NavigationOutputData.java	(date 1731338717396)
+@@ -1,4 +1,27 @@
+ package use_case.navigation;
+ 
+ public class NavigationOutputData {
++    private final String roomcode;
++    private final int estimatedTime; // in minutes or seconds
++    private final boolean error;
++
++    public NavigationOutputData(String roomcode, int estimatedTime, boolean error) {
++        this.roomcode = roomcode;
++        this.estimatedTime = estimatedTime;
++        this.error = error;
++    }
++
++    public String getRoomcode() {
++        return roomcode;
++    }
++
++    public int getEstimatedTime() {
++        return estimatedTime;
++    }
++
++    public boolean isError() {
++        return error;
++    }
+ }
++        
++    
