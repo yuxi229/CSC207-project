@@ -1,127 +1,113 @@
 package use_case.navigation;
 
-import java.util.List;
-
-import entity.*;
-
-import org.jgrapht.GraphPath;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleWeightedGraph;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import entity.Location;
+import entity.MultiFloorLocation;
 import use_case.LocationDataAccessInterface;
+import use_case.navigation.PathFinder;
+
+import java.util.*;
 
 public class GraphPathFinder implements PathFinder {
-    private SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map
-            = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
-    private LocationDataAccessInterface database;
-    private static final double DEFAULT_WEIGHT = 1.0;
+    private final HashMap<String, List<String>> adjacencyList;
 
-    /**
-     * Default constructor. Initializes the pathfinder with no data.
-     */
-    public GraphPathFinder() {
+    public GraphPathFinder(LocationDataAccessInterface locationDataAccess) {
+        this.adjacencyList = new HashMap<>();
+        buildGraph(locationDataAccess);
     }
 
-    /**
-     * Constructor that initializes the pathfinder with the given data.
-     * @param locationDAO the data access object to use
-     */
-    public GraphPathFinder(LocationDataAccessInterface locationDAO) {
-        this.database = locationDAO;
-        loadData(database);
-    }
-
-    /**
-     * Initializes the pathfinder with the given data.
-     * @param locationDAO the data access object to use
-     */
-    @Override
-    public void loadData(LocationDataAccessInterface locationDAO) {
-        database = locationDAO;
-        List<Floor> floors = database.getFloors();
-        for (Floor floor: floors) {
-            buildFloor(floor);
+    // Build the graph using the LocationDataAccessInterface
+    private void buildGraph(LocationDataAccessInterface locationDataAccess) {
+        // Add single-floor locations
+        for (Location location : locationDataAccess.getSingleFloorLocations()) {
+            adjacencyList.putIfAbsent(location.getId(), new ArrayList<>());
+            List<String> connected = getConnected(locationDataAccess, location.getId());
+            adjacencyList.get(location.getId()).addAll(connected);
         }
-        linkFloors();
+
+        // Add multi-floor locations
+        for (MultiFloorLocation location : locationDataAccess.getMultiFloorLocations()) {
+            adjacencyList.putIfAbsent(location.getId(), new ArrayList<>());
+            List<String> connected = getConnected(locationDataAccess, location.getId());
+            adjacencyList.get(location.getId()).addAll(connected);
+        }
     }
 
-    /**
-     * Go through all the locations on the floor and link them together.
-     * @param floor the floor to build the graph for
-     */
-    private void buildFloor(Floor floor) {
-        // Loop through all the locations on the floor
-        for (AbstractLocation location1 : floor.getLocationsList()) {
-            MapLocation mapLocation1 = database.getMapLocation(location1.getId(), floor.getFloorId());
-            // Link the location to all the locations it is connected to
-            for (AbstractLocation location2 : location1.getConnectedLocations()) {
-                MapLocation mapLocation2 = database.getMapLocation(location2.getId(), floor.getFloorId());
-                linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2));
+    // Updated getConnected method
+    private List<String> getConnected(LocationDataAccessInterface locationDataAccess, String id) {
+        // Check if it's a single-floor location
+        if (locationDataAccess.getLocation(id) != null) {
+            Location location = locationDataAccess.getLocation(id);
+
+            if (location instanceof entity.Room) {
+                return ((entity.Room) location).getConnected();
+            } else if (location instanceof entity.Corridor) {
+                return ((entity.Corridor) location).getConnected();
+            } else if (location instanceof entity.Washroom) {
+                return ((entity.Washroom) location).getConnected();
+            } else if (location instanceof entity.Valve) {
+                return ((entity.Valve) location).getConnected();
             }
         }
+
+        // Check if it's a multi-floor location
+        if (locationDataAccess.getMultiFloorLocation(id) != null) {
+            MultiFloorLocation location = locationDataAccess.getMultiFloorLocation(id);
+
+            if (location instanceof entity.Stair) {
+                return ((entity.Stair) location).getConnected();
+            } else if (location instanceof entity.Elevator) {
+                return ((entity.Elevator) location).getConnected();
+            }
+        }
+
+        // Return empty if no connections are found
+        return Collections.emptyList();
     }
 
-    /**
-     * Go through all the locations that span multiple floors and link them together.
-     */
-    private void linkFloors() {
-        for (AbstractLocation location : database.getLocations()) {
-            List<Floor> floorsConnected = location.getFloors();
-            // If the location is on multiple floors, link its map locations on the different floors
-            if (floorsConnected.size() > 1) {
-                for (Floor floor1 : floorsConnected) {
-                    for (Floor floor2 : floorsConnected) {
-                        if (!floor1.getFloorId().equals(floor2.getFloorId())) {
-                            MapLocation mapLocation1 = database.getMapLocation(location.getId(), floor1.getFloorId());
-                            MapLocation mapLocation2 = database.getMapLocation(location.getId(), floor2.getFloorId());
-                            linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
-                        }
-                    }
+
+    // Find the shortest path using BFS
+    public List<String> findShortestPath(String startId, String endId) {
+        if (!adjacencyList.containsKey(startId) || !adjacencyList.containsKey(endId)) {
+            throw new IllegalArgumentException("Invalid start or end location ID.");
+        }
+
+        Queue<List<String>> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+
+        // Start BFS with the starting node
+        queue.add(List.of(startId));
+        visited.add(startId);
+
+        while (!queue.isEmpty()) {
+            List<String> path = queue.poll();
+            String current = path.get(path.size() - 1);
+
+            // If we reach the destination, return the path
+            if (current.equals(endId)) {
+                return path;
+            }
+
+            // Explore neighbors
+            for (String neighbor : adjacencyList.getOrDefault(current, new ArrayList<>())) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+
+                    // Create a new path extending the current one
+                    List<String> newPath = new ArrayList<>(path);
+                    newPath.add(neighbor);
+                    queue.add(newPath);
                 }
             }
         }
+
+        // Return an empty list if no path is found
+        return Collections.emptyList();
     }
 
-    /**
-     * Links two map locations together with the given weight.
-     */
-    private void linkLocations(MapLocation location1, MapLocation location2, Double weight) {
-        // No duplicate vertices will be added because the vertices are stored in a set
-        if (!map.containsVertex(location1)){
-            map.addVertex(location1);
-        } else if (!map.containsVertex(location2)){
-            map.addVertex(location2);
+    // For debugging: Print the adjacency list
+    public void printGraph() {
+        for (Map.Entry<String, List<String>> entry : adjacencyList.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
-        DefaultWeightedEdge edge = map.addEdge(location1, location2);
-        map.setEdgeWeight(edge, weight);
-    }
-
-    /**
-     * Calculates the weight between two locations.
-     */
-    private double calculateWeight(AbstractLocation location1, AbstractLocation location2) {
-        //TODO: Decide on weight strategy in meeting
-        return DEFAULT_WEIGHT;
-    }
-
-    private MapLocation roomCodeToMapLocation(String roomCode) {
-        Room room = database.getRoom(roomCode);
-        String floorID = room.getFloors().get(0).getFloorId(); //Pick the first floor the room is on
-        return database.getMapLocation(room.getId(), floorID);
-    }
-
-    /**
-     * Returns the path from the start room to the end room as a list of ids.
-     * @param startRoomCode valid room code for starting room
-     * @param endRoomCode valid room code for ending room
-     * @return A list of MapLocation objects representing the path.
-     */
-    @Override
-    public List<MapLocation> getPath(String startRoomCode, String endRoomCode) {
-        // Use Dijkstra's algorithm to find the shortest path. Change algorithm if needed.
-        DijkstraShortestPath<MapLocation, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(map);
-        GraphPath<MapLocation, DefaultWeightedEdge> route =
-                dijkstraAlg.getPath(roomCodeToMapLocation(startRoomCode), roomCodeToMapLocation(endRoomCode));
-        return route.getVertexList();
     }
 }

@@ -1,6 +1,7 @@
 package use_case.navigation;
 
 import use_case.LocationDataAccessInterface;
+import use_case.navigation.GraphPathFinder;
 
 /**
  * The Navigation Interactor.
@@ -33,7 +34,7 @@ public class NavigationInteractor implements NavigationInputBoundary {
         else {
             PathFinder pathFinder = new GraphPathFinder(locationDAO); //TODO: Discuss pre-loading this data somewhere
             NavigationOutputData output = new NavigationOutputData(
-                    pathFinder.getPath(departureRoomCode, destinationRoomCode));
+                    pathFinder.findShortestPath(departureRoomCode, destinationRoomCode));
             naviPresenter.prepareSuccessView(output);
         }
     }

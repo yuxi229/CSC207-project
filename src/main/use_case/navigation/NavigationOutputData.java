@@ -7,30 +7,19 @@ import java.util.List;
  * Output Data for the Navigation Use Case.
  */
 public class NavigationOutputData {
-    private final List<MapLocation> pathLocations;
+    private final List<String> pathIds;
 
     /**
      * Constructor for the NavigationOutputData.
      */
-    public NavigationOutputData(List<MapLocation> pathLocations) {
-        this.pathLocations = pathLocations;
-    }
-
-    /**
-     * Return a list of the ids of the locations in the path.
-     */
-    public List<String> getPathIDs() {
-        List<String> pathIDs = new ArrayList<>();
-        for (MapLocation location : pathLocations) {
-            pathIDs.add(location.getLocationID());
-        }
-        return pathIDs;
+    public NavigationOutputData(List<String> pathLocations) {
+        this.pathIds = pathLocations;
     }
 
     /**
      * Return the path as a list of MapLocation objects.
      */
-    public List<MapLocation> getLocation(String id) {
-        return List.copyOf(pathLocations);
+    public List<String> getLocation(String id) {
+        return List.copyOf(pathIds);
     }
 }
