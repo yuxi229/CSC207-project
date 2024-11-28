@@ -7,18 +7,19 @@ import java.util.List;
  * A Corridor implementation that inherits the Location class.
  */
 public class Corridor extends AbstractLocation {
-    private ArrayList<Room> roomList = new ArrayList<>();
-    private ArrayList<Stairs> stairsList = new ArrayList<>();
-    private ArrayList<Corridor> connectedCorridors = new ArrayList<>();
-    private final Floor floor;
+    private final List<String> connectedRooms;
+    private final List<String> connectedStairs;
+    private final List<String> connectedCorridors;
+    private final String floorId;
     private final double length;
 
-    Corridor(String id, ArrayList<Room> roomList, ArrayList<Stairs> stairsList,
-             Floor floor, double length) {
+    Corridor(String id, List<String> roomList, List<String> stairsList, List<String> corridorsList,
+             String floorId, double length) {
         super(id);
-        this.roomList = roomList;
-        this.stairsList = stairsList;
-        this.floor = floor;
+        this.connectedRooms = roomList;
+        this.connectedStairs = stairsList;
+        this.connectedCorridors = corridorsList;
+        this.floorId = floorId;
         this.length = length;
     }
 
@@ -26,24 +27,24 @@ public class Corridor extends AbstractLocation {
         return length;
     }
 
-    public List<Room> getConnectedRooms() {
-        return List.copyOf(roomList);
+    public List<String> getConnectedRooms() {
+        return List.copyOf(connectedRooms);
     }
 
-    public List<Stairs> getConnectedStairs() {
-        return List.copyOf(stairsList);
-    }
-
-    @Override
-    public List<Floor> getFloors() {
-        return List.of(floor);
+    public List<String> getConnectedStairs() {
+        return List.copyOf(connectedStairs);
     }
 
     @Override
-    public List<AbstractLocation> getConnectedLocations() {
-        final ArrayList<AbstractLocation> connected = new ArrayList<>();
-        connected.addAll(roomList);
-        connected.addAll(stairsList);
+    public List<String> getFloors() {
+        return List.of(floorId);
+    }
+
+    @Override
+    public List<String> getConnectedLocations() {
+        final ArrayList<String> connected = new ArrayList<>();
+        connected.addAll(connectedRooms);
+        connected.addAll(connectedStairs);
         connected.addAll(connectedCorridors);
         return connected;
     }

@@ -11,6 +11,7 @@ public class NavigationOutputData {
 
     /**
      * Constructor for the NavigationOutputData.
+     * @param pathLocations A list of locations in the path
      */
     public NavigationOutputData(List<MapLocation> pathLocations) {
         this.pathLocations = pathLocations;
@@ -18,19 +19,21 @@ public class NavigationOutputData {
 
     /**
      * Return a list of the ids of the locations in the path.
+     * @return a list ids
      */
-    public List<String> getPathIDs() {
-        List<String> pathIDs = new ArrayList<>();
+    public List<String> getPathIds() {
+        final List<String> pathIds = new ArrayList<>();
         for (MapLocation location : pathLocations) {
-            pathIDs.add(location.getLocationID());
+            pathIds.add(location.getLocationID());
         }
-        return pathIDs;
+        return pathIds;
     }
 
     /**
      * Return the path as a list of MapLocation objects.
+     * @return a list of MapLocations
      */
-    public List<MapLocation> getLocation(String id) {
+    public List<MapLocation> getLocation() {
         return List.copyOf(pathLocations);
     }
 }

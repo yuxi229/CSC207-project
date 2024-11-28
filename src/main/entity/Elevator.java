@@ -6,25 +6,25 @@ import java.util.List;
  * Implementation of Elevator.
  */
 public class Elevator extends AbstractLocation {
-    private final List<Corridor> connectedCorridors;
+    private final List<String> connectedCorridors;
+    private final List<String> connectedFloors;
     private final double length;
 
-    // Constructor
-
-    public Elevator(String id, List<Corridor> connectedCorridors,
-                    double length) {
+    public Elevator(String id, List<String> connectedCorridors,
+                    List<String> connectedFloors, double length) {
         super(id);
         this.connectedCorridors = connectedCorridors;
+        this.connectedFloors = connectedFloors;
         this.length = length;
     }
 
     @Override
-    public List<Floor> getFloors() {
-        return List.of();
+    public List<String> getFloors() {
+        return List.copyOf(connectedFloors);
     }
 
     @Override
-    public List<AbstractLocation> getConnectedLocations() {
+    public List<String> getConnectedLocations() {
         return List.copyOf(connectedCorridors);
     }
 

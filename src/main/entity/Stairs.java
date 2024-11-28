@@ -8,72 +8,52 @@ import java.util.List;
  */
 
 public class Stairs extends AbstractLocation {
-    private Floor lowerFloor;
-    private Floor upperFloor;
-    private Corridor lowerCorridor;
-    private Corridor upperCorridor;
-    private double length;
+    private final String lowerFloorId;
+    private final String upperFloorId;
+    private final String lowerCorridorId;
+    private final String upperCorridorId;
+    private final double length;
 
-    public Stairs(String id, Floor lowerFloor, Floor upperFloor, Corridor lowerCorridor,
-                  Corridor upperCorridor, double length) {
+    public Stairs(String id, String lowerFloorId, String upperFloorId, String lowerCorridorId,
+                  String upperCorridorId, double length) {
         super(id);
-        this.lowerFloor = lowerFloor;
-        this.upperFloor = upperFloor;
-        this.lowerCorridor = lowerCorridor;
-        this.upperCorridor = upperCorridor;
+        this.lowerFloorId = lowerFloorId;
+        this.upperFloorId = upperFloorId;
+        this.lowerCorridorId = lowerCorridorId;
+        this.upperCorridorId = upperCorridorId;
         this.length = length;
     }
 
     @Override
-    public List<Floor> getFloors() {
-        return List.of(lowerFloor, upperFloor);
+    public List<String> getFloors() {
+        return List.of(lowerFloorId, upperFloorId);
     }
 
     @Override
-    public List<AbstractLocation> getConnectedLocations() {
-        final ArrayList<AbstractLocation> connected = new ArrayList<>();
-        connected.add(lowerCorridor);
-        connected.add(upperCorridor);
+    public List<String> getConnectedLocations() {
+        final ArrayList<String> connected = new ArrayList<>();
+        connected.add(lowerCorridorId);
+        connected.add(upperCorridorId);
         return connected;
     }
 
-    public Floor getLowerFloor() {
-        return lowerFloor;
+    public String getLowerFloorId() {
+        return lowerFloorId;
     }
 
-    public void setLowerFloor(Floor lowerFloor) {
-        this.lowerFloor = lowerFloor;
+    public String getUpperFloorId() {
+        return upperFloorId;
     }
 
-    public Floor getUpperFloor() {
-        return upperFloor;
+    public String getLowerCorridorId() {
+        return lowerCorridorId;
     }
 
-    public void setUpperFloor(Floor upperFloor) {
-        this.upperFloor = upperFloor;
-    }
-
-    public Corridor getLowerCorridor() {
-        return lowerCorridor;
-    }
-
-    public void setLowerCorridor(Corridor lowerCorridor) {
-        this.lowerCorridor = lowerCorridor;
-    }
-
-    public Corridor getUpperCorridor() {
-        return upperCorridor;
-    }
-
-    public void setUpperCorridor(Corridor upperCorridor) {
-        this.upperCorridor = upperCorridor;
+    public String getUpperCorridorId() {
+        return upperCorridorId;
     }
 
     public double getLength() {
         return length;
-    }
-
-    public void setLength(double length) {
-        this.length = length;
     }
 }

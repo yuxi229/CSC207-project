@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import entity.*;
-import use_case.LocationDataAccessInterface;
+import entity.AbstractLocation;
+import entity.Corridor;
+import entity.Floor;
+import entity.Room;
+import entity.Stairs;
 import use_case.navigation.MapLocation;
 
 /**
@@ -21,9 +24,10 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
     public InMemoryLocationDao() {
     }
 
-    public InMemoryLocationDao(List<AbstractLocation> locations, List<MapLocation> mapLocations) {
+    public InMemoryLocationDao(List<AbstractLocation> locations, List<MapLocation> mapLocations, List<Floor> floors) {
         loadLocations(locations);
         loadMapLocations(mapLocations);
+        loadFloors(floors);
     }
 
     private void loadLocations(List<AbstractLocation> locations) {
@@ -35,12 +39,6 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
             if (location instanceof Room) {
                 roomCodeToRoom.put(((Room) location).getRoomCode(), (Room) location);
             }
-            // Add floors to floorIdToFloor
-            for (Floor floor : location.getFloors()) {
-                if (!floorIdToFloor.containsKey(floor.getFloorId())) {
-                    floorIdToFloor.put(floor.getFloorId(), floor);
-                }
-            }
         }
     }
 
@@ -50,6 +48,12 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
                 mapLocationLookup.put(mapLocation.getLocationID(), new HashMap<>());
             }
             mapLocationLookup.get(mapLocation.getLocationID()).put(mapLocation.getFloorID(), mapLocation);
+        }
+    }
+
+    private void loadFloors(List<Floor> floors) {
+        for (Floor floor : floors) {
+            floorIdToFloor.put(floor.getFloorId(), floor);
         }
     }
 
@@ -80,11 +84,12 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
 
     @Override
     public Stairs getStair(String id) {
-        Stairs result;
+        final Stairs result;
         if (locationMap.containsKey(id) && locationMap.get(id) instanceof Stairs) {
             result = (Stairs) locationMap.get(id);
-        } else {
-            //TODO: Raise an appropriate Error
+        }
+        else {
+            // TODO: Raise an appropriate Error
             result = null;
         }
         return result;
@@ -92,11 +97,12 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
 
     @Override
     public Corridor getCorridor(String id) {
-        Corridor result;
+        final Corridor result;
         if (locationMap.containsKey(id) && locationMap.get(id) instanceof Corridor) {
             result = (Corridor) locationMap.get(id);
-        } else {
-            //TODO: Raise an appropriate Error
+        }
+        else {
+            // TODO: Raise an appropriate Error
             result = null;
         }
         return result;

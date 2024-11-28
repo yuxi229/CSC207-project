@@ -1,18 +1,18 @@
 package use_case.navigation;
 
-import use_case.LocationDataAccessInterface;
+import data_access.LocationDataAccessInterface;
 
 /**
  * The Navigation Interactor.
  */
 
 public class NavigationInteractor implements NavigationInputBoundary {
-    private final LocationDataAccessInterface locationDAO;
+    private final LocationDataAccessInterface locationDao;
     private final NavigationOutputBoundary naviPresenter;
 
-    public NavigationInteractor(LocationDataAccessInterface locationDAO,
+    public NavigationInteractor(LocationDataAccessInterface locationDao,
                                 NavigationOutputBoundary naviPresenter) {
-        this.locationDAO = locationDAO;
+        this.locationDao = locationDao;
         this.naviPresenter = naviPresenter;
     }
 
@@ -22,17 +22,18 @@ public class NavigationInteractor implements NavigationInputBoundary {
         final String destinationRoomCode = inputData.getDestinationRoomCode();
 
         // Check if the rooms exist
-        if (!locationDAO.roomExists(departureRoomCode)) {
+        if (!locationDao.roomExists(departureRoomCode)) {
             naviPresenter.prepareFailView(departureRoomCode + ": Departure room does not exist.");
         }
-        else if (!locationDAO.roomExists(destinationRoomCode)) {
+        else if (!locationDao.roomExists(destinationRoomCode)) {
             naviPresenter.prepareFailView(destinationRoomCode + ": Destination room does not exist.");
         }
 
         // If both rooms exist, find the shortest path between them
         else {
-            PathFinder pathFinder = new GraphPathFinder(locationDAO); //TODO: Discuss pre-loading this data somewhere
-            NavigationOutputData output = new NavigationOutputData(
+            // TODO: Discuss pre-loading this data somewhere
+            final PathFinder pathFinder = new GraphPathFinder(locationDao);
+            final NavigationOutputData output = new NavigationOutputData(
                     pathFinder.getPath(departureRoomCode, destinationRoomCode));
             naviPresenter.prepareSuccessView(output);
         }

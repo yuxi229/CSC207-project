@@ -2,7 +2,7 @@
 //
 //import entity.Room;
 //import entity.RoomFactory;
-//import use_case.LocationDataAccessInterface;
+//import data_access.LocationDataAccessInterface;
 //
 ///**
 // * The DAO for room data.
