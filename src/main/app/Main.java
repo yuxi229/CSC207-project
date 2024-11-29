@@ -2,6 +2,7 @@ package app;
 
 import javax.swing.JFrame;
 
+import api_infrastructure.LoadApiDataFacade;
 import data_access.LocationDataAccess;
 import data_access.MapLocationDataAccess;
 

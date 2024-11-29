@@ -1,8 +1,5 @@
-package app;
+package api_infrastructure;
 
-import api_infrastructure.APIClient;
-import api_infrastructure.APIClientImpl;
-import api_infrastructure.EntityParser;
 import data_access.InMemoryLocationDao;
 import data_access.LocationDaoBuilder;
 import data_access.LocationDataAccess;
