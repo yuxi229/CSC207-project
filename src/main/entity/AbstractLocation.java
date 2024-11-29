@@ -5,11 +5,15 @@ import java.util.List;
 /**
  * The representation of a location in our program.
  */
-public abstract class AbstractLocation {
+public abstract class AbstractLocation implements Location {
     private final String id;
+    private final List<String> connectedLocations;
+    private final int size;
 
-    public AbstractLocation(String id) {
+    public AbstractLocation(String id, List<String> connectedLocations, int size) {
         this.id = id;
+        this.connectedLocations = connectedLocations;
+        this.size = size;
     }
 
     public String getId() {
@@ -17,14 +21,14 @@ public abstract class AbstractLocation {
     }
 
     /**
-     * Gets the floors this location is on.
-     * @return Returns a list of floor ids of floors this location is on.
-     */
-    public abstract List<String> getFloors();
-
-    /**
      * Gets the locations connected to this location.
      * @return a list of ids of the locations connected to this location.
      */
-    public abstract List<String> getConnectedLocations();
+    public List<String> getConnectedLocations() {
+        return List.copyOf(connectedLocations);
+    }
+
+    public int getSize() {
+        return size;
+    }
 }

@@ -1,23 +1,26 @@
 package entity;
 
+import java.util.List;
+
 /**
  * Factory for creating Stairs.
  */
 public class StairsFactory {
     /**
-     * Creates a new Room.
+     * Creates a new Stairs object.
      *
-     * @param id the id of the new room
-     * @param lowerFloor the id of the lower floor the stairs connect to.
-     * @param upperFloor the id of the upper floor the stairs connect to.
-     * @param lowerCorridor the id of the corridor on the lower floor the stairs connect to.
-     * @param upperCorridor the id of the corridor on the upper floor the stairs connect to.
-     * @param length the length of the stairs.
-     * @return the new room
+     * @param id           the unique identifier of the stairs
+     * @param lowerFloor   the floor number of the lower end of the stairs
+     * @param upperFloor   the floor number of the upper end of the stairs
+     * @param lowerCorridor the unique identifier of the corridor at the lower end of the stairs
+     * @param upperCorridor the unique identifier of the corridor at the upper end of the stairs
+     * @param size         the size of the stairs
      */
-    public Stairs createStairs(String id, String lowerFloor, String upperFloor, String lowerCorridor,
-                               String upperCorridor, double length) {
+    public Stairs createStairs(String id, int lowerFloor, int upperFloor, String lowerCorridor,
+                               String upperCorridor, int size) {
 
-        return new Stairs(id, lowerFloor, upperFloor, lowerCorridor, upperCorridor, length);
+        final List<String> connected = List.of(lowerCorridor, upperCorridor);
+        final List<Integer> floors = List.of(lowerFloor, upperFloor);
+        return new Stairs(id, size, connected, floors);
     }
 }

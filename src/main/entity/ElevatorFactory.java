@@ -6,17 +6,14 @@ import java.util.List;
  * Factory for creating Elevators.
  */
 public class ElevatorFactory {
-
     /**
      * Creates a new Elevator.
-     * @param id the id of the Elevator
-     * @param corridorList a list of ids of the Corridors connected to the Elevator
-     * @param floorsList a list of ids of the floors reached by this Elevator
-     * @param length the length of the Elevator
-     * @return the new Elevator
+     * @param id the id of the elevator
+     * @param connected the list of connected locations
+     * @param floors the list of floors the elevator is on
+     * @param size the size of the elevator
      */
-    public AbstractLocation createElevator(String id, List<String> corridorList, List<String> floorsList,
-                                           double length) {
-        return new Elevator(id, corridorList, floorsList, length);
+    public Elevator createElevator(String id, List<String> connected, List<Integer> floors, int size) {
+        return new Elevator(id, connected, floors, size);
     }
 }
