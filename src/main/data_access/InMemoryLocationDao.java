@@ -16,7 +16,8 @@ import use_case.navigation.MapLocation;
  * In-memory implementation of the DAO for storing navigation data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuilder {
+public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuilder, MapLocationDataAccess,
+        MapLocationDaoBuilder {
     private final Map<String, Location> locationMap = new HashMap<>();
     private final Map<String, Map<Integer, MapLocation>> mapLocationLookup = new HashMap<>();
     private final Set<Integer> floorIds = new HashSet<>();

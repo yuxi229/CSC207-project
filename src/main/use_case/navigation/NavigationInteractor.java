@@ -5,14 +5,15 @@ import data_access.LocationDataAccess;
 /**
  * The Navigation Interactor.
  */
-
 public class NavigationInteractor implements NavigationInputBoundary {
     private final LocationDataAccess locationDao;
+    private final PathFinder pathFinder;
     private final NavigationOutputBoundary naviPresenter;
 
-    public NavigationInteractor(LocationDataAccess locationDao,
+    public NavigationInteractor(LocationDataAccess locationDao, PathFinder pathFinder,
                                 NavigationOutputBoundary naviPresenter) {
         this.locationDao = locationDao;
+        this.pathFinder = pathFinder;
         this.naviPresenter = naviPresenter;
     }
 
@@ -31,8 +32,6 @@ public class NavigationInteractor implements NavigationInputBoundary {
 
         // If both rooms exist, find the shortest path between them
         else {
-            // TODO: Discuss pre-loading this data somewhere
-            final PathFinder pathFinder = new GraphPathFinder(locationDao);
             final NavigationOutputData output = new NavigationOutputData(
                     pathFinder.getPath(departureRoomCode, destinationRoomCode));
             naviPresenter.prepareSuccessView(output);

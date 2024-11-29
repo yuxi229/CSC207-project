@@ -7,7 +7,6 @@ import entity.Corridor;
 import entity.Location;
 import entity.Room;
 import entity.Stairs;
-import use_case.navigation.MapLocation;
 
 /**
  * The Navigation Data Access Use Case.
@@ -78,12 +77,4 @@ public interface LocationDataAccess {
      * @return a set of locations on the given floor
      */
     Set<Location> getLocations(int floor);
-
-    /**
-     * Returns the map location of the location with the given id and on the given floor.
-     * @param id the id of the location
-     * @param floor the id of the floor
-     * @return a MapLocation object representing the location.
-     */
-    MapLocation getMapLocation(String id, int floor);
 }

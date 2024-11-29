@@ -2,6 +2,7 @@ package use_case.navigation;
 
 import java.util.List;
 
+import data_access.MapLocationDataAccess;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -9,7 +10,6 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 
 import data_access.LocationDataAccess;
 import entity.Location;
-import entity.MultiFloorLocation;
 import entity.Room;
 
 /**
@@ -19,7 +19,8 @@ public class GraphPathFinder implements PathFinder {
     private static final double DEFAULT_WEIGHT = 1.0;
     private final SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map =
             new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
-    private LocationDataAccess database;
+    private LocationDataAccess locationDao;
+    private MapLocationDataAccess mapLocationDao;
 
     /**
      * Default constructor. Initializes the pathfinder with no data.
@@ -29,11 +30,12 @@ public class GraphPathFinder implements PathFinder {
 
     /**
      * Constructor that initializes the pathfinder with the given data.
-     * @param locationDao the data access object to use
+     * @param locationDao the data access object to use for locations
+     * @param mapLocationDao the map location data access object to use for map locations
      */
-    public GraphPathFinder(LocationDataAccess locationDao) {
-        this.database = locationDao;
-        loadData(database);
+    public GraphPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
+        this.locationDao = locationDao;
+        this.mapLocationDao = mapLocationDao;
     }
 
     /**
@@ -42,8 +44,8 @@ public class GraphPathFinder implements PathFinder {
      */
     @Override
     public void loadData(LocationDataAccess inMemoryDao) {
-        database = inMemoryDao;
-        for (int floor: database.getFloorIds()) {
+        locationDao = inMemoryDao;
+        for (int floor: locationDao.getFloorIds()) {
             buildFloor(floor);
         }
         linkFloors();
@@ -55,13 +57,13 @@ public class GraphPathFinder implements PathFinder {
      */
     private void buildFloor(int floor) {
         // Loop through all the locations on the floor
-        for (Location location1 : database.getLocations(floor)) {
+        for (Location location1 : locationDao.getLocations(floor)) {
             final String location1Id = location1.getId();
-            final MapLocation mapLocation1 = database.getMapLocation(location1Id, floor);
+            final MapLocation mapLocation1 = mapLocationDao.getMapLocation(location1Id, floor);
 
             // Link the location to all the locations it is connected to
             for (String location2Id : location1.getConnectedLocations()) {
-                final MapLocation mapLocation2 = database.getMapLocation(location2Id, floor);
+                final MapLocation mapLocation2 = mapLocationDao.getMapLocation(location2Id, floor);
                 linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2Id));
             }
         }
@@ -71,14 +73,14 @@ public class GraphPathFinder implements PathFinder {
      * Go through all the locations that span multiple floors and link them together.
      */
     private void linkFloors() {
-        for (Location location : database.getLocations()) {
+        for (Location location : locationDao.getLocations()) {
             final List<Integer> floorsConnected = location.getFloors();
             for (int floor1Id : floorsConnected) {
                 for (int floor2Id : floorsConnected) {
                     if (floor1Id != floor2Id) {
-                        final MapLocation mapLocation1 = database
+                        final MapLocation mapLocation1 = mapLocationDao
                                 .getMapLocation(location.getId(), floor1Id);
-                        final MapLocation mapLocation2 = database
+                        final MapLocation mapLocation2 = mapLocationDao
                                 .getMapLocation(location.getId(), floor2Id);
                         linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
                     }
@@ -113,8 +115,8 @@ public class GraphPathFinder implements PathFinder {
     }
 
     private MapLocation roomCodeToMapLocation(String roomCode) {
-        final Room room = database.getRoom(roomCode);
-        return database.getMapLocation(room.getId(), room.getFloor());
+        final Room room = locationDao.getRoom(roomCode);
+        return mapLocationDao.getMapLocation(room.getId(), room.getFloor());
     }
 
     /**
