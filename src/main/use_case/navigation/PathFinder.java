@@ -3,6 +3,7 @@ package use_case.navigation;
 import java.util.List;
 
 import data_access.LocationDataAccess;
+import use_case.navigation.MapLocation.MapLocation;
 
 /**
  * A pathfinder that can find the shortest path between two rooms.

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * A factory class for creating locations.
  */
-public class LocationFactory {
+public interface LocationFactory {
     /**
      * Creates a new Corridor.
      * @param id the id of the new corridor
@@ -15,7 +15,7 @@ public class LocationFactory {
      * @param length the length of the new corridor
      * @return the new corridor.
      */
-    public static Corridor create(String id, List<String> connected, int size, int floor, double length) {
+    static Corridor create(String id, List<String> connected, int floor, int size, double length) {
         return new Corridor(id, connected, size, floor, length);
     }
 
@@ -27,7 +27,7 @@ public class LocationFactory {
      * @param size the size of the elevator
      * @return the new elevator
      */
-    public static Elevator create(String id, List<String> connected, List<Integer> floors, int size) {
+    static Elevator create(String id, List<String> connected, List<Integer> floors, int size) {
         return new Elevator(id, connected, floors, size);
     }
 
@@ -40,7 +40,7 @@ public class LocationFactory {
      * @param isRestricted whether the room is restricted
      * @return the new room
      */
-    public static Room create(String id, List<String> connected, int floor, int size, boolean isRestricted) {
+    static Room create(String id, List<String> connected, int floor, int size, boolean isRestricted) {
         return new Room(id, connected, floor, size, isRestricted);
     }
 
@@ -54,7 +54,7 @@ public class LocationFactory {
      * @param size         the size of the stairs
      * @return a new Stairs object
      */
-    public static Stairs create(String id, int lowerFloor, int upperFloor, String lowerCorridor, String upperCorridor,
+    static Stairs create(String id, int lowerFloor, int upperFloor, String lowerCorridor, String upperCorridor,
                          int size) {
         final List<String> connected = List.of(lowerCorridor, upperCorridor);
         final List<Integer> floors = List.of(lowerFloor, upperFloor);
@@ -70,7 +70,7 @@ public class LocationFactory {
      * @param gender the gender identifier of the washroom
      * @return a new Washroom object
      */
-    public static Washroom create(String id, List<String> connected, int size, int floor, String gender) {
+    static Washroom create(String id, List<String> connected, int floor, int size, String gender) {
         return new Washroom(id, connected, size, floor, gender);
     }
 }

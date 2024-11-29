@@ -1,4 +1,4 @@
-package use_case.navigation;
+package use_case.navigation.MapLocation;
 
 /**
  * Represents a location on a map.

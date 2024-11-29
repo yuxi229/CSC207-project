@@ -10,7 +10,7 @@ import entity.Corridor;
 import entity.Location;
 import entity.Room;
 import entity.Stairs;
-import use_case.navigation.MapLocation;
+import use_case.navigation.MapLocation.MapLocation;
 
 /**
  * In-memory implementation of the DAO for storing navigation data. This implementation does
@@ -115,27 +115,26 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     }
 
     @Override
-    public boolean addMapLocation(Location location, MapLocation mapLocation) {
-        final boolean result = false;
-        if (location.getId().equals(mapLocation.getLocationID())) {
-            mapLocationLookup.put(location.getId(), Map.of(mapLocation.getFloorID(), mapLocation));
-            mapLocations.add(mapLocation);
-            floorIds.add(mapLocation.getFloorID());
-        }
-        return result;
-    }
-
-    @Override
-    public boolean addMapLocations(Set<MapLocation> newMapLocations) {
-        boolean result = false;
-        for (MapLocation mapLocation : newMapLocations) {
-            result = addMapLocation(locationMap.get(mapLocation.getLocationID()), mapLocation);
-        }
-        return result;
-    }
-
-    @Override
     public LocationDataAccess createDataAccessObject() {
-        return (LocationDataAccess) this;
+        return this;
+    }
+
+    @Override
+    public void addMapLocation(MapLocation mapLocation) {
+        mapLocationLookup.put(mapLocation.getLocationID(), Map.of(mapLocation.getFloorID(), mapLocation));
+        mapLocations.add(mapLocation);
+        floorIds.add(mapLocation.getFloorID());
+    }
+
+    @Override
+    public void addMapLocations(Set<MapLocation> newMapLocations) {
+        for (MapLocation mapLocation : newMapLocations) {
+            addMapLocation(mapLocation);
+        }
+    }
+
+    @Override
+    public MapLocationDataAccess createMapLocationDao() {
+        return this;
     }
 }
