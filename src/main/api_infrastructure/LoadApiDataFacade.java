@@ -19,10 +19,11 @@ public class LoadApiDataFacade {
     public static void loadDataIntoMemory() {
         APIClient apiClient = null;
         try {
-            apiClient = fetchData();
+//             apiClient = fetchApiData();
+            apiClient = fetchFakeData();
         }
         catch (Exception exception) {
-            // TODO: Catch appropriate exception and handle it.
+            // TODO: Throw/catch appropriate exception and handle it.
             printFailureMessageToConsole();
         }
         buildEntityParser(apiClient);
@@ -33,10 +34,18 @@ public class LoadApiDataFacade {
      * Fetches data from the API and returns an APIClient object.
      * @return APIClient object with data fetched from the API.
      */
-    public static APIClient fetchData() {
+    public static APIClient fetchApiData() {
         final String apiBaseUrl = "https://be2e-138-51-70-251.ngrok-free.app/get-dictionary";
         printSuccessMessageToConsole();
         return new APIClientImpl(apiBaseUrl);
+    }
+
+    /**
+     * Fetches fake data for testing purposes.
+     * @return APIClient object with fake data.
+     */
+    public static APIClient fetchFakeData() {
+        return new FakeApiClient();
     }
 
     private static void buildEntityParser(APIClient apiClient) {
