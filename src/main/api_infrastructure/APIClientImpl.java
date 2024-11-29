@@ -1,6 +1,5 @@
-package infrastructure;
+package api_infrastructure;
 
-import interfaces.APIClient;
 import com.google.gson.Gson;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

@@ -1,9 +1,9 @@
-package interfaces;
+package api_infrastructure;
 
 import java.util.Map;
 
 /**
- * Interface for interacting with the building data API.
+ * Interface xfor interacting with the building data API.
  */
 public interface APIClient {
     Map<String, Object> fetchRooms();
