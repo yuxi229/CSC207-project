@@ -13,11 +13,15 @@ import use_case.navigation.maplocation.ImageMapLocationFactory;
 public class LoadApiDataFacade {
     private static EntityParser entityParser;
 
+    /**
+     * Loads data from the API into memory and handles any exceptions that occur.
+     */
     public static void loadDataIntoMemory() {
         APIClient apiClient = null;
         try {
             apiClient = fetchData();
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             // TODO: Catch appropriate exception and handle it.
             printFailureMessageToConsole();
         }

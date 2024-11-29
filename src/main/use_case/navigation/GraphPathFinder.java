@@ -2,13 +2,13 @@ package use_case.navigation;
 
 import java.util.List;
 
-import data_access.MapLocationDataAccess;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import data_access.LocationDataAccess;
+import data_access.MapLocationDataAccess;
 import entity.Location;
 import entity.Room;
 import use_case.navigation.maplocation.MapLocation;

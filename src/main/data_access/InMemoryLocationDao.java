@@ -121,7 +121,6 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     @Override
     public void addMapLocation(MapLocation mapLocation) {
         mapLocationLookup.put(mapLocation.getLocationID(), Map.of(mapLocation.getFloorID(), mapLocation));
-        mapLocations.add(mapLocation);
         floorIds.add(mapLocation.getFloorID());
     }
 
