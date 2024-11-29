@@ -11,7 +11,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import data_access.LocationDataAccess;
 import entity.Location;
 import entity.Room;
-import use_case.navigation.MapLocation.MapLocation;
+import use_case.navigation.maplocation.MapLocation;
 
 /**
  * A class that finds the shortest path between two locations on the map.

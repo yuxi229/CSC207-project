@@ -8,7 +8,7 @@ import data_access.LocationDataAccess;
 import data_access.MapLocationDaoBuilder;
 import data_access.MapLocationDataAccess;
 import entity.LocationFactory;
-import use_case.navigation.MapLocation.MapLocationFactory;
+import use_case.navigation.maplocation.MapLocationFactory;
 
 /**
  * Utility to parse raw API data into a LocationDataAccess object.
@@ -130,6 +130,7 @@ public class EntityParser {
     }
 
     private void parseValves() {
+        // TODO: Discuss what to do with Valves
         final Map<String, Object> rawValves = apiClient.fetchValves();
         for (Map.Entry<String, Object> entry : rawValves.entrySet()) {
             final String id = entry.getKey();

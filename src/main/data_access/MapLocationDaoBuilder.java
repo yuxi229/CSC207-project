@@ -2,7 +2,7 @@ package data_access;
 
 import java.util.Set;
 
-import use_case.navigation.MapLocation.MapLocation;
+import use_case.navigation.maplocation.MapLocation;
 
 /**
  * Interface for creating MapLocationDataAccessInterface objects.

@@ -1,4 +1,4 @@
-package use_case.navigation.MapLocation;
+package use_case.navigation.maplocation;
 
 /**
  * A class that represents a location on the map.

@@ -5,7 +5,7 @@ import data_access.LocationDaoBuilder;
 import data_access.LocationDataAccess;
 import data_access.MapLocationDaoBuilder;
 import data_access.MapLocationDataAccess;
-import use_case.navigation.MapLocation.ImageMapLocationFactory;
+import use_case.navigation.maplocation.ImageMapLocationFactory;
 
 /**
  * Facade object representing the subsystem of loading location data from the API.
@@ -59,10 +59,10 @@ public class LoadApiDataFacade {
     }
 
     private static void printSuccessMessageToConsole() {
-
+        System.out.println("Data loaded successfully.");
     }
 
     private static void printFailureMessageToConsole() {
-
+        System.out.println("Failed to load data from the API.");
     }
 }

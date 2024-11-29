@@ -3,7 +3,7 @@ package api_infrastructure;
 import java.util.Map;
 
 /**
- * Interface xfor interacting with the building data API.
+ * Interface for interacting with the building data API.
  */
 public interface APIClient {
     Map<String, Object> fetchRooms();

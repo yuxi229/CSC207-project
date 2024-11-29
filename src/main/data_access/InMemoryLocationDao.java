@@ -10,7 +10,7 @@ import entity.Corridor;
 import entity.Location;
 import entity.Room;
 import entity.Stairs;
-import use_case.navigation.MapLocation.MapLocation;
+import use_case.navigation.maplocation.MapLocation;
 
 /**
  * In-memory implementation of the DAO for storing navigation data. This implementation does
@@ -22,7 +22,6 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     private final Map<String, Map<Integer, MapLocation>> mapLocationLookup = new HashMap<>();
     private final Set<Integer> floorIds = new HashSet<>();
     private final Set<Location> locations = new HashSet<>();
-    private final Set<MapLocation> mapLocations = new HashSet<>();
 
     public InMemoryLocationDao() {
     }

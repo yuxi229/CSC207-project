@@ -1,4 +1,4 @@
-package use_case.navigation.MapLocation;
+package use_case.navigation.maplocation;
 
 /**
  * Factory for creating MapLocation objects.

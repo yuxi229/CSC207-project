@@ -1,6 +1,6 @@
 package data_access;
 
-import use_case.navigation.MapLocation.MapLocation;
+import use_case.navigation.maplocation.MapLocation;
 
 /**
  * Data access object for map locations.
