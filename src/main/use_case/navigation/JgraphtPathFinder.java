@@ -16,7 +16,7 @@ import use_case.navigation.maplocation.MapLocation;
 /**
  * A class that finds the shortest path between two locations on the map.
  */
-public class GraphPathFinder implements PathFinder {
+public class JgraphtPathFinder implements PathFinder {
     private static final double DEFAULT_WEIGHT = 1.0;
     private final SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map =
             new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
@@ -26,7 +26,7 @@ public class GraphPathFinder implements PathFinder {
     /**
      * Default constructor. Initializes the pathfinder with no data.
      */
-    public GraphPathFinder() {
+    public JgraphtPathFinder() {
     }
 
     /**
@@ -34,7 +34,7 @@ public class GraphPathFinder implements PathFinder {
      * @param locationDao the data access object to use for locations
      * @param mapLocationDao the map location data access object to use for map locations
      */
-    public GraphPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
+    public JgraphtPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
         this.locationDao = locationDao;
         this.mapLocationDao = mapLocationDao;
     }
