@@ -7,9 +7,9 @@ public class ImageMapLocation implements MapLocation {
     private final String locationID;
     private final double x;
     private final double y;
-    private final String floorID;
+    private final int floorID;
 
-    public ImageMapLocation(String locationID, double imgX, double imgY, String floorID) {
+    public ImageMapLocation(String locationID, double imgX, double imgY, int floorID) {
         this.locationID = locationID;
         this.x = imgX;
         this.y = imgY;
@@ -32,7 +32,7 @@ public class ImageMapLocation implements MapLocation {
     }
 
     @Override
-    public String getFloorID() {
+    public int getFloorID() {
         return floorID;
     }
 
@@ -42,14 +42,14 @@ public class ImageMapLocation implements MapLocation {
         if (o instanceof ImageMapLocation) {
             final ImageMapLocation other = (ImageMapLocation) o;
             result = this.locationID.equals(other.locationID)
-                    && this.x == other.x && this.y == other.y && this.floorID.equals(other.floorID);
+                    && this.x == other.x && this.y == other.y && this.floorID == other.floorID;
         }
         return result;
     }
 
     @Override
     public int hashCode() {
-        final String toString = locationID + String.valueOf(x) + String.valueOf(y) + floorID;
+        final String toString = locationID + String.valueOf(x) + String.valueOf(y) + String.valueOf(floorID);
         return toString.hashCode();
     }
 }

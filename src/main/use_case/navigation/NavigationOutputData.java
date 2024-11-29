@@ -33,7 +33,7 @@ public class NavigationOutputData {
      * Return the path as a list of MapLocation objects.
      * @return a list of MapLocations
      */
-    public List<MapLocation> getLocation() {
+    public List<MapLocation> getLocations() {
         return List.copyOf(pathLocations);
     }
 }

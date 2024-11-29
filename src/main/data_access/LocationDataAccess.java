@@ -1,10 +1,10 @@
 package data_access;
 
 import java.util.List;
+import java.util.Set;
 
-import entity.AbstractLocation;
 import entity.Corridor;
-import entity.Floor;
+import entity.Location;
 import entity.Room;
 import entity.Stairs;
 import use_case.navigation.MapLocation;
@@ -12,7 +12,7 @@ import use_case.navigation.MapLocation;
 /**
  * The Navigation Data Access Use Case.
  */
-public interface LocationDataAccessInterface {
+public interface LocationDataAccess {
 
     /**
      * Checks if the given roomCode exists.
@@ -36,7 +36,7 @@ public interface LocationDataAccessInterface {
      * @param id the id to look up
      * @return the location with the given id
      */
-    AbstractLocation getLocation(String id);
+    Location getLocation(String id);
 
     /**
      * Returns the room with the given roomCode.
@@ -47,18 +47,11 @@ public interface LocationDataAccessInterface {
     Room getRoom(String roomCode);
 
     /**
-     * Returns the floor with the given id.
-     * @param id the id of the floor
-     * @return the floor with the given id
-     */
-    Floor getFloor(String id);
-
-    /**
      * Returns the stairs with the given id.
      * @param id the id of the stairs
      * @return the stairs with the given id
      */
-    Stairs getStair(String id);
+    Stairs getStairs(String id);
 
     /**
      * Returns the corridor with the given id.
@@ -68,22 +61,29 @@ public interface LocationDataAccessInterface {
     Corridor getCorridor(String id);
 
     /**
-     * Returns the list of floors in the data access object.
-     * @return a list of floors
+     * Returns a list of all floor ids in the data access object.
+     * @return a list of floor ids
      */
-    List<Floor> getFloors();
+    List<Integer> getFloorIds();
 
     /**
-     * Returns the list of locations in the data access object.
-     * @return a list of locations
+     * Returns a set of all locations in the data access object.
+     * @return a set of locations
      */
-    List<AbstractLocation> getLocations();
+    Set<Location> getLocations();
+
+    /**
+     * Returns a set of all locations on the given floor.
+     * @param floor the id of the floor
+     * @return a set of locations on the given floor
+     */
+    Set<Location> getLocations(int floor);
 
     /**
      * Returns the map location of the location with the given id and on the given floor.
      * @param id the id of the location
-     * @param floorID the id of the floor
+     * @param floor the id of the floor
      * @return a MapLocation object representing the location.
      */
-    MapLocation getMapLocation(String id, String floorID);
+    MapLocation getMapLocation(String id, int floor);
 }

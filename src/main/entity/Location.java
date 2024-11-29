@@ -13,8 +13,35 @@ public interface Location {
     String getId();
 
     /**
+     * Gets a list of the ids of the locations connected to this location.
+     * @return a list of the ids
+     */
+    List<String> getConnectedLocations();
+
+    /**
      * Gets the size of the location.
      * @return the size of the location.
      */
-    List<String> getConnectedLocations();
+    int getSize();
+
+    /**
+     * Gets a list of floors the location is on.
+     * @return a list of floors
+     */
+    List<Integer> getFloors();
+
+    /**
+     * Returns a unique integer (hash code) representing the location.
+     * @return the hash code
+     */
+    @Override
+    int hashCode();
+
+    /**
+     * Compares this location to another object.
+     * @param obj the object to compare to
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    boolean equals(Object obj);
 }

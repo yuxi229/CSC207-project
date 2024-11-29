@@ -31,4 +31,19 @@ public abstract class AbstractLocation implements Location {
     public int getSize() {
         return size;
     }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof AbstractLocation) {
+            // Two locations are equal if they have the same id.
+            result = id.equals(((AbstractLocation) obj).id);
+        }
+        return result;
+    }
 }

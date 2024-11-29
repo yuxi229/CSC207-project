@@ -1,16 +1,16 @@
 package use_case.navigation;
 
-import data_access.LocationDataAccessInterface;
+import data_access.LocationDataAccess;
 
 /**
  * The Navigation Interactor.
  */
 
 public class NavigationInteractor implements NavigationInputBoundary {
-    private final LocationDataAccessInterface locationDao;
+    private final LocationDataAccess locationDao;
     private final NavigationOutputBoundary naviPresenter;
 
-    public NavigationInteractor(LocationDataAccessInterface locationDao,
+    public NavigationInteractor(LocationDataAccess locationDao,
                                 NavigationOutputBoundary naviPresenter) {
         this.locationDao = locationDao;
         this.naviPresenter = naviPresenter;

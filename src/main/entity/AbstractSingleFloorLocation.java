@@ -16,4 +16,9 @@ public abstract class AbstractSingleFloorLocation extends AbstractLocation {
     public int getFloor() {
         return floor;
     }
+
+    @Override
+    public List<Integer> getFloors() {
+        return List.of(floor);
+    }
 }
