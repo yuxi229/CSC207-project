@@ -7,7 +7,7 @@ import use_case.navigation.maplocation.MapLocation;
 /**
  * A class that makes string instructions.
  */
-public interface InstructionMaker {
+public interface InstructionFactory {
 
     /**
      * Make written instructions from a list of map locations.
@@ -15,5 +15,5 @@ public interface InstructionMaker {
      * @param locations The list of map locations.
      * @return The written instructions.
      */
-    TextInstructions makeInstructions(List<MapLocation> locations);
+    BasicTextInstructions makeInstructions(List<MapLocation> locations);
 }
