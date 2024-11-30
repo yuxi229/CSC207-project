@@ -9,6 +9,19 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import interface_adapter.inputrooms.InputRoomsController;
+import interface_adapter.inputrooms.InputRoomsState;
+import interface_adapter.inputrooms.InputRoomsViewModel;
+
+
 public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final InputRoomsViewModel inputRoomsViewModel;
     private final JTextField departureRoomField = new JTextField(15);

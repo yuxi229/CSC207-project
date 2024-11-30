@@ -1,65 +1,34 @@
 package data_access;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import entity.AbstractLocation;
 import entity.Corridor;
-import entity.Floor;
+import entity.Location;
 import entity.Room;
 import entity.Stairs;
-import use_case.navigation.MapLocation;
+import use_case.navigation.maplocation.MapLocation;
 
 /**
  * In-memory implementation of the DAO for storing navigation data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryLocationDao implements LocationDataAccessInterface {
-    private final Map<String, AbstractLocation> locationMap = new HashMap<>();
-    private final Map<String, Room> roomCodeToRoom = new HashMap<>();
-    private final Map<String, Floor> floorIdToFloor = new HashMap<>();
-    private final Map<String, Map<String, MapLocation>> mapLocationLookup = new HashMap<>();
+public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuilder, MapLocationDataAccess,
+        MapLocationDaoBuilder {
+    private final Map<String, Location> locationMap = new HashMap<>();
+    private final Map<String, Map<Integer, MapLocation>> mapLocationLookup = new HashMap<>();
+    private final Set<Integer> floorIds = new HashSet<>();
+    private final Set<Location> locations = new HashSet<>();
 
     public InMemoryLocationDao() {
     }
 
-    public InMemoryLocationDao(List<AbstractLocation> locations, List<MapLocation> mapLocations, List<Floor> floors) {
-        loadLocations(locations);
-        loadMapLocations(mapLocations);
-        loadFloors(floors);
-    }
-
-    private void loadLocations(List<AbstractLocation> locations) {
-        for (AbstractLocation location : locations) {
-            // Add location to locationMap
-            locationMap.put(location.getId(), location);
-
-            // Add rooms to roomCodeToRoom
-            if (location instanceof Room) {
-                roomCodeToRoom.put(((Room) location).getRoomCode(), (Room) location);
-            }
-        }
-    }
-
-    private void loadMapLocations(List<MapLocation> mapLocations) {
-        for (MapLocation mapLocation : mapLocations) {
-            if (!mapLocationLookup.containsKey(mapLocation.getLocationID())) {
-                mapLocationLookup.put(mapLocation.getLocationID(), new HashMap<>());
-            }
-            mapLocationLookup.get(mapLocation.getLocationID()).put(mapLocation.getFloorID(), mapLocation);
-        }
-    }
-
-    private void loadFloors(List<Floor> floors) {
-        for (Floor floor : floors) {
-            floorIdToFloor.put(floor.getFloorId(), floor);
-        }
-    }
-
     @Override
     public boolean roomExists(String roomCode) {
-        return roomCodeToRoom.containsKey(roomCode);
+        return locationMap.containsKey(roomCode);
     }
 
     @Override
@@ -68,22 +37,25 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
     }
 
     @Override
-    public AbstractLocation getLocation(String id) {
+    public Location getLocation(String id) {
         return locationMap.get(id);
     }
 
     @Override
     public Room getRoom(String roomCode) {
-        return roomCodeToRoom.get(roomCode);
+        final Room result;
+        if (locationMap.containsKey(roomCode) && locationMap.get(roomCode) instanceof Room) {
+            result = (Room) locationMap.get(roomCode);
+        }
+        else {
+            // TODO: Raise an appropriate Error
+            result = null;
+        }
+        return result;
     }
 
     @Override
-    public Floor getFloor(String id) {
-        return floorIdToFloor.get(id);
-    }
-
-    @Override
-    public Stairs getStair(String id) {
+    public Stairs getStairs(String id) {
         final Stairs result;
         if (locationMap.containsKey(id) && locationMap.get(id) instanceof Stairs) {
             result = (Stairs) locationMap.get(id);
@@ -109,17 +81,58 @@ public class InMemoryLocationDao implements LocationDataAccessInterface {
     }
 
     @Override
-    public List<Floor> getFloors() {
-        return List.copyOf(floorIdToFloor.values());
+    public List<Integer> getFloorIds() {
+        return List.copyOf(floorIds);
     }
 
     @Override
-    public List<AbstractLocation> getLocations() {
-        return List.copyOf(locationMap.values());
+    public Set<Location> getLocations() {
+        return Set.copyOf(locations);
     }
 
     @Override
-    public MapLocation getMapLocation(String id, String floorID) {
-        return mapLocationLookup.get(id).get(floorID);
+    public Set<Location> getLocations(int floor) {
+        return Set.of();
+    }
+
+    @Override
+    public MapLocation getMapLocation(String id, int floor) {
+        return mapLocationLookup.get(id).get(floor);
+    }
+
+    @Override
+    public void addLocation(Location location) {
+        locationMap.put(location.getId(), location);
+        locations.add(location);
+    }
+
+    @Override
+    public void addLocations(Set<Location> newLocations) {
+        for (Location location : newLocations) {
+            addLocation(location);
+        }
+    }
+
+    @Override
+    public LocationDataAccess createDataAccessObject() {
+        return this;
+    }
+
+    @Override
+    public void addMapLocation(MapLocation mapLocation) {
+        mapLocationLookup.put(mapLocation.getLocationID(), Map.of(mapLocation.getFloorID(), mapLocation));
+        floorIds.add(mapLocation.getFloorID());
+    }
+
+    @Override
+    public void addMapLocations(Set<MapLocation> newMapLocations) {
+        for (MapLocation mapLocation : newMapLocations) {
+            addMapLocation(mapLocation);
+        }
+    }
+
+    @Override
+    public MapLocationDataAccess createMapLocationDao() {
+        return this;
     }
 }

@@ -3,6 +3,8 @@ package use_case.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
+import use_case.navigation.maplocation.MapLocation;
+
 /**
  * Output Data for the Navigation Use Case.
  */
@@ -33,7 +35,7 @@ public class NavigationOutputData {
      * Return the path as a list of MapLocation objects.
      * @return a list of MapLocations
      */
-    public List<MapLocation> getLocation() {
+    public List<MapLocation> getLocations() {
         return List.copyOf(pathLocations);
     }
 }

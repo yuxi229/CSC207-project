@@ -7,33 +7,36 @@ import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
-import data_access.LocationDataAccessInterface;
-import entity.AbstractLocation;
-import entity.Floor;
+import data_access.LocationDataAccess;
+import data_access.MapLocationDataAccess;
+import entity.Location;
 import entity.Room;
+import use_case.navigation.maplocation.MapLocation;
 
 /**
  * A class that finds the shortest path between two locations on the map.
  */
-public class GraphPathFinder implements PathFinder {
+public class JgraphtPathFinder implements PathFinder {
     private static final double DEFAULT_WEIGHT = 1.0;
     private final SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map =
             new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
-    private LocationDataAccessInterface database;
+    private LocationDataAccess locationDao;
+    private MapLocationDataAccess mapLocationDao;
 
     /**
      * Default constructor. Initializes the pathfinder with no data.
      */
-    public GraphPathFinder() {
+    public JgraphtPathFinder() {
     }
 
     /**
      * Constructor that initializes the pathfinder with the given data.
-     * @param locationDao the data access object to use
+     * @param locationDao the data access object to use for locations
+     * @param mapLocationDao the map location data access object to use for map locations
      */
-    public GraphPathFinder(LocationDataAccessInterface locationDao) {
-        this.database = locationDao;
-        loadData(database);
+    public JgraphtPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
+        this.locationDao = locationDao;
+        this.mapLocationDao = mapLocationDao;
     }
 
     /**
@@ -41,9 +44,9 @@ public class GraphPathFinder implements PathFinder {
      * @param inMemoryDao the data access object to use
      */
     @Override
-    public void loadData(LocationDataAccessInterface inMemoryDao) {
-        database = inMemoryDao;
-        for (Floor floor: database.getFloors()) {
+    public void loadData(LocationDataAccess inMemoryDao) {
+        locationDao = inMemoryDao;
+        for (int floor: locationDao.getFloorIds()) {
             buildFloor(floor);
         }
         linkFloors();
@@ -53,15 +56,15 @@ public class GraphPathFinder implements PathFinder {
      * Go through all the locations on the floor and link them together.
      * @param floor the floor to build the graph for
      */
-    private void buildFloor(Floor floor) {
+    private void buildFloor(int floor) {
         // Loop through all the locations on the floor
-        for (AbstractLocation location1 : floor.getLocationsList()) {
+        for (Location location1 : locationDao.getLocations(floor)) {
             final String location1Id = location1.getId();
-            final MapLocation mapLocation1 = database.getMapLocation(location1Id, floor.getFloorId());
+            final MapLocation mapLocation1 = mapLocationDao.getMapLocation(location1Id, floor);
 
             // Link the location to all the locations it is connected to
             for (String location2Id : location1.getConnectedLocations()) {
-                final MapLocation mapLocation2 = database.getMapLocation(location2Id, floor.getFloorId());
+                final MapLocation mapLocation2 = mapLocationDao.getMapLocation(location2Id, floor);
                 linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2Id));
             }
         }
@@ -71,19 +74,16 @@ public class GraphPathFinder implements PathFinder {
      * Go through all the locations that span multiple floors and link them together.
      */
     private void linkFloors() {
-        for (AbstractLocation location : database.getLocations()) {
-            final List<String> floorsConnected = location.getFloors();
-            // If the location is on multiple floors, link its map locations on the different floors
-            if (floorsConnected.size() > 1) {
-                for (String floor1Id : floorsConnected) {
-                    for (String floor2Id : floorsConnected) {
-                        if (!floor1Id.equals(floor2Id)) {
-                            final MapLocation mapLocation1 = database
-                                    .getMapLocation(location.getId(), floor1Id);
-                            final MapLocation mapLocation2 = database
-                                    .getMapLocation(location.getId(), floor2Id);
-                            linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
-                        }
+        for (Location location : locationDao.getLocations()) {
+            final List<Integer> floorsConnected = location.getFloors();
+            for (int floor1Id : floorsConnected) {
+                for (int floor2Id : floorsConnected) {
+                    if (floor1Id != floor2Id) {
+                        final MapLocation mapLocation1 = mapLocationDao
+                                .getMapLocation(location.getId(), floor1Id);
+                        final MapLocation mapLocation2 = mapLocationDao
+                                .getMapLocation(location.getId(), floor2Id);
+                        linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
                     }
                 }
             }
@@ -98,12 +98,8 @@ public class GraphPathFinder implements PathFinder {
      */
     private void linkLocations(MapLocation location1, MapLocation location2, Double weight) {
         // No duplicate vertices will be added because the vertices are stored in a set
-        if (!map.containsVertex(location1)) {
-            map.addVertex(location1);
-        }
-        else if (!map.containsVertex(location2)) {
-            map.addVertex(location2);
-        }
+        map.addVertex(location1);
+        map.addVertex(location2);
         final DefaultWeightedEdge edge = map.addEdge(location1, location2);
         map.setEdgeWeight(edge, weight);
     }
@@ -114,16 +110,14 @@ public class GraphPathFinder implements PathFinder {
      * @param location2 the second location
      * @return the weight between the two locations
      */
-    private double calculateWeight(AbstractLocation location1, String location2) {
+    private double calculateWeight(Location location1, String location2) {
         // TODO: Decide on weight strategy in meeting
         return DEFAULT_WEIGHT;
     }
 
     private MapLocation roomCodeToMapLocation(String roomCode) {
-        final Room room = database.getRoom(roomCode);
-        // Pick the first floor the room is on
-        final String floorID = room.getFloors().get(0);
-        return database.getMapLocation(room.getId(), floorID);
+        final Room room = locationDao.getRoom(roomCode);
+        return mapLocationDao.getMapLocation(room.getId(), room.getFloor());
     }
 
     /**
