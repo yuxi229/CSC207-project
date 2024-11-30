@@ -5,11 +5,11 @@ import entity.Location;
 /**
  * Pathfinder class that allow for filtering which locations to visit.
  */
-public class EdgeWeightFilterPathfinder extends JgraphtPathFinder implements EdgeWeightFilterStrategy {
+public class ClassNameFilteredPathfinder extends JgraphtPathFinder implements ClassNameFilterStrategy {
     public static final double DEFAULT_WEIGHT = 1.0;
     private ClassNameFilter filter;
 
-    public EdgeWeightFilterPathfinder(ClassNameFilter filter) {
+    public ClassNameFilteredPathfinder(ClassNameFilter filter) {
         setFilter(filter);
     }
 

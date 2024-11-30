@@ -1,6 +1,7 @@
 package use_case.navigation;
 
 import data_access.LocationDataAccess;
+import use_case.navigation.pathfinder.PathFinder;
 
 /**
  * The Navigation Interactor.
