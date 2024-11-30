@@ -10,5 +10,5 @@ public interface InstructionsOutputData {
      *
      * @return The instructions.
      */
-    BasicTextInstructions getInstructions();
+    TextInstructions getInstructions();
 }

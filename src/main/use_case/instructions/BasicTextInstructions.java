@@ -10,7 +10,7 @@ import use_case.navigation.maplocation.MapLocation;
 /**
  * A class that represents a set of text instructions.
  */
-public class BasicTextInstructions implements InstructionsOutputData, InstructionFactory {
+public class BasicTextInstructions implements InstructionsOutputData, TextInstructions {
     private final List<String> locationIds = new ArrayList<>();
     private final List<String> instructions = new ArrayList<>();
     private final Map<String, String> instructionLookup = new HashMap<>();
@@ -41,22 +41,19 @@ public class BasicTextInstructions implements InstructionsOutputData, Instructio
         return this;
     }
 
-    /**
-     * Get the list of location ids in order.
-     *
-     * @return The list of location ids in order.
-     */
+    @Override
     public List<String> getLocationList() {
         return List.copyOf(locationIds);
     }
 
-    /**
-     * Get the list of instructions in order.
-     *
-     * @return The list of instructions in order.
-     */
+    @Override
     public List<String> getInstructionList() {
         return List.copyOf(instructions);
+    }
+
+    @Override
+    public String getInstruction(String location1Id, String location2Id) {
+        return instructionLookup.get(location1Id + location2Id);
     }
 
     /**
@@ -69,17 +66,6 @@ public class BasicTextInstructions implements InstructionsOutputData, Instructio
      */
     public boolean instructionIsValid(String location1Id, String location2Id, String instruction) {
         return locationIds.isEmpty() || locationIds.get(locationIds.size() - 1).equals(location1Id);
-    }
-
-    /**
-     * Get the instruction for getting from location1 to location2. (Possibly only used in testing.)
-     *
-     * @param location1Id The ID of the first location.
-     * @param location2Id The ID of the second location.
-     * @return The instruction between the two locations.
-     */
-    public String getInstruction(String location1Id, String location2Id) {
-        return instructionLookup.get(location1Id + location2Id);
     }
 
     /**
