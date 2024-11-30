@@ -1,4 +1,4 @@
-package use_case.navigation;
+package use_case.navigation.pathfinder;
 
 import java.util.List;
 
@@ -53,6 +53,37 @@ public class JgraphtPathFinder implements PathFinder {
     }
 
     /**
+     * Returns the path from the start room to the end room as a list of ids.
+     * @param startRoomCode valid room code for starting room
+     * @param endRoomCode valid room code for ending room
+     * @return A list of MapLocation objects representing the path.
+     */
+    @Override
+    public List<MapLocation> getPath(String startRoomCode, String endRoomCode) {
+        // Use Dijkstra's algorithm to find the shortest path. Change algorithm if needed.
+        final DijkstraShortestPath<MapLocation, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(map);
+        final GraphPath<MapLocation, DefaultWeightedEdge> route =
+                dijkstraAlg.getPath(roomCodeToMapLocation(startRoomCode), roomCodeToMapLocation(endRoomCode));
+        return route.getVertexList();
+    }
+
+    /**
+     * Calculates the weight between two locations.
+     * @param location1 the first location
+     * @param location2 the second location
+     * @return the weight between the two locations
+     */
+    protected Double calculateWeight(Location location1, Location location2) {
+        // TODO: Decide on weight strategy in meeting
+        return DEFAULT_WEIGHT;
+    }
+
+    private MapLocation roomCodeToMapLocation(String roomCode) {
+        final Room room = locationDao.getRoom(roomCode);
+        return mapLocationDao.getMapLocation(room.getId(), room.getFloor());
+    }
+
+    /**
      * Go through all the locations on the floor and link them together.
      * @param floor the floor to build the graph for
      */
@@ -65,7 +96,8 @@ public class JgraphtPathFinder implements PathFinder {
             // Link the location to all the locations it is connected to
             for (String location2Id : location1.getConnectedLocations()) {
                 final MapLocation mapLocation2 = mapLocationDao.getMapLocation(location2Id, floor);
-                linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2Id));
+                final Location location2 = locationDao.getLocation(location2Id);
+                linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2));
             }
         }
     }
@@ -102,36 +134,5 @@ public class JgraphtPathFinder implements PathFinder {
         map.addVertex(location2);
         final DefaultWeightedEdge edge = map.addEdge(location1, location2);
         map.setEdgeWeight(edge, weight);
-    }
-
-    /**
-     * Calculates the weight between two locations.
-     * @param location1 the first location
-     * @param location2 the second location
-     * @return the weight between the two locations
-     */
-    private double calculateWeight(Location location1, String location2) {
-        // TODO: Decide on weight strategy in meeting
-        return DEFAULT_WEIGHT;
-    }
-
-    private MapLocation roomCodeToMapLocation(String roomCode) {
-        final Room room = locationDao.getRoom(roomCode);
-        return mapLocationDao.getMapLocation(room.getId(), room.getFloor());
-    }
-
-    /**
-     * Returns the path from the start room to the end room as a list of ids.
-     * @param startRoomCode valid room code for starting room
-     * @param endRoomCode valid room code for ending room
-     * @return A list of MapLocation objects representing the path.
-     */
-    @Override
-    public List<MapLocation> getPath(String startRoomCode, String endRoomCode) {
-        // Use Dijkstra's algorithm to find the shortest path. Change algorithm if needed.
-        final DijkstraShortestPath<MapLocation, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(map);
-        final GraphPath<MapLocation, DefaultWeightedEdge> route =
-                dijkstraAlg.getPath(roomCodeToMapLocation(startRoomCode), roomCodeToMapLocation(endRoomCode));
-        return route.getVertexList();
     }
 }

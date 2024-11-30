@@ -1,4 +1,4 @@
-package use_case.navigation;
+package use_case.navigation.pathfinder;
 
 import java.util.List;
 
