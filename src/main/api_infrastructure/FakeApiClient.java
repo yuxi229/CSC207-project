@@ -6,6 +6,10 @@ import java.util.Map;
  * Fake implementation of the APIClient interface for testing purposes.
  */
 public class FakeApiClient implements APIClient {
+    FakeApiClient() {
+
+    }
+
     @Override
     public Map<String, Object> fetchRooms() {
         return null;
