@@ -1,4 +1,4 @@
-package use_case.navigation;
+package use_case.navigation.pathfinder;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class JgraphtPathFinder implements PathFinder {
     /**
      * Default constructor. Initializes the pathfinder with no data.
      */
-    public JgraphtPathFinder() {
+    JgraphtPathFinder() {
     }
 
     /**
@@ -34,22 +34,51 @@ public class JgraphtPathFinder implements PathFinder {
      * @param locationDao the data access object to use for locations
      * @param mapLocationDao the map location data access object to use for map locations
      */
-    public JgraphtPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
-        this.locationDao = locationDao;
-        this.mapLocationDao = mapLocationDao;
+    JgraphtPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
+        loadData(locationDao, mapLocationDao);
     }
 
-    /**
-     * Initializes the pathfinder with the given data.
-     * @param inMemoryDao the data access object to use
-     */
     @Override
-    public void loadData(LocationDataAccess inMemoryDao) {
-        locationDao = inMemoryDao;
-        for (int floor: locationDao.getFloorIds()) {
+    public void loadData(LocationDataAccess entityDao, MapLocationDataAccess mapDao) {
+        this.locationDao = entityDao;
+        this.mapLocationDao = mapDao;
+        for (int floor: this.locationDao.getFloors()) {
             buildFloor(floor);
         }
         linkFloors();
+    }
+
+    /**
+     * Returns the path from the start room to the end room as a list of ids.
+     * @param startRoomCode valid room code for starting room
+     * @param endRoomCode valid room code for ending room
+     * @return A list of MapLocation objects representing the path.
+     */
+    @Override
+    public List<MapLocation> getPath(String startRoomCode, String endRoomCode) {
+        // Use Dijkstra's algorithm to find the shortest path. Change algorithm if needed.
+        final DijkstraShortestPath<MapLocation, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(map);
+        final GraphPath<MapLocation, DefaultWeightedEdge> route =
+                dijkstraAlg.getPath(roomCodeToMapLocation(startRoomCode), roomCodeToMapLocation(endRoomCode));
+        return route.getVertexList();
+    }
+
+    /**
+     * Calculates the weight between two locations.
+     * @param location1 the first location
+     * @param location2 the second location
+     * @return the weight between the two locations
+     */
+    protected Double calculateWeight(Location location1, Location location2) {
+        return DEFAULT_WEIGHT;
+    }
+
+    /**
+     * Returns the map used by the pathfinder, used only by subclasses.
+     * @return the map used by the pathfinder
+     */
+    protected SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> getMap() {
+        return map;
     }
 
     /**
@@ -61,11 +90,13 @@ public class JgraphtPathFinder implements PathFinder {
         for (Location location1 : locationDao.getLocations(floor)) {
             final String location1Id = location1.getId();
             final MapLocation mapLocation1 = mapLocationDao.getMapLocation(location1Id, floor);
-
             // Link the location to all the locations it is connected to
             for (String location2Id : location1.getConnectedLocations()) {
-                final MapLocation mapLocation2 = mapLocationDao.getMapLocation(location2Id, floor);
-                linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2Id));
+                final Location location2 = locationDao.getLocation(location2Id);
+                if (location2.getFloors().contains(floor)) {
+                    final MapLocation mapLocation2 = mapLocationDao.getMapLocation(location2Id, floor);
+                    linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2));
+                }
             }
         }
     }
@@ -83,7 +114,7 @@ public class JgraphtPathFinder implements PathFinder {
                                 .getMapLocation(location.getId(), floor1Id);
                         final MapLocation mapLocation2 = mapLocationDao
                                 .getMapLocation(location.getId(), floor2Id);
-                        linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
+                        linkLocations(mapLocation1, mapLocation2, calculateWeight(location, location));
                     }
                 }
             }
@@ -100,38 +131,21 @@ public class JgraphtPathFinder implements PathFinder {
         // No duplicate vertices will be added because the vertices are stored in a set
         map.addVertex(location1);
         map.addVertex(location2);
-        final DefaultWeightedEdge edge = map.addEdge(location1, location2);
-        map.setEdgeWeight(edge, weight);
+
+        // Check if an edge exist already
+        if (!map.containsEdge(location1, location2)) {
+            final DefaultWeightedEdge edge = map.addEdge(location1, location2);
+            map.setEdgeWeight(edge, weight);
+        }
     }
 
     /**
-     * Calculates the weight between two locations.
-     * @param location1 the first location
-     * @param location2 the second location
-     * @return the weight between the two locations
+     * Helper function that converts a room code to a map location.
+     * @param roomCode the room code to convert
+     * @return the map location corresponding to the room code
      */
-    private double calculateWeight(Location location1, String location2) {
-        // TODO: Decide on weight strategy in meeting
-        return DEFAULT_WEIGHT;
-    }
-
     private MapLocation roomCodeToMapLocation(String roomCode) {
         final Room room = locationDao.getRoom(roomCode);
         return mapLocationDao.getMapLocation(room.getId(), room.getFloor());
-    }
-
-    /**
-     * Returns the path from the start room to the end room as a list of ids.
-     * @param startRoomCode valid room code for starting room
-     * @param endRoomCode valid room code for ending room
-     * @return A list of MapLocation objects representing the path.
-     */
-    @Override
-    public List<MapLocation> getPath(String startRoomCode, String endRoomCode) {
-        // Use Dijkstra's algorithm to find the shortest path. Change algorithm if needed.
-        final DijkstraShortestPath<MapLocation, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(map);
-        final GraphPath<MapLocation, DefaultWeightedEdge> route =
-                dijkstraAlg.getPath(roomCodeToMapLocation(startRoomCode), roomCodeToMapLocation(endRoomCode));
-        return route.getVertexList();
     }
 }
