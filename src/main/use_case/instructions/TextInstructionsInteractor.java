@@ -7,10 +7,10 @@ import use_case.navigation.maplocation.MapLocation;
 /**
  * The interactor for the make instructions use case.
  */
-public class InstructionsInteractor {
+public class TextInstructionsInteractor {
     private final InstructionsOutputBoundary presenter;
 
-    public InstructionsInteractor(InstructionsOutputBoundary presenter) {
+    public TextInstructionsInteractor(InstructionsOutputBoundary presenter) {
         this.presenter = presenter;
     }
 
