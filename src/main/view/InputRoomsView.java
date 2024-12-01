@@ -1,25 +1,21 @@
 package view;
 
 import interface_adapter.inputrooms.InputRoomsViewModel;
+import interface_adapter.inputrooms.InputRoomsState;
+import interface_adapter.inputrooms.InputRoomsController;
+import interface_adapter.inputrooms.InputRoomsPresenter;
+import interface_adapter.beginnavigation.BeginNavigationViewModel;
+import interface_adapter.beginnavigation.BeginNavigationState;
+import use_case.navigation.NavigationOutputData;
+import use_case.navigation.maplocation.MapLocation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import interface_adapter.inputrooms.InputRoomsController;
-import interface_adapter.inputrooms.InputRoomsState;
-import interface_adapter.inputrooms.InputRoomsViewModel;
 
 
 public class InputRoomsView extends JPanel implements PropertyChangeListener {
@@ -28,33 +24,16 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final JTextField destinationRoomField = new JTextField(15);
     private final MapPanel mapPanel;
     private BeginNavigationView beginNavigationView;
-    private final HashMap<String, List<Point>> fixedRoute = new HashMap<>();
     private final TextPromptPanel textPromptPanel;
+    private final InputRoomsPresenter presenter;
+    private final InputRoomsController controller;
 
-    public InputRoomsView(InputRoomsViewModel inputRoomsViewModel, TextPromptPanel textPromptPanel) {
+    public InputRoomsView(InputRoomsViewModel inputRoomsViewModel, TextPromptPanel textPromptPanel, InputRoomsPresenter presenter, InputRoomsController controller) {
         this.inputRoomsViewModel = inputRoomsViewModel;
         this.textPromptPanel = textPromptPanel;
-        // TODO: 1. Replace this with API returned data
-        //       2. Verify all API points data/models can be used in PathFinder
-        //          2.a If it doesn't work, we find another way
-        //       3. Possibly replace this path (list of points) with PathFinder class's function
-        //          3.a This algorithm: Input: two room IDs  Output: list of points
-        // In conclusion, the UI gets all location data from the API. Feed to PathFinder.
-
-        // TODO Ideally: use PathFinder.loadData()
-
-        // Mock routes for navigation
-        fixedRoute.put(
-                "1160-1170", List.of(
-                        new Point(2029, 1479),
-                        new Point(1644, 1476))
-        );
-        fixedRoute.put(
-                "1160-1200", List.of(
-                        new Point(2029, 1479),
-                        new Point(1600, 1700),
-                        new Point(1324, 2070))
-        );
+        this.presenter = presenter;
+        this.controller = controller;
+        inputRoomsViewModel.addPropertyChangeListener(this);
 
         // Layout and design improvements
         this.setLayout(new BorderLayout());
@@ -172,45 +151,53 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         textField.setMaximumSize(new Dimension(400, 30)); // Fixed size
     }
 
+    // Method triggered by the "Begin Navigation" button
     private void onBeginNavigation() {
-        String fromRoom = getDepartureRoom();
-        String toRoom = getDestinationRoom();
+        // Retrieve room inputs from text fields
+        String departureRoom = departureRoomField.getText();
+        String destinationRoom = destinationRoomField.getText();
 
-        // Mock findPath logic using fixedRoute
-        List<Point> path = fixedRoute.get(fromRoom + "-" + toRoom);
-        if (path == null) {
-            JOptionPane.showMessageDialog(this,
-                    "No route found from " + fromRoom + " to " + toRoom,
-                    "Route Not Found",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        mapPanel.setPath(path); // Update the map with the mock path
+        // Pass these inputs to the controller to process navigation
+        controller.execute(departureRoom, destinationRoom);
     }
 
-    public String getDepartureRoom() {
-        return departureRoomField.getText();
-    }
 
-    public String getDestinationRoom() {
-        return destinationRoomField.getText();
-    }
-
-    public void updatePath(List<Point> path) {
-        mapPanel.setPath(path); // Update the map with the given path
-    }
-
+    // Property change listener to react to updates in the InputRoomsViewModel
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("path".equals(evt.getPropertyName())) {
-            // Handle property change event from ViewModel
-            List<Point> path = (List<Point>) evt.getNewValue();
-            updatePath(path);
+        if ("state".equals(evt.getPropertyName())) {
+            InputRoomsState state = (InputRoomsState) evt.getNewValue();
+
+            // Update text fields
+            departureRoomField.setText(state.getDepartureRoomCode());
+            destinationRoomField.setText(state.getDestinationRoomCode());
+
+            // Handle errors (if any)
+            if (state.getDepartureRoomCodeError() != null) {
+                departureRoomField.setForeground(Color.RED);
+                departureRoomField.setToolTipText(state.getDepartureRoomCodeError());
+            } else {
+                departureRoomField.setForeground(Color.BLACK);
+                departureRoomField.setToolTipText(null);
+            }
+
+            if (state.getDestinationRoomCodeError() != null) {
+                destinationRoomField.setForeground(Color.RED);
+                destinationRoomField.setToolTipText(state.getDestinationRoomCodeError());
+            } else {
+                destinationRoomField.setForeground(Color.BLACK);
+                destinationRoomField.setToolTipText(null);
+            }
+
+            // Update the map if a path is available
+            if (state.getPath() != null && !state.getPath().isEmpty()) {
+                updateMapWithPath(state.getPath());
+            }
         }
     }
 
-    public String getViewName() {
-        return "inputRoomsView";
+    private void updateMapWithPath(List<Point> path) {
+        mapPanel.setPath(path); // Directly pass the List<Point>
+        mapPanel.repaint(); // Refresh the map panel
     }
-}
+    }

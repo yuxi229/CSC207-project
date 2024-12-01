@@ -1,11 +1,14 @@
 package app;
 
+import data_access.InMemoryLocationDao;
 import data_access.LocationDataAccess;
 import data_access.MapLocationDataAccess;
+import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.InputRoomsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
 import interface_adapter.inputrooms.InputRoomsPresenter;
+import use_case.navigation.*;
 import view.TextPromptPanel;
 import use_case.navigation.NavigationOutputBoundary;
 import view.InputRoomsView;
@@ -50,21 +53,37 @@ public class AppBuilder {
     }
 
     public AppBuilder addNavigationView() {
-        // Initialize dependencies
+        // Initialize the necessary components
         inputRoomsViewModel = new InputRoomsViewModel();
         textPromptPanel = new TextPromptPanel();
+        BeginNavigationViewModel beginNavigationViewModel = new BeginNavigationViewModel();
 
-        // Pass both InputRoomsViewModel and TextPromptPanel to InputRoomsView
-        inputRoomsView = new InputRoomsView(inputRoomsViewModel, textPromptPanel);
+        // Initialize the presenter
+        InputRoomsPresenter inputRoomsPresenter = new InputRoomsPresenter(
+                viewManagerModel, inputRoomsViewModel);
+
+        // Initialize the use case interactor
+        InMemoryLocationDao inMemoryDao = new InMemoryLocationDao();
+        LocationDataAccess locationDataAccess = inMemoryDao;
+        MapLocationDataAccess mapLocationDataAccess = inMemoryDao;
+
+        // Initialize the PathFinder
+        PathFinder pathFinder = new JgraphtPathFinder(locationDataAccess, mapLocationDataAccess);
+        pathFinder.loadData(locationDataAccess); // Load data into the path finder
+
+        // Initialize the interactor with the presenter as the output boundary
+        NavigationInputBoundary navigationInteractor = new NavigationInteractor(
+                locationDataAccess, pathFinder, inputRoomsPresenter);
+
+        // Initialize the controller with the interactor
+        InputRoomsController inputRoomsController = new InputRoomsController(navigationInteractor);
+
+        // Create the InputRoomsView with all required dependencies
+        inputRoomsView = new InputRoomsView(
+                inputRoomsViewModel, textPromptPanel, inputRoomsPresenter, inputRoomsController);
 
         // Add InputRoomsView to card panel
-        cardPanel.add(inputRoomsView, inputRoomsView.getViewName());
-        return this;
-    }
-
-    public AppBuilder addNavigationUseCase() {
-        final NavigationOutputBoundary navigationOutputBoundary = new InputRoomsPresenter(
-                viewManagerModel, new BeginNavigationViewModel(), inputRoomsViewModel);
+        cardPanel.add(inputRoomsView, "InputRoomsView");
         return this;
     }
 
@@ -72,6 +91,7 @@ public class AppBuilder {
         final JFrame application = new JFrame("Navigation");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
+        application.pack(); // Adjust frame to fit contents
+        application.setLocationRelativeTo(null); // Centers the frame on the screen
         return application;
-    }
-}
+    }}

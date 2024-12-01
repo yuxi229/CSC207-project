@@ -15,7 +15,6 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addNavigationView()
-                .addNavigationUseCase()
                 .build();
 
         application.pack();
