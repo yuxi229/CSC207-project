@@ -63,7 +63,7 @@ public interface LocationDataAccess {
      * Returns a list of all floor ids in the data access object.
      * @return a list of floor ids
      */
-    List<Integer> getFloorIds();
+    List<Integer> getFloors();
 
     /**
      * Returns a set of all locations in the data access object.

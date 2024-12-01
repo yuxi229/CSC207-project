@@ -13,5 +13,5 @@ public interface MapLocationFactory {
      * @param floor the id of the floor
      * @return the created MapLocation object
      */
-    MapLocation createMapLocation(String id, double mapX, double mapY, int floor);
+    MapLocation createMapLocation(String id, int mapX, int mapY, int floor);
 }

@@ -23,13 +23,19 @@ public class Main {
 
         // Build the application
         final AppBuilder appBuilder = new AppBuilder();
+
+        // Load all data into memory
+        appBuilder.loadData();
         final JFrame application = appBuilder
                 .addNavigationView()
                 .addBlueprintSelectionView()
                 .addNavigationUseCase()
                 .build();
 
-        application.pack();
-        application.setVisible(true);
+        // Add the use cases to the application
+        appBuilder.addNavigationView();
+
+        // Build the application
+        appBuilder.build();
     }
 }

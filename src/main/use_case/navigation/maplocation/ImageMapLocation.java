@@ -1,15 +1,17 @@
 package use_case.navigation.maplocation;
 
+import java.util.Objects;
+
 /**
  * A class that represents a location on the map.
  */
 public class ImageMapLocation implements MapLocation {
     private final String locationID;
-    private final double x;
-    private final double y;
+    private final int x;
+    private final int y;
     private final int floorID;
 
-    public ImageMapLocation(String locationID, double imgX, double imgY, int floorID) {
+    public ImageMapLocation(String locationID, int imgX, int imgY, int floorID) {
         this.locationID = locationID;
         this.x = imgX;
         this.y = imgY;
@@ -22,17 +24,17 @@ public class ImageMapLocation implements MapLocation {
     }
 
     @Override
-    public double getX() {
+    public int getX() {
         return x;
     }
 
     @Override
-    public double getY() {
+    public int getY() {
         return y;
     }
 
     @Override
-    public int getFloorID() {
+    public int getFloor() {
         return floorID;
     }
 
@@ -49,7 +51,6 @@ public class ImageMapLocation implements MapLocation {
 
     @Override
     public int hashCode() {
-        final String toString = locationID + String.valueOf(x) + String.valueOf(y) + String.valueOf(floorID);
-        return toString.hashCode();
+        return Objects.hash(locationID, x, y, floorID);
     }
 }

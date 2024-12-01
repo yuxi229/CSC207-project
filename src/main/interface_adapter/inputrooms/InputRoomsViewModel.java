@@ -7,7 +7,8 @@ import interface_adapter.ViewModel;
  */
 public class InputRoomsViewModel extends ViewModel<InputRoomsState> {
     public InputRoomsViewModel() {
-        super("input rooms");
+        // TODO: Edit to a more descriptive name
+        super("Room Input View Model");
         setState(new InputRoomsState());
     }
 }
