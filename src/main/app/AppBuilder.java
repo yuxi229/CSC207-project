@@ -1,6 +1,5 @@
 package app;
 
-import api_infrastructure.LoadApiDataFacade;
 import data_access.LocationDataAccess;
 import data_access.MapLocationDataAccess;
 import interface_adapter.inputrooms.InputRoomsViewModel;
