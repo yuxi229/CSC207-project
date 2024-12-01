@@ -12,4 +12,8 @@ public class InputRoomsController {
     public InputRoomsController(NavigationInputBoundary navigationFacade) {
         this.navigationFacade = navigationFacade;
     }
+
+    public void execute(NavigationInputData navigationInputData) {
+        navigationFacade.execute(navigationInputData);
+    }
 }
