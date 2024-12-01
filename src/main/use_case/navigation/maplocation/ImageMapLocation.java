@@ -34,7 +34,7 @@ public class ImageMapLocation implements MapLocation {
     }
 
     @Override
-    public int getFloorID() {
+    public int getFloor() {
         return floorID;
     }
 

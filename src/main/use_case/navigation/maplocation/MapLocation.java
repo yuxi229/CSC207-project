@@ -27,7 +27,7 @@ public interface MapLocation {
      * Returns the floor ID of the location.
      * @return the floor ID of the location
      */
-    int getFloorID();
+    int getFloor();
 
     /**
      * Returns true iff the object is a MapLocation and represents the same location as this MapLocation.
