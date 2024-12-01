@@ -45,9 +45,8 @@ public class AppBuilder {
 
     /**
      * Set up navigation use case and add the related view to the card panel.
-     * @return This instance
      */
-    public AppBuilder addNavigationView() {
+    public void addNavigationView() {
         final NavigationSetupFacade navigationSetupFacade = new NavigationSetupFacade(
                 locationDataAccess, mapLocationDataAccess, viewManagerModel);
 
@@ -56,21 +55,20 @@ public class AppBuilder {
 
         // Add InputRoomsView to card panel
         cardPanel.add(inputRoomsView, "InputRoomsView");
-        return this;
     }
 
     /**
      * TODO: Add javadoc.
-     * @return The JFrame of the application
      */
-    public JFrame build() {
+    public void build() {
         final JFrame application = new JFrame("Navigation");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
-        // Adjust frame to fit contents
-        application.pack();
+
         // Centers the frame on the screen
         application.setLocationRelativeTo(null);
-        return application;
+
+        application.pack();
+        application.setVisible(true);
     }
 }

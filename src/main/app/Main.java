@@ -17,11 +17,9 @@ public class Main {
         appBuilder.loadData();
 
         // Add the use cases to the application
-        final JFrame application = appBuilder
-                .addNavigationView()
-                .build();
+        appBuilder.addNavigationView();
 
-        application.pack();
-        application.setVisible(true);
+        // Build the application
+        appBuilder.build();
     }
 }
