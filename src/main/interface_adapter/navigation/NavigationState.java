@@ -1,4 +1,4 @@
-package interface_adapter.inputrooms;
+package interface_adapter.navigation;
 
 import java.awt.Point;
 import java.util.List;

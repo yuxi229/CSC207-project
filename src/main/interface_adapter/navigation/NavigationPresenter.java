@@ -1,4 +1,4 @@
-package interface_adapter.inputrooms;
+package interface_adapter.navigation;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import use_case.navigation.maplocation.MapLocation;
 /**
  * The Presenter for the Navigation Use Case.
  */
-public class InputRoomsPresenter implements NavigationOutputBoundary {
+public class NavigationPresenter implements NavigationOutputBoundary {
 
     private final NavigationViewModel navigationViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public InputRoomsPresenter(ViewManagerModel viewManagerModel,
+    public NavigationPresenter(ViewManagerModel viewManagerModel,
                                NavigationViewModel navigationViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.navigationViewModel = navigationViewModel;
