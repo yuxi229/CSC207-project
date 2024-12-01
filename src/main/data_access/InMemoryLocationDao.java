@@ -104,13 +104,7 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     public void addLocation(Location location) {
         locationMap.put(location.getId(), location);
         locations.add(location);
-    }
-
-    @Override
-    public void addLocations(Set<Location> newLocations) {
-        for (Location location : newLocations) {
-            addLocation(location);
-        }
+        floorIds.addAll(location.getFloors());
     }
 
     @Override
@@ -120,8 +114,18 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
 
     @Override
     public void addMapLocation(MapLocation mapLocation) {
-        mapLocationLookup.put(mapLocation.getLocationID(), Map.of(mapLocation.getFloorID(), mapLocation));
-        floorIds.add(mapLocation.getFloorID());
+        final String locationID = mapLocation.getLocationID();
+        final Integer floorID = mapLocation.getFloorID();
+        if (mapLocationLookup.containsKey(locationID)) {
+            System.out.println(mapLocationLookup.get(locationID));
+            System.out.println(locationID);
+            System.out.println(floorID);
+            mapLocationLookup.get(locationID).put(floorID, mapLocation);
+        }
+        else {
+            mapLocationLookup.put(locationID, Map.of(floorID, mapLocation));
+        }
+        floorIds.add(floorID);
     }
 
     @Override

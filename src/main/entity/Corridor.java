@@ -8,7 +8,7 @@ import java.util.List;
 public class Corridor extends AbstractSingleFloorLocation {
     private final double length;
 
-    Corridor(String id, List<String> connected, int size, int floor, double length) {
+    public Corridor(String id, List<String> connected, int size, int floor, double length) {
         super(id, connected, size, floor);
         this.length = length;
     }

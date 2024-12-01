@@ -10,7 +10,7 @@ public abstract class AbstractLocation implements Location {
     private final List<String> connectedLocations;
     private final int size;
 
-    public AbstractLocation(String id, List<String> connectedLocations, int size) {
+    AbstractLocation(String id, List<String> connectedLocations, int size) {
         this.id = id;
         this.connectedLocations = connectedLocations;
         this.size = size;

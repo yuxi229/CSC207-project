@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class AbstractSingleFloorLocation extends AbstractLocation {
     private final int floor;
 
-    public AbstractSingleFloorLocation(String id, List<String> connectedLocations, int size, int floor) {
+    AbstractSingleFloorLocation(String id, List<String> connectedLocations, int size, int floor) {
         super(id, connectedLocations, size);
         this.floor = floor;
     }
