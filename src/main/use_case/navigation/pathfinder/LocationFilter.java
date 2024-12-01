@@ -1,8 +1,8 @@
 package use_case.navigation.pathfinder;
 
-import entity.Location;
-
 import java.util.Set;
+
+import entity.Location;
 
 /**
  * Interface for location filters.
