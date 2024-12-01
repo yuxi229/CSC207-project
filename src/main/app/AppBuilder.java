@@ -36,18 +36,6 @@ public class AppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
-    //    public AppBuilder addNavigationView() {
-//        // Initialize dependencies
-//        inputRoomsViewModel = new InputRoomsViewModel();
-//        textPromptPanel = new TextPromptPanel();
-//
-//        // Pass both InputRoomsViewModel and TextPromptPanel to InputRoomsView
-//        inputRoomsView = new InputRoomsView(inputRoomsViewModel, textPromptPanel);
-//
-//        // Add InputRoomsView to card panel
-//        cardPanel.add(inputRoomsView, inputRoomsView.getViewName());
-//        return this;
-//    }
     public AppBuilder addNavigationView() {
         inputRoomsViewModel = new InputRoomsViewModel();
         inputRoomsView = new InputRoomsView(inputRoomsViewModel, new TextPromptPanel());
@@ -79,27 +67,6 @@ public class AppBuilder {
                 viewManagerModel, new BeginNavigationViewModel(), inputRoomsViewModel);
         return this;
     }
-
-//    public AppBuilder addBlueprintSelectionView() {
-//        blueprintViewModel = new BlueprintViewModel();
-//        blueprintSelectionView = new BlueprintSelectionView(
-//                Arrays.asList("map1.jpg", "map2.jpg"), // Use Arrays.asList for compatibility with Java 8
-//                () -> viewManagerModel.setState("inputRoomsView"),
-//                () -> {
-//                    String nextBlueprint = blueprintViewModel.getCurrentBlueprint().equals("map1.jpg")
-//                            ? "map2.jpg"
-//                            : "map1.jpg";
-//                    blueprintViewModel.setCurrentBlueprint(nextBlueprint);
-//                }
-//        );
-//        blueprintViewModel.addPropertyChangeListener(evt -> {
-//            if ("blueprint".equals(evt.getPropertyName())) {
-//                blueprintSelectionView.updateBlueprintImage((String) evt.getNewValue());
-//            }
-//        });
-//        cardPanel.add(blueprintSelectionView, "blueprintSelectionView");
-//        return this;
-//    }
 
     public JFrame build() {
         final JFrame application = new JFrame("Navigation");
