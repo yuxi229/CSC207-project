@@ -1,9 +1,6 @@
 package interface_adapter.inputrooms;
 
-import org.jgrapht.alg.drawing.model.Points;
-import use_case.navigation.maplocation.MapLocation;
-
-import java.awt.*;
+import java.awt.Point;
 import java.util.List;
 
 /**
@@ -33,11 +30,13 @@ public class InputRoomsState {
     }
 
     public void setDepartureRoomCode(String departureRoomCode) {
-        this.departureRoomCode = departureRoomCode;  // Correct assignment
+        // Correct assignment
+        this.departureRoomCode = departureRoomCode;
     }
 
     public void setDestinationRoomCode(String destinationRoomCode) {
-        this.destinationRoomCode = destinationRoomCode;  // Correct assignment
+        // Correct assignment
+        this.destinationRoomCode = destinationRoomCode;
     }
 
     public void setDepartureRoomCodeError(String departureRoomCodeError) {
@@ -47,6 +46,7 @@ public class InputRoomsState {
     public void setDestinationRoomCodeError(String destinationRoomCodeError) {
         this.destinationRoomCodeError = destinationRoomCodeError;
     }
+
     public List<Point> getPath() {
         return path;
     }

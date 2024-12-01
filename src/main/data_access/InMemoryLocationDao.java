@@ -1,9 +1,12 @@
 package data_access;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import entity.Corridor;
@@ -19,7 +22,7 @@ import use_case.navigation.maplocation.MapLocation;
 public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuilder, MapLocationDataAccess,
         MapLocationDaoBuilder {
     private final Map<String, Location> locationMap = new HashMap<>();
-    private final Map<String, Map<Integer, MapLocation>> mapLocationLookup = new HashMap<>();
+    private final Map<IdFloorPair, MapLocation> mapLocationLookup = new HashMap<>();
     private final Set<Integer> floorIds = new HashSet<>();
     private final Set<Location> locations = new HashSet<>();
 
@@ -81,8 +84,10 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     }
 
     @Override
-    public List<Integer> getFloorIds() {
-        return List.copyOf(floorIds);
+    public List<Integer> getFloors() {
+        final List<Integer> floorIdList = new ArrayList<>(this.floorIds);
+        Collections.sort(floorIdList);
+        return floorIdList;
     }
 
     @Override
@@ -92,25 +97,20 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
 
     @Override
     public Set<Location> getLocations(int floor) {
-        return Set.of();
-    }
-
-    @Override
-    public MapLocation getMapLocation(String id, int floor) {
-        return mapLocationLookup.get(id).get(floor);
+        final Set<Location> locationsOnFloor = new HashSet<>();
+        for (Location location : locations) {
+            if (location.getFloors().contains(floor)) {
+                locationsOnFloor.add(location);
+            }
+        }
+        return locationsOnFloor;
     }
 
     @Override
     public void addLocation(Location location) {
         locationMap.put(location.getId(), location);
         locations.add(location);
-    }
-
-    @Override
-    public void addLocations(Set<Location> newLocations) {
-        for (Location location : newLocations) {
-            addLocation(location);
-        }
+        floorIds.addAll(location.getFloors());
     }
 
     @Override
@@ -119,20 +119,47 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     }
 
     @Override
-    public void addMapLocation(MapLocation mapLocation) {
-        mapLocationLookup.put(mapLocation.getLocationID(), Map.of(mapLocation.getFloorID(), mapLocation));
-        floorIds.add(mapLocation.getFloorID());
+    public MapLocation getMapLocation(String id, int floor) {
+        return mapLocationLookup.get(new IdFloorPair(id, floor));
     }
 
     @Override
-    public void addMapLocations(Set<MapLocation> newMapLocations) {
-        for (MapLocation mapLocation : newMapLocations) {
-            addMapLocation(mapLocation);
-        }
+    public void addMapLocation(MapLocation mapLocation) {
+        final IdFloorPair idFloorPair = new IdFloorPair(mapLocation.getLocationID(), mapLocation.getFloor());
+        mapLocationLookup.put(idFloorPair, mapLocation);
+        floorIds.add(mapLocation.getFloor());
     }
 
     @Override
     public MapLocationDataAccess createMapLocationDao() {
         return this;
+    }
+
+    /**
+     * Helper class for storing a pair of an ID and a floor number as a key in a map.
+     */
+    private static class IdFloorPair {
+        private final String id;
+        private final int floor;
+
+        IdFloorPair(String id, int floor) {
+            this.id = id;
+            this.floor = floor;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            boolean result = false;
+            if (obj instanceof IdFloorPair) {
+                final IdFloorPair other = (IdFloorPair) obj;
+                result = id.equals(other.id) && floor == other.floor;
+            }
+            return result;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, floor);
+        }
     }
 }
