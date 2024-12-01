@@ -1,21 +1,16 @@
 package app;
 
-import data_access.InMemoryLocationDao;
+import java.awt.CardLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
 import data_access.LocationDataAccess;
 import data_access.MapLocationDataAccess;
-import interface_adapter.inputrooms.InputRoomsController;
-import interface_adapter.inputrooms.InputRoomsViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.beginnavigation.BeginNavigationViewModel;
-import interface_adapter.inputrooms.InputRoomsPresenter;
-import use_case.navigation.*;
-import view.TextPromptPanel;
-import use_case.navigation.NavigationOutputBoundary;
 import view.InputRoomsView;
 import view.ViewManager;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -28,10 +23,6 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
     private LocationDataAccess locationDataAccess;
     private MapLocationDataAccess mapLocationDataAccess;
-
-    private InputRoomsView inputRoomsView;
-    private InputRoomsViewModel inputRoomsViewModel;
-    private TextPromptPanel textPromptPanel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -52,46 +43,34 @@ public class AppBuilder {
         mapLocationDataAccess = LoadApiDataFacade.getMapLocationDao();
     }
 
+    /**
+     * Set up navigation use case and add the related view to the card panel.
+     * @return This instance
+     */
     public AppBuilder addNavigationView() {
-        // Initialize the necessary components
-        inputRoomsViewModel = new InputRoomsViewModel();
-        textPromptPanel = new TextPromptPanel();
-        BeginNavigationViewModel beginNavigationViewModel = new BeginNavigationViewModel();
-
-        // Initialize the presenter
-        InputRoomsPresenter inputRoomsPresenter = new InputRoomsPresenter(
-                viewManagerModel, inputRoomsViewModel);
-
-        // Initialize the use case interactor
-        InMemoryLocationDao inMemoryDao = new InMemoryLocationDao();
-        LocationDataAccess locationDataAccess = inMemoryDao;
-        MapLocationDataAccess mapLocationDataAccess = inMemoryDao;
-
-        // Initialize the PathFinder
-        PathFinder pathFinder = new JgraphtPathFinder(locationDataAccess, mapLocationDataAccess);
-        pathFinder.loadData(locationDataAccess); // Load data into the path finder
-
-        // Initialize the interactor with the presenter as the output boundary
-        NavigationInputBoundary navigationInteractor = new NavigationInteractor(
-                locationDataAccess, pathFinder, inputRoomsPresenter);
-
-        // Initialize the controller with the interactor
-        InputRoomsController inputRoomsController = new InputRoomsController(navigationInteractor);
+        final NavigationSetupFacade navigationSetupFacade = new NavigationSetupFacade(
+                locationDataAccess, mapLocationDataAccess, viewManagerModel);
 
         // Create the InputRoomsView with all required dependencies
-        inputRoomsView = new InputRoomsView(
-                inputRoomsViewModel, textPromptPanel, inputRoomsPresenter, inputRoomsController);
+        final InputRoomsView inputRoomsView = navigationSetupFacade.getInputRoomsView();
 
         // Add InputRoomsView to card panel
         cardPanel.add(inputRoomsView, "InputRoomsView");
         return this;
     }
 
+    /**
+     * TODO: Add javadoc.
+     * @return The JFrame of the application
+     */
     public JFrame build() {
         final JFrame application = new JFrame("Navigation");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
-        application.pack(); // Adjust frame to fit contents
-        application.setLocationRelativeTo(null); // Centers the frame on the screen
+        // Adjust frame to fit contents
+        application.pack();
+        // Centers the frame on the screen
+        application.setLocationRelativeTo(null);
         return application;
-    }}
+    }
+}
