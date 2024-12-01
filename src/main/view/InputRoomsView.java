@@ -18,8 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import interface_adapter.inputrooms.InputRoomsController;
-import interface_adapter.inputrooms.InputRoomsState;
-import interface_adapter.inputrooms.InputRoomsViewModel;
+import interface_adapter.inputrooms.NavigationState;
+import interface_adapter.inputrooms.NavigationViewModel;
 
 /**
  * TODO: Add javadoc.
@@ -37,7 +37,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     public static final Color LIGHT_GREY = new Color(240, 240, 240);
 
     // Instance variables
-    private final InputRoomsViewModel inputRoomsViewModel;
+    private final NavigationViewModel navigationViewModel;
     private final JTextField departureRoomField = new JTextField(15);
     private final JTextField destinationRoomField = new JTextField(15);
     private final MapPanel mapPanel = new MapPanel(IMAGE_PATH);
@@ -45,12 +45,12 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final TextPromptPanel textPromptPanel;
     private final InputRoomsController controller;
 
-    public InputRoomsView(InputRoomsViewModel inputRoomsViewModel, TextPromptPanel textPromptPanel,
+    public InputRoomsView(NavigationViewModel navigationViewModel, TextPromptPanel textPromptPanel,
                           InputRoomsController controller) {
-        this.inputRoomsViewModel = inputRoomsViewModel;
+        this.navigationViewModel = navigationViewModel;
         this.textPromptPanel = textPromptPanel;
         this.controller = controller;
-        inputRoomsViewModel.addPropertyChangeListener(this);
+        navigationViewModel.addPropertyChangeListener(this);
         makeView();
     }
 
@@ -201,7 +201,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
-            final InputRoomsState state = (InputRoomsState) evt.getNewValue();
+            final NavigationState state = (NavigationState) evt.getNewValue();
 
             // Update text fields
             departureRoomField.setText(state.getDepartureRoomCode());

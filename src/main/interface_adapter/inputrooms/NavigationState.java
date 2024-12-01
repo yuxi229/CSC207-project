@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * The state for the Navigation View Model.
  */
-public class InputRoomsState {
+public class NavigationState {
     private String departureRoomCode = "";
     private String destinationRoomCode = "";
     private String departureRoomCodeError;

@@ -5,7 +5,7 @@ import data_access.MapLocationDataAccess;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.InputRoomsPresenter;
-import interface_adapter.inputrooms.InputRoomsViewModel;
+import interface_adapter.inputrooms.NavigationViewModel;
 import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInteractor;
 import use_case.navigation.NavigationOutputBoundary;
@@ -19,7 +19,7 @@ import view.TextPromptPanel;
  * A facade taking care of the subsystem of setting up the map navigation use case.
  */
 public class NavigationSetupFacade {
-    private final InputRoomsViewModel inputRoomsViewModel = new InputRoomsViewModel();
+    private final NavigationViewModel navigationViewModel = new NavigationViewModel();
     private InputRoomsController inputRoomsController;
     private NavigationInputBoundary naviInteractor;
     private NavigationOutputBoundary inputRoomsPresenter;
@@ -38,7 +38,7 @@ public class NavigationSetupFacade {
     }
 
     private void setUpPresenters(ViewManagerModel viewManagerModel) {
-        inputRoomsPresenter = new InputRoomsPresenter(viewManagerModel, inputRoomsViewModel);
+        inputRoomsPresenter = new InputRoomsPresenter(viewManagerModel, navigationViewModel);
     }
 
     private void setUpInteractors(LocationDataAccess locationData,
@@ -55,6 +55,6 @@ public class NavigationSetupFacade {
 
     private void setUpView() {
         final TextPromptPanel textPromptPanel = new TextPromptPanel();
-        inputRoomsView = new InputRoomsView(inputRoomsViewModel, textPromptPanel, inputRoomsController);
+        inputRoomsView = new InputRoomsView(navigationViewModel, textPromptPanel, inputRoomsController);
     }
 }
