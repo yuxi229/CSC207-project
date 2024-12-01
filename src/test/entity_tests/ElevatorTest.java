@@ -11,9 +11,9 @@ class ElevatorTest {
 
     @Test
     void testElevator() {
-        Elevator elevator = new Elevator("E1", List.of("E2"), List.of(1, 2, 3), 150);
-        assertEquals("E1", elevator.getId());
-        assertEquals(List.of("E2"), elevator.getConnectedLocations());
+        Elevator elevator = new Elevator("Elevator 1", List.of("Elevator 2"), List.of(1, 2, 3), 150);
+        assertEquals("Elevator 1", elevator.getId());
+        assertEquals(List.of("Elevator 2"), elevator.getConnectedLocations());
         assertEquals(150, elevator.getSize());
         assertEquals(List.of(1, 2, 3), elevator.getFloors());
     }

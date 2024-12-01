@@ -11,9 +11,9 @@ class WashroomTest {
 
     @Test
     void testWashroom() {
-        Washroom washroom = new Washroom("W1", List.of("W2"), 10, 1, "Male");
-        assertEquals("W1", washroom.getId());
-        assertEquals(List.of("W2"), washroom.getConnectedLocations());
+        Washroom washroom = new Washroom("Womens 1", List.of("Womens 2"), 10, 1, "Male");
+        assertEquals("Womens 1", washroom.getId());
+        assertEquals(List.of("Womens 2"), washroom.getConnectedLocations());
         assertEquals(10, washroom.getSize());
         assertEquals(1, washroom.getFloor());
         assertEquals("Male", washroom.getGender());

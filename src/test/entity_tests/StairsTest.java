@@ -11,10 +11,10 @@ class StairsTest {
 
     @Test
     void testStairs() {
-        Stairs stairs = new Stairs("S1", 100, List.of("S2"), List.of(1, 2, 3, 4));
-        assertEquals("S1", stairs.getId());
+        Stairs stairs = new Stairs("Stairs 1", 100, List.of("Stairs 2"), List.of(1, 2, 3, 4));
+        assertEquals("Stairs 1", stairs.getId());
         assertEquals(100, stairs.getSize());
-        assertEquals(List.of("S2"), stairs.getConnectedLocations());
+        assertEquals(List.of("Stairs 2"), stairs.getConnectedLocations());
         assertEquals(List.of(1, 2, 3, 4), stairs.getFloors());
     }
 }

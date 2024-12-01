@@ -11,9 +11,9 @@ class RoomTest {
 
     @Test
     void testRoom() {
-        Room room = new Room("R1", List.of("R2"), 1, 30, true);
-        assertEquals("R1", room.getRoomCode());
-        assertEquals(List.of("R2"), room.getConnectedLocations());
+        Room room = new Room("BA3195", List.of("BA1000"), 1, 30, true);
+        assertEquals("BA3195", room.getRoomCode());
+        assertEquals(List.of("BA1000"), room.getConnectedLocations());
         assertEquals(1, room.getFloor());
         assertEquals(30, room.getSize());
         assertTrue(room.isRestricted());

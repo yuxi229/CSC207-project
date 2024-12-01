@@ -53,7 +53,7 @@ public class AppBuilder {
 
     public AppBuilder addBlueprintSelectionView() {
         blueprintSelectionView = new BlueprintSelectionView(
-                Arrays.asList("map1.jpg", "map2.jpg"),
+                Arrays.asList("floor1.jpg", "floor2.jpg"),
                 () -> viewManagerModel.setState("inputRoomsView"),
                 () -> System.out.println("Switch blueprint logic here")
         );

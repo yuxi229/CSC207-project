@@ -63,7 +63,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         this.add(leftPanel, BorderLayout.WEST);
 
         // Map panel for rendering routes
-        mapPanel = new MapPanel("map1.jpg");
+        mapPanel = new MapPanel("floor1.jpg");
         mapPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
         mapPanel.setLayout(new BorderLayout());
 
@@ -150,7 +150,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         JPanel blueprintPanel = new JPanel(new BorderLayout());
 
         // Dropdown for selecting blueprints
-        String[] blueprints = {"map1.jpg", "map2.jpg"};
+        String[] blueprints = {"floor1.jpg", "floor2.jpg"};
         JComboBox<String> blueprintDropdown = new JComboBox<>(blueprints);
 
         // Map panel to show the selected blueprint
