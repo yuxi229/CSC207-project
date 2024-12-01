@@ -17,15 +17,14 @@ public class Main {
     public static void main(String[] args) {
 
         // Load the data from the API
-        LoadApiDataFacade.loadDataIntoMemory();
-        final LocationDataAccess locationDataAccess = LoadApiDataFacade.getLocationDao();
-        final MapLocationDataAccess mapLocationDataAccess = LoadApiDataFacade.getMapLocationDao();
+//        LoadApiDataFacade.loadDataIntoMemory();
+//        final LocationDataAccess locationDataAccess = LoadApiDataFacade.getLocationDao();
+//        final MapLocationDataAccess mapLocationDataAccess = LoadApiDataFacade.getMapLocationDao();
 
         // Build the application
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addNavigationView()
-                .addNavigationUseCase()
                 .build();
 
         application.pack();

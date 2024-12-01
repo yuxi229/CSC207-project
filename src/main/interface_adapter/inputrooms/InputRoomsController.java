@@ -4,24 +4,26 @@ import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInputData;
 
 /**
- * The controller for the Login Use Case.
+ * The controller for the Navigation Use Case.
  */
 public class InputRoomsController {
 
-    private NavigationInputBoundary navigationUseCaseInteractor;
+    private final NavigationInputBoundary navigationInteractor;
 
-    public InputRoomsController(NavigationInputBoundary navigationUseCaseInteractor) {
-        this.navigationUseCaseInteractor = navigationUseCaseInteractor;
+    public InputRoomsController(NavigationInputBoundary navigationInteractor) {
+        this.navigationInteractor = navigationInteractor;
     }
 
     /**
-     * Executes the Login Use Case.
-     * @param departure_room the roomCode of the departure room
-     * @param destination_room the roomCode of the destination room
+     * Executes the navigation use case.
+     * @param departureRoom the room code of the departure room
+     * @param destinationRoom the room code of the destination room
      */
-    public void execute(String departure_room, String destination_room) {
-        final NavigationInputData navigationInputData = new NavigationInputData(departure_room, destination_room);
+    public void execute(String departureRoom, String destinationRoom) {
+        // Create the input data for navigation use case
+        NavigationInputData navigationInputData = new NavigationInputData(departureRoom, destinationRoom);
 
-        navigationUseCaseInteractor.execute(navigationInputData);
+        // Pass the input data to the interactor for execution
+        navigationInteractor.execute(navigationInputData);
     }
 }
