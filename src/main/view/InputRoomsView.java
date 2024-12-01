@@ -10,12 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.InputRoomsState;
@@ -71,7 +66,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
 
         // Map panel for rendering routes
         mapPanel.setBorder(BorderFactory.createLineBorder(BORDER_COLOR));
-        mapPanel = new MapPanel("floor1.jpg");
         mapPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
         mapPanel.setLayout(new BorderLayout());
 
@@ -111,16 +105,12 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         final JLabel departureLabel = new JLabel("Departure Room");
         // Apply styling to the input field
         styleTextField(departureRoomField);
-        JLabel departureLabel = new JLabel("Departure Room");
         styleTextField(departureRoomField);
 
         final JLabel destinationLabel = new JLabel("Destination Room");
         // Apply styling to the input field
         styleTextField(destinationRoomField);
-        JLabel destinationLabel = new JLabel("Destination Room");
         styleTextField(destinationRoomField);
-
-        beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
 
         // Set a preferred size for the TextPromptPanel
         // Adjust height as needed
@@ -157,10 +147,8 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         leftPanel.add(Box.createVerticalStrut(20));
         // Label for the TextPromptPanel
         leftPanel.add(new JLabel("Text Prompt"));
-        leftPanel.add(new JLabel("Text Prompt"));
         leftPanel.add(Box.createVerticalStrut(5));
         // Add the TextPromptPanel
-        leftPanel.add(textPromptPanel);
         leftPanel.add(textPromptPanel);
         leftPanel.add(Box.createVerticalStrut(20));
         leftPanel.add(viewFreelyPanel); // Add the "View Freely" button panel
@@ -261,6 +249,35 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
                 textPromptPanel.updatePrompt(state.getPath().toString());
             }
         }
+    }
+
+    private void openFreeViewScreen() {
+        JFrame freeViewFrame = new JFrame("Free View Mode");
+        freeViewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        freeViewFrame.setSize(1350, 1100);
+
+        // Panel for displaying blueprints
+        JPanel blueprintPanel = new JPanel(new BorderLayout());
+
+        // Dropdown for selecting blueprints
+        String[] blueprints = {"floor1.jpg", "floor2.jpg"};
+        JComboBox<String> blueprintDropdown = new JComboBox<>(blueprints);
+
+        // Map panel to show the selected blueprint
+        MapPanel blueprintMapPanel = new MapPanel((String) blueprintDropdown.getSelectedItem());
+
+        // Update the map when a new blueprint is selected
+        blueprintDropdown.addActionListener(e -> {
+            String selectedBlueprint = (String) blueprintDropdown.getSelectedItem();
+            blueprintMapPanel.updateBlueprint(selectedBlueprint);
+        });
+
+        // Add components to the blueprint panel
+        blueprintPanel.add(blueprintDropdown, BorderLayout.NORTH);
+        blueprintPanel.add(blueprintMapPanel, BorderLayout.CENTER);
+
+        freeViewFrame.add(blueprintPanel);
+        freeViewFrame.setVisible(true);
     }
 
     private void updateMapWithPath(List<Point> path) {

@@ -4,10 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.List;
 
 public class MapPanel extends JPanel {
@@ -43,6 +39,8 @@ public class MapPanel extends JPanel {
                 scale = Math.max(0.3, scale - zoomStep); // Zoom out
             }
             repaint();
+        });
+
         addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
@@ -96,7 +94,6 @@ public class MapPanel extends JPanel {
             }
         });
     }
-
     public void setPath(List<Point> path) {
         this.path = path;
         repaint();

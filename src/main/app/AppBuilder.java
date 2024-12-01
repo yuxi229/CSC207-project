@@ -10,17 +10,10 @@ import data_access.LocationDataAccess;
 import data_access.MapLocationDataAccess;
 import interface_adapter.BlueprintViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.beginnavigation.BeginNavigationViewModel;
-import interface_adapter.inputrooms.InputRoomsPresenter;
-import interface_adapter.inputrooms.InputRoomsViewModel;
 import view.BlueprintSelectionView;
-import view.TextPromptPanel;
-import use_case.navigation.NavigationOutputBoundary;
 import view.InputRoomsView;
 import view.ViewManager;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.Arrays;
 
 /**
@@ -56,16 +49,7 @@ public class AppBuilder {
         locationDataAccess = LoadApiDataFacade.getLocationDao();
         mapLocationDataAccess = LoadApiDataFacade.getMapLocationDao();
     }
-    public AppBuilder addNavigationView() {
-        inputRoomsViewModel = new InputRoomsViewModel();
-        inputRoomsView = new InputRoomsView(inputRoomsViewModel, new TextPromptPanel());
 
-        // Listen for blueprint selector event
-        inputRoomsViewModel.addPropertyChangeListener(evt -> {
-            if ("openBlueprintSelector".equals(evt.getPropertyName())) {
-                viewManagerModel.setState("blueprintSelectionView");
-            }
-        });
     /**
      * Set up navigation use case and add the related view to the card panel.
      */
@@ -78,25 +62,18 @@ public class AppBuilder {
 
         // Add InputRoomsView to card panel
         cardPanel.add(inputRoomsView, "InputRoomsView");
-        cardPanel.add(inputRoomsView, inputRoomsView.getViewName());
-        return this;
     }
 
-    public AppBuilder addBlueprintSelectionView() {
+    /**
+     * \\TODO: Add javadoc.
+     */
+    public void addBlueprintSelectionView() {
         blueprintSelectionView = new BlueprintSelectionView(
                 Arrays.asList("floor1.jpg", "floor2.jpg"),
                 () -> viewManagerModel.setState("inputRoomsView"),
                 () -> System.out.println("Switch blueprint logic here")
         );
         cardPanel.add(blueprintSelectionView, "blueprintSelectionView");
-        return this;
-    }
-
-
-    public AppBuilder addNavigationUseCase() {
-        final NavigationOutputBoundary navigationOutputBoundary = new InputRoomsPresenter(
-                viewManagerModel, new BeginNavigationViewModel(), inputRoomsViewModel);
-        return this;
     }
 
     /**
