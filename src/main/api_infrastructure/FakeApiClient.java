@@ -17,7 +17,7 @@ public class FakeApiClient implements APIClient {
         try {
             data = gson.fromJson(new FileReader("src/main/api_infrastructure/fake_data.json"), Map.class);
         }
-        catch (FileNotFoundException e) {
+        catch (FileNotFoundException error) {
             System.out.println("File not found");
         }
     }
