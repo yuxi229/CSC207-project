@@ -14,19 +14,19 @@ import use_case.navigation.maplocation.MapLocation;
  */
 public class InputRoomsPresenter implements NavigationOutputBoundary {
 
-    private final InputRoomsViewModel inputRoomsViewModel;
+    private final NavigationViewModel navigationViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public InputRoomsPresenter(ViewManagerModel viewManagerModel,
-                               InputRoomsViewModel inputRoomsViewModel) {
+                               NavigationViewModel navigationViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.inputRoomsViewModel = inputRoomsViewModel;
+        this.navigationViewModel = navigationViewModel;
     }
 
     @Override
     public void prepareSuccessView(NavigationOutputData outputData) {
         // Create a new state for the InputRoomsViewModel
-        final InputRoomsState newState = new InputRoomsState();
+        final NavigationState newState = new NavigationState();
 
         // Ensure the outputData is valid
         final List<MapLocation> pathLocations = outputData.getLocations();
@@ -54,13 +54,13 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
             newState.setDestinationRoomCode(destinationLocation.getLocationID());
 
             // Update the InputRoomsViewModel and fire property change
-            inputRoomsViewModel.setState(newState);
+            navigationViewModel.setState(newState);
         }
     }
 
     @Override
     public void prepareFailView(String error) {
-        final InputRoomsState newState = new InputRoomsState();
+        final NavigationState newState = new NavigationState();
 
         // Clear previous errors
         newState.setDepartureRoomCodeError(null);
@@ -79,6 +79,6 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
         }
 
         // Update the InputRoomsViewModel and fire property change
-        inputRoomsViewModel.setState(newState);
+        navigationViewModel.setState(newState);
     }
 }
