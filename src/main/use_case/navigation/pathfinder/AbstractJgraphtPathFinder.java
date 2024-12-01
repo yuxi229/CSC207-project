@@ -17,7 +17,6 @@ import use_case.navigation.maplocation.MapLocation;
  * A class that finds the shortest path between two locations on the map.
  */
 public abstract class AbstractJgraphtPathFinder implements PathFinder {
-    private static final double DEFAULT_WEIGHT = 1.0;
     private final SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map =
             new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
     private LocationDataAccess locationDao;
@@ -69,10 +68,7 @@ public abstract class AbstractJgraphtPathFinder implements PathFinder {
      * @param location2 the second location
      * @return the weight between the two locations
      */
-    protected Double calculateWeight(Location location1, Location location2) {
-        // TODO: Decide on weight strategy in meeting
-        return DEFAULT_WEIGHT;
-    }
+    protected abstract Double calculateWeight(Location location1, Location location2);
 
     private MapLocation roomCodeToMapLocation(String roomCode) {
         final Room room = locationDao.getRoom(roomCode);
@@ -111,7 +107,7 @@ public abstract class AbstractJgraphtPathFinder implements PathFinder {
                                 .getMapLocation(location.getId(), floor1Id);
                         final MapLocation mapLocation2 = mapLocationDao
                                 .getMapLocation(location.getId(), floor2Id);
-                        linkLocations(mapLocation1, mapLocation2, DEFAULT_WEIGHT);
+                        linkLocations(mapLocation1, mapLocation2, calculateWeight(location, location));
                     }
                 }
             }
