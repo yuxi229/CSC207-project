@@ -1,7 +1,5 @@
 package data_access;
 
-import java.util.Set;
-
 import use_case.navigation.maplocation.MapLocation;
 
 /**
@@ -13,12 +11,6 @@ public interface MapLocationDaoBuilder {
      * @param mapLocation the map location to add
      */
     void addMapLocation(MapLocation mapLocation);
-
-    /**
-     * Add a set of map locations to the data.
-     * @param mapLocations the set of map locations to add
-     */
-    void addMapLocations(Set<MapLocation> mapLocations);
 
     /**
      * Create a new MapLocationDataAccessInterface object.
