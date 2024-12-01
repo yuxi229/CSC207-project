@@ -1,4 +1,4 @@
-package interface_adapter.inputrooms;
+package interface_adapter.navigation;
 
 import interface_adapter.ViewModel;
 
