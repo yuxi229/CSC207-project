@@ -70,11 +70,6 @@ public abstract class AbstractJgraphtPathFinder implements PathFinder {
      */
     protected abstract Double calculateWeight(Location location1, Location location2);
 
-    private MapLocation roomCodeToMapLocation(String roomCode) {
-        final Room room = locationDao.getRoom(roomCode);
-        return mapLocationDao.getMapLocation(room.getId(), room.getFloor());
-    }
-
     /**
      * Go through all the locations on the floor and link them together.
      * @param floor the floor to build the graph for
@@ -126,5 +121,15 @@ public abstract class AbstractJgraphtPathFinder implements PathFinder {
         map.addVertex(location2);
         final DefaultWeightedEdge edge = map.addEdge(location1, location2);
         map.setEdgeWeight(edge, weight);
+    }
+
+    /**
+     * Helper function that converts a room code to a map location.
+     * @param roomCode the room code to convert
+     * @return the map location corresponding to the room code
+     */
+    private MapLocation roomCodeToMapLocation(String roomCode) {
+        final Room room = locationDao.getRoom(roomCode);
+        return mapLocationDao.getMapLocation(room.getId(), room.getFloor());
     }
 }

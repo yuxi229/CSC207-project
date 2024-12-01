@@ -1,5 +1,8 @@
 package app;
 
+import api_infrastructure.LoadApiDataFacade;
+import data_access.LocationDataAccess;
+import data_access.MapLocationDataAccess;
 import interface_adapter.inputrooms.InputRoomsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.beginnavigation.BeginNavigationViewModel;
@@ -21,6 +24,8 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    private LocationDataAccess locationDataAccess;
+    private MapLocationDataAccess mapLocationDataAccess;
 
     private InputRoomsView inputRoomsView;
     private InputRoomsViewModel inputRoomsViewModel;
@@ -28,6 +33,21 @@ public class AppBuilder {
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+    }
+
+    /**
+     * Load all data into memory.
+     */
+    public void loadData() {
+        loadApiLocationData();
+        // TODO: Load user data.
+    }
+
+    private void loadApiLocationData() {
+        // Load location data from the API
+        LoadApiDataFacade.loadDataIntoMemory();
+        locationDataAccess = LoadApiDataFacade.getLocationDao();
+        mapLocationDataAccess = LoadApiDataFacade.getMapLocationDao();
     }
 
     public AppBuilder addNavigationView() {
