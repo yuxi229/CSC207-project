@@ -1,13 +1,13 @@
 package interface_adapter.inputrooms;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 import interface_adapter.ViewManagerModel;
 import use_case.navigation.NavigationOutputBoundary;
 import use_case.navigation.NavigationOutputData;
 import use_case.navigation.maplocation.MapLocation;
-
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The Presenter for the Navigation Use Case.

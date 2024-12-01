@@ -33,18 +33,6 @@ public class NavigationSetupFacade {
         setUpView();
     }
 
-    public InputRoomsController getInputRoomsController() {
-        return inputRoomsController;
-    }
-
-    public NavigationInputBoundary getNavigationInteractor() {
-        return naviInteractor;
-    }
-
-    public NavigationOutputBoundary getInputRoomsPresenter() {
-        return inputRoomsPresenter;
-    }
-
     public InputRoomsView getInputRoomsView() {
         return inputRoomsView;
     }
