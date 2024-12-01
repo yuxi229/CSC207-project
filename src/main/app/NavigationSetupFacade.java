@@ -19,6 +19,7 @@ import view.TextPromptPanel;
  * A facade taking care of the subsystem of setting up the map navigation use case.
  */
 public class NavigationSetupFacade {
+    private final InputRoomsViewModel inputRoomsViewModel = new InputRoomsViewModel();
     private InputRoomsController inputRoomsController;
     private NavigationInputBoundary naviInteractor;
     private NavigationOutputBoundary inputRoomsPresenter;
@@ -49,7 +50,6 @@ public class NavigationSetupFacade {
     }
 
     private void setUpPresenters(ViewManagerModel viewManagerModel) {
-        final InputRoomsViewModel inputRoomsViewModel = new InputRoomsViewModel();
         inputRoomsPresenter = new InputRoomsPresenter(viewManagerModel, inputRoomsViewModel);
     }
 
@@ -66,7 +66,6 @@ public class NavigationSetupFacade {
     }
 
     private void setUpView() {
-        final InputRoomsViewModel inputRoomsViewModel = new InputRoomsViewModel();
         final TextPromptPanel textPromptPanel = new TextPromptPanel();
         inputRoomsView = new InputRoomsView(inputRoomsViewModel, textPromptPanel, inputRoomsController);
     }

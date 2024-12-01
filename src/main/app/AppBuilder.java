@@ -13,13 +13,13 @@ import view.InputRoomsView;
 import view.ViewManager;
 
 /**
- * The AppBuilder class is responsible for putting together the pieces of
- * our CA architecture; piece by piece.
+ * The AppBuilder class is responsible for putting together the pieces of our CA architecture.
  */
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
+    // TODO: Figure out what viewManager does.
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
     private LocationDataAccess locationDataAccess;
     private MapLocationDataAccess mapLocationDataAccess;
@@ -68,6 +68,7 @@ public class AppBuilder {
         // Centers the frame on the screen
         application.setLocationRelativeTo(null);
 
+        // Display the application
         application.pack();
         application.setVisible(true);
     }

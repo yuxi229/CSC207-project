@@ -41,7 +41,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final JTextField departureRoomField = new JTextField(15);
     private final JTextField destinationRoomField = new JTextField(15);
     private final MapPanel mapPanel = new MapPanel(IMAGE_PATH);
-    private BeginNavigationView beginNavigationView;
+    private final BeginNavigationView beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
     private final TextPromptPanel textPromptPanel;
     private final InputRoomsController controller;
 
@@ -51,7 +51,10 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         this.textPromptPanel = textPromptPanel;
         this.controller = controller;
         inputRoomsViewModel.addPropertyChangeListener(this);
+        makeView();
+    }
 
+    private void makeView() {
         // Layout and design improvements
         this.setLayout(new BorderLayout());
 
@@ -71,7 +74,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         mapPanel.setLayout(new BorderLayout());
 
         // Add "Displaying Bahen Centre" title to MapPanel
-        JPanel mapTitlePanel = createMapTitlePanel();
+        final JPanel mapTitlePanel = createMapTitlePanel();
         mapPanel.add(mapTitlePanel, BorderLayout.NORTH);
 
         this.add(mapPanel, BorderLayout.CENTER);
@@ -111,8 +114,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         // Apply styling to the input field
         styleTextField(destinationRoomField);
 
-        beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
-
         // Set a preferred size for the TextPromptPanel
         // Adjust height as needed
         textPromptPanel.setPreferredSize(new Dimension(500, 100));
@@ -138,7 +139,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
 
         return leftPanel;
     }
-
 
     private JPanel createMapTitlePanel() {
         final JPanel mapTitlePanel = new JPanel();
@@ -229,6 +229,8 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
             // Update the map if a path is available
             if (state.getPath() != null && !state.getPath().isEmpty()) {
                 updateMapWithPath(state.getPath());
+                // TODO: Update textPromptPanel with output from instructions use case (Likely requires new presenter)
+                textPromptPanel.updatePrompt(state.getPath().toString());
             }
         }
     }
