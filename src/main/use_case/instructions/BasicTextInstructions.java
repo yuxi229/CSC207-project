@@ -15,7 +15,7 @@ public class BasicTextInstructions implements InstructionsOutputData, TextInstru
     private final List<String> instructions = new ArrayList<>();
     private final Map<String, String> instructionLookup = new HashMap<>();
 
-    BasicTextInstructions(List<MapLocation> mapLocations) {
+    public BasicTextInstructions(List<MapLocation> mapLocations) {
         makeInstructions(mapLocations);
     }
 
@@ -28,13 +28,15 @@ public class BasicTextInstructions implements InstructionsOutputData, TextInstru
     public BasicTextInstructions makeInstructions(List<MapLocation> mapLocations) {
         if (mapLocations.size() >= 2) {
             for (int i = 1; i < mapLocations.size(); i++) {
+                final String locationId1 = mapLocations.get(i - 1).getLocationID();
                 final String locationId2 = mapLocations.get(i).getLocationID();
                 final String instruction = "Go to " + locationId2;
-                if (instructionIsValid(locationId2, locationId2, instruction)) {
-                    addInstruction(locationId2, locationId2, instruction);
+                if (instructionIsValid(locationId1, locationId2, instruction)) {
+                    addInstruction(locationId1, locationId2, instruction);
                 }
                 else {
-                    // TODO: Raise an error here.
+                    System.out.println("Invalid instruction: " + instruction);
+                    System.out.println(locationIds);
                 }
             }
         }
@@ -76,7 +78,9 @@ public class BasicTextInstructions implements InstructionsOutputData, TextInstru
      * @param instruction The instruction.
      */
     private void addInstruction(String location1Id, String location2Id, String instruction) {
-        locationIds.add(location1Id);
+        if (locationIds.isEmpty()) {
+            locationIds.add(location1Id);
+        }
         locationIds.add(location2Id);
         instructions.add(instruction);
         instructionLookup.put(location1Id + location2Id, instruction);
