@@ -29,18 +29,7 @@ public class MapPanel extends JPanel {
     }
 
     private void setupListeners() {
-        // Mouse wheel listener for zooming
-        addMouseWheelListener(e -> {
-            double zoomStep = 0.1; // Adjust zoom step as needed
-            double rotation = e.getPreciseWheelRotation();
-            if (rotation < 0) {
-                scale = Math.min(scale + zoomStep, 5.0); // Zoom in
-            } else if (rotation > 0) {
-                scale = Math.max(0.3, scale - zoomStep); // Zoom out
-            }
-            repaint();
-        });
-
+      // Mouse wheel listener for zooming
         addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {

@@ -66,7 +66,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
 
         // Map panel for rendering routes
         mapPanel.setBorder(BorderFactory.createLineBorder(BORDER_COLOR));
-        mapPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
         mapPanel.setLayout(new BorderLayout());
 
         // Add "Displaying Bahen Centre" title to MapPanel
@@ -105,19 +104,15 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         final JLabel departureLabel = new JLabel("Departure Room");
         // Apply styling to the input field
         styleTextField(departureRoomField);
-        styleTextField(departureRoomField);
 
         final JLabel destinationLabel = new JLabel("Destination Room");
         // Apply styling to the input field
-        styleTextField(destinationRoomField);
         styleTextField(destinationRoomField);
 
         // Set a preferred size for the TextPromptPanel
         // Adjust height as needed
         textPromptPanel.setPreferredSize(new Dimension(500, 100));
         // Prevent expansion
-        textPromptPanel.setMaximumSize(new Dimension(500, 100));
-        textPromptPanel.setPreferredSize(new Dimension(500, 100));
         textPromptPanel.setMaximumSize(new Dimension(500, 100));
 
         // Add "View Freely" button with right alignment
@@ -142,7 +137,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         leftPanel.add(destinationRoomField);
         leftPanel.add(Box.createVerticalStrut(20));
         // Add the button
-        leftPanel.add(beginNavigationView.getButton());
         leftPanel.add(beginNavigationView.getButton());
         leftPanel.add(Box.createVerticalStrut(20));
         // Label for the TextPromptPanel
