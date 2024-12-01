@@ -1,6 +1,5 @@
 package api_infrastructure;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Map;
@@ -13,7 +12,7 @@ import com.google.gson.Gson;
 public class FakeApiClient implements APIClient {
     private Map<String, Object> data;
 
-    FakeApiClient() {
+    public FakeApiClient() {
         final Gson gson = new Gson();
         try {
             data = gson.fromJson(new FileReader("src/main/api_infrastructure/fake_data.json"), Map.class);
