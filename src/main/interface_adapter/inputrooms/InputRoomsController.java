@@ -8,10 +8,12 @@ import use_case.navigation.NavigationInputData;
  */
 public class InputRoomsController {
 
-    private NavigationInputBoundary navigationFacade;
+    private final NavigationInputBoundary navigationFacade;
 
     public InputRoomsController(NavigationInputBoundary navigationFacade) {
         this.navigationFacade = navigationFacade;
+    }
+
     /**
      * Executes the navigation use case.
      * @param departureRoom the room code of the departure room
@@ -22,6 +24,6 @@ public class InputRoomsController {
         NavigationInputData navigationInputData = new NavigationInputData(departureRoom, destinationRoom);
 
         // Pass the input data to the interactor for execution
-        navigationInteractor.execute(navigationInputData);
+            navigationFacade.execute(navigationInputData);
     }
 }

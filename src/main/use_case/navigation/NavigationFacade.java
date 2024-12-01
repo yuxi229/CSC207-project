@@ -1,38 +1,25 @@
 package use_case.navigation;
 
+import use_case.instructions.TextInstructionsInteractor;
 import use_case.room_exists.RoomValidationInteractor;
 
 public class NavigationFacade implements NavigationInputBoundary {
+    private final RoomValidationInteractor roomValidationInteractor;
+    private final NavigationInteractor navigationInteractor;
+    private final TextInstructionsInteractor textInstructionsInteractor;
 
-    private final NavigationInputData navigationInputData;
-    private RoomValidationInteractor roomValidationInteractor;
-    private NavigationInteractor navigationInteractor;
-    private TextInstructionsInteractor textInstructionsInteractor;
-
-    public NavigationFacade(NavigationInputData navigationInputData) {
-        this.navigationInputData = navigationInputData;
-    }
-
-    public void setRoomValidationInteractor (RoomValidationInteractor roomValidationInteractor) {
+    public NavigationFacade(RoomValidationInteractor roomValidationInteractor,
+                            NavigationInteractor navigationInteractor,
+                            TextInstructionsInteractor textInstructionsInteractor) {
         this.roomValidationInteractor = roomValidationInteractor;
-    }
-
-    public void setNavigationInteractor (NavigationInteractor navigationInteractor) {
         this.navigationInteractor = navigationInteractor;
-    }
-
-    public void setTextInstructionsInteractor (TextInstructionsInteractor textInstructionsInteractor ) {
         this.textInstructionsInteractor = textInstructionsInteractor;
     }
 
-
     @Override
     public void execute(NavigationInputData navigationInputData) {
-        this.setNavigationInteractor(navigationInteractor);
-        this.setRoomValidationInteractor(roomValidationInteractor);
-        this.setTextInstructionsInteractor(textInstructionsInteractor);
-        navigationInteractor.execute(navigationInputData);
         roomValidationInteractor.execute(navigationInputData);
-        textInstructionsInteractor.execute(navigationInputData);
+        navigationInteractor.execute(navigationInputData);
+//        textInstructionsInteractor.execute();
     }
 }
