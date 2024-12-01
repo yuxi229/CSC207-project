@@ -41,6 +41,33 @@ public class MapPanel extends JPanel {
             repaint();
         });
 
+        addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                double zoomStep = 0.025; // Adjust zoom step for responsiveness
+                double minScale = 0.5; // Minimum zoom scale
+                double maxScale = 5; // Maximum zoom scale
+
+                double oldScale = scale;
+                if (e.getPreciseWheelRotation() < 0) {
+                    // Zoom in
+                    scale = Math.min(scale + zoomStep, maxScale);
+                } else {
+                    // Zoom out
+                    scale = Math.max(minScale, scale - zoomStep);
+                }
+
+                // Adjust image offset to center zoom around mouse pointer
+                double scaleChange = scale / oldScale;
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+                imageOffset.x = (int) (mouseX - scaleChange * (mouseX - imageOffset.x));
+                imageOffset.y = (int) (mouseY - scaleChange * (mouseY - imageOffset.y));
+
+                repaint();
+            }
+        });
+
         // Mouse listeners for panning
         addMouseListener(new MouseAdapter() {
             @Override
@@ -54,7 +81,7 @@ public class MapPanel extends JPanel {
             }
         });
 
-        addMouseMotionListener(new MouseMotionAdapter() {
+        addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (lastDragPoint != null) {
@@ -67,7 +94,6 @@ public class MapPanel extends JPanel {
             }
         });
     }
-
     public void setPath(List<Point> path) {
         this.path = path;
         repaint();
@@ -127,5 +153,10 @@ public class MapPanel extends JPanel {
         int scaledX = (int) (point.x * scale) + offsetX;
         int scaledY = (int) (point.y * scale) + offsetY;
         return new Point(scaledX, scaledY);
+    }
+
+    public void updateBlueprint(String imagePath) {
+        loadImage(imagePath);
+        repaint();
     }
 }

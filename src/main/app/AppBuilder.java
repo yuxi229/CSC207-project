@@ -8,9 +8,13 @@ import javax.swing.WindowConstants;
 
 import data_access.LocationDataAccess;
 import data_access.MapLocationDataAccess;
+import interface_adapter.BlueprintViewModel;
 import interface_adapter.ViewManagerModel;
+import view.BlueprintSelectionView;
 import view.InputRoomsView;
 import view.ViewManager;
+
+import java.util.Arrays;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of our CA architecture.
@@ -23,6 +27,9 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
     private LocationDataAccess locationDataAccess;
     private MapLocationDataAccess mapLocationDataAccess;
+
+    private BlueprintSelectionView blueprintSelectionView;
+    private BlueprintViewModel blueprintViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -58,6 +65,18 @@ public class AppBuilder {
     }
 
     /**
+     * \\TODO: Add javadoc.
+     */
+    public void addBlueprintSelectionView() {
+        blueprintSelectionView = new BlueprintSelectionView(
+                Arrays.asList("floor1.jpg", "floor2.jpg"),
+                () -> viewManagerModel.setState("inputRoomsView"),
+                () -> System.out.println("Switch blueprint logic here")
+        );
+        cardPanel.add(blueprintSelectionView, "blueprintSelectionView");
+    }
+
+    /**
      * TODO: Add javadoc.
      */
     public void build() {
@@ -72,4 +91,6 @@ public class AppBuilder {
         application.pack();
         application.setVisible(true);
     }
+
+
 }
