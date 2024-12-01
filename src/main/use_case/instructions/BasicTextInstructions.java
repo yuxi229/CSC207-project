@@ -31,7 +31,7 @@ public class BasicTextInstructions implements InstructionsOutputData, TextInstru
                 final String locationId1 = mapLocations.get(i - 1).getLocationID();
                 final String locationId2 = mapLocations.get(i).getLocationID();
                 final String instruction = "Go to " + locationId2;
-                if (instructionIsValid(locationId1, locationId2, instruction)) {
+                if (instructionIsValid(locationId1)) {
                     addInstruction(locationId1, locationId2, instruction);
                 }
                 else {
@@ -62,11 +62,9 @@ public class BasicTextInstructions implements InstructionsOutputData, TextInstru
      * Check if the instruction is valid. (Possibly only used in testing.)
      *
      * @param location1Id The ID of the first location.
-     * @param location2Id The ID of the second location.
-     * @param instruction The instruction.
      * @return True if the instruction is valid, false otherwise.
      */
-    public boolean instructionIsValid(String location1Id, String location2Id, String instruction) {
+    public boolean instructionIsValid(String location1Id) {
         return locationIds.isEmpty() || locationIds.get(locationIds.size() - 1).equals(location1Id);
     }
 
