@@ -3,18 +3,19 @@ package use_case.navigation.pathfinder;
 import entity.Location;
 
 /**
- * Pathfinder class that allow for filtering which locations to visit.
+ * Pathfinder class that allow for filtering which locations to visit by class name by adjusting the edge weights of
+ * the filtered locations to be positive infinity.
  */
-public class ClassNameFilteredPathfinder extends JgraphtPathFinder implements ClassNameFilterStrategy {
+public class FilteredJgraphtPathfinder extends JgraphtPathFinder implements ClassNameFilterStrategy {
     public static final double DEFAULT_WEIGHT = 1.0;
     private ClassNameFilter filter;
 
-    public ClassNameFilteredPathfinder(ClassNameFilter filter) {
+    public FilteredJgraphtPathfinder(ClassNameFilter filter) {
         setFilter(filter);
     }
 
     @Override
-    public Double calculateWeight(Location location1, Location location2) {
+    protected Double calculateWeight(Location location1, Location location2) {
         double weight = DEFAULT_WEIGHT;
         if (filter.hasExcluded()) {
             if (filter.isExcluded(location1) || filter.isExcluded(location2)) {

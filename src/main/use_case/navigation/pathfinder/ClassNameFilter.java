@@ -5,7 +5,7 @@ import java.util.Set;
 import entity.Location;
 
 /**
- * Implementation of filter that filters locations based on their weight.
+ * Implementation of filter that filters locations based on their class name.
  */
 public class ClassNameFilter implements LocationFilter<Class<?>> {
     private Set<Class<?>> excluded;
