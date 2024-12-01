@@ -25,7 +25,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     public static final Color SOFT_LIGHT_GREY = new Color(245, 245, 245);
     // TODO: Rename BORDER_COLOR to the color
     public static final Color BORDER_COLOR = new Color(200, 200, 200);
-    public static final String IMAGE_PATH = "map.jpg";
+    public static final String IMAGE_PATH = "floor1.jpg";
     public static final Color SOFT_BLUE = new Color(48, 63, 159);
     public static final Font HEADER_STYLE = new Font("Arial", Font.BOLD, 20);
     public static final String HEADER_STRING = "UofT Indoor Navigation";
