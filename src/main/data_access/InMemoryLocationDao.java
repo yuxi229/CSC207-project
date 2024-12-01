@@ -1,10 +1,6 @@
 package data_access;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import entity.Corridor;
 import entity.Location;
@@ -82,7 +78,9 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
 
     @Override
     public List<Integer> getFloorIds() {
-        return List.copyOf(floorIds);
+        final List<Integer> floorIdList = new ArrayList<>(floorIds);
+        Collections.sort(floorIdList);
+        return floorIdList;
     }
 
     @Override
@@ -92,7 +90,13 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
 
     @Override
     public Set<Location> getLocations(int floor) {
-        return Set.of();
+        final Set<Location> locationsOnFloor = new HashSet<>();
+        for (Location location : locations) {
+            if (location.getFloors().contains(floor)) {
+                locationsOnFloor.add(location);
+            }
+        }
+        return locationsOnFloor;
     }
 
     @Override
