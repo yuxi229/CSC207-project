@@ -36,4 +36,11 @@ public interface MapLocation {
      */
     @Override
     boolean equals(Object o);
+
+    /**
+     * Returns the hash code of the MapLocation.
+     * @return the hash code of the MapLocation
+     */
+    @Override
+    int hashCode();
 }

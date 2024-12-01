@@ -1,5 +1,7 @@
 package use_case.navigation.maplocation;
 
+import java.util.Objects;
+
 /**
  * A class that represents a location on the map.
  */
@@ -49,7 +51,6 @@ public class ImageMapLocation implements MapLocation {
 
     @Override
     public int hashCode() {
-        final String toString = locationID + String.valueOf(x) + String.valueOf(y) + String.valueOf(floorID);
-        return toString.hashCode();
+        return Objects.hash(locationID, x, y, floorID);
     }
 }

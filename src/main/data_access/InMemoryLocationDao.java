@@ -1,6 +1,13 @@
 package data_access;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import entity.Corridor;
 import entity.Location;
@@ -15,7 +22,7 @@ import use_case.navigation.maplocation.MapLocation;
 public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuilder, MapLocationDataAccess,
         MapLocationDaoBuilder {
     private final Map<String, Location> locationMap = new HashMap<>();
-    private final Map<String, Map<Integer, MapLocation>> mapLocationLookup = new HashMap<>();
+    private final Map<IdFloorPair, MapLocation> mapLocationLookup = new HashMap<>();
     private final Set<Integer> floorIds = new HashSet<>();
     private final Set<Location> locations = new HashSet<>();
 
@@ -77,8 +84,8 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     }
 
     @Override
-    public List<Integer> getFloorIds() {
-        final List<Integer> floorIdList = new ArrayList<>(floorIds);
+    public List<Integer> getFloors() {
+        final List<Integer> floorIdList = new ArrayList<>(this.floorIds);
         Collections.sort(floorIdList);
         return floorIdList;
     }
@@ -100,11 +107,6 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     }
 
     @Override
-    public MapLocation getMapLocation(String id, int floor) {
-        return mapLocationLookup.get(id).get(floor);
-    }
-
-    @Override
     public void addLocation(Location location) {
         locationMap.put(location.getId(), location);
         locations.add(location);
@@ -117,30 +119,47 @@ public class InMemoryLocationDao implements LocationDataAccess, LocationDaoBuild
     }
 
     @Override
-    public void addMapLocation(MapLocation mapLocation) {
-        final String locationID = mapLocation.getLocationID();
-        final Integer floorID = mapLocation.getFloorID();
-        if (mapLocationLookup.containsKey(locationID)) {
-            System.out.println(mapLocationLookup.get(locationID));
-            System.out.println(locationID);
-            System.out.println(floorID);
-            mapLocationLookup.get(locationID).put(floorID, mapLocation);
-        }
-        else {
-            mapLocationLookup.put(locationID, Map.of(floorID, mapLocation));
-        }
-        floorIds.add(floorID);
+    public MapLocation getMapLocation(String id, int floor) {
+        return mapLocationLookup.get(new IdFloorPair(id, floor));
     }
 
     @Override
-    public void addMapLocations(Set<MapLocation> newMapLocations) {
-        for (MapLocation mapLocation : newMapLocations) {
-            addMapLocation(mapLocation);
-        }
+    public void addMapLocation(MapLocation mapLocation) {
+        final IdFloorPair idFloorPair = new IdFloorPair(mapLocation.getLocationID(), mapLocation.getFloorID());
+        mapLocationLookup.put(idFloorPair, mapLocation);
+        floorIds.add(mapLocation.getFloorID());
     }
 
     @Override
     public MapLocationDataAccess createMapLocationDao() {
         return this;
+    }
+
+    /**
+     * Helper class for storing a pair of an ID and a floor number as a key in a map.
+     */
+    private static class IdFloorPair {
+        private final String id;
+        private final int floor;
+
+        IdFloorPair(String id, int floor) {
+            this.id = id;
+            this.floor = floor;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            boolean result = false;
+            if (obj instanceof IdFloorPair) {
+                final IdFloorPair other = (IdFloorPair) obj;
+                result = id.equals(other.id) && floor == other.floor;
+            }
+            return result;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, floor);
+        }
     }
 }

@@ -6,6 +6,8 @@ import entity.Elevator;
 import entity.Room;
 import entity.Stairs;
 import org.junit.jupiter.api.Test;
+import use_case.navigation.maplocation.ImageMapLocation;
+import use_case.navigation.maplocation.MapLocation;
 
 import java.util.List;
 import java.util.Set;
@@ -71,7 +73,7 @@ public class InMemoryDaoTest {
         locationDaoBuilder.addLocation(location3);
         locationDaoBuilder.addLocation(location4);
         LocationDataAccess locationDataAccess = locationDaoBuilder.createDataAccessObject();
-        assertEquals(List.of(1, 3, 4, 5, 6, 9), locationDataAccess.getFloorIds());
+        assertEquals(List.of(1, 3, 4, 5, 6, 9), locationDataAccess.getFloors());
     }
 
     @Test
@@ -107,4 +109,26 @@ public class InMemoryDaoTest {
     }
 
     // Tests for MapLocationDaoBuilder and MapLocationDataAccess
+    @Test
+    public void testGetMapLocation() {
+        // Test that getMapLocation returns the correct map location
+        MapLocation mapLocation = new ImageMapLocation("room1", 1, 1, 1);
+        MapLocationDaoBuilder mapLocationDaoBuilder = new InMemoryLocationDao();
+        mapLocationDaoBuilder.addMapLocation(mapLocation);
+        MapLocationDataAccess mapLocationDataAccess = mapLocationDaoBuilder.createMapLocationDao();
+        assertEquals(mapLocation, mapLocationDataAccess.getMapLocation("room1", 1));
+    }
+
+    @Test
+    public void testAddMultifloorLocation() {
+        Stairs stair = new Stairs("stairs1", 10, List.of("corridor1", "corridor2"), List.of(1, 2));
+        MapLocation stairMap1 = new ImageMapLocation("stairs1", 1, 1, 1);
+        MapLocation stairMap2 = new ImageMapLocation("stairs1", 2, 1, 2);
+        MapLocationDaoBuilder mapLocationDaoBuilder = new InMemoryLocationDao();
+        mapLocationDaoBuilder.addMapLocation(stairMap1);
+        mapLocationDaoBuilder.addMapLocation(stairMap2);
+        MapLocationDataAccess mapLocationDataAccess = mapLocationDaoBuilder.createMapLocationDao();
+        assertEquals(stairMap1, mapLocationDataAccess.getMapLocation("stairs1", 1));
+        assertEquals(stairMap2, mapLocationDataAccess.getMapLocation("stairs1", 2));
+    }
 }

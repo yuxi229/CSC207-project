@@ -41,7 +41,7 @@ public abstract class AbstractJgraphtPathFinder implements PathFinder {
     public void loadData(LocationDataAccess entityDao, MapLocationDataAccess mapDao) {
         this.locationDao = entityDao;
         this.mapLocationDao = mapDao;
-        for (int floor: this.locationDao.getFloorIds()) {
+        for (int floor: this.locationDao.getFloors()) {
             buildFloor(floor);
         }
         linkFloors();
