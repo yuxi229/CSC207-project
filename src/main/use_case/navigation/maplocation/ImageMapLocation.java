@@ -7,11 +7,11 @@ import java.util.Objects;
  */
 public class ImageMapLocation implements MapLocation {
     private final String locationID;
-    private final double x;
-    private final double y;
+    private final int x;
+    private final int y;
     private final int floorID;
 
-    public ImageMapLocation(String locationID, double imgX, double imgY, int floorID) {
+    public ImageMapLocation(String locationID, int imgX, int imgY, int floorID) {
         this.locationID = locationID;
         this.x = imgX;
         this.y = imgY;
@@ -24,12 +24,12 @@ public class ImageMapLocation implements MapLocation {
     }
 
     @Override
-    public double getX() {
+    public int getX() {
         return x;
     }
 
     @Override
-    public double getY() {
+    public int getY() {
         return y;
     }
 

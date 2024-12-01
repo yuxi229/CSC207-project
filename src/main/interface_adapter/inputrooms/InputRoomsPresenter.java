@@ -33,29 +33,29 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
         if (pathLocations == null || pathLocations.isEmpty()) {
             prepareFailView("Path not found.");
         }
+        else {
+            // Convert MapLocations to Points
+            final List<Point> pathPoints = new ArrayList<>();
+            for (MapLocation location : pathLocations) {
+                final int x = location.getX();
+                final int y = location.getY();
+                pathPoints.add(new Point(x, y));
+            }
 
-        // Convert MapLocations to Points
-        final List<Point> pathPoints = new ArrayList<>();
-        for (MapLocation location : pathLocations) {
-            // Cast double to int
-            final int x = (int) location.getX();
-            final int y = (int) location.getY();
-            pathPoints.add(new Point(x, y));
+            // Set the path in the state as List<Point>
+            newState.setPath(pathPoints);
+
+            // Assume the first and last MapLocations represent the departure and destination
+            final MapLocation departureLocation = pathLocations.get(0);
+            final MapLocation destinationLocation = pathLocations.get(pathLocations.size() - 1);
+
+            // Set departure and destination room codes using IDs or other appropriate properties
+            newState.setDepartureRoomCode(departureLocation.getLocationID());
+            newState.setDestinationRoomCode(destinationLocation.getLocationID());
+
+            // Update the InputRoomsViewModel and fire property change
+            inputRoomsViewModel.setState(newState);
         }
-
-        // Set the path in the state as List<Point>
-        newState.setPath(pathPoints);
-
-        // Assume the first and last MapLocations represent the departure and destination
-        final MapLocation departureLocation = pathLocations.get(0);
-        final MapLocation destinationLocation = pathLocations.get(pathLocations.size() - 1);
-
-        // Set departure and destination room codes using IDs or other appropriate properties
-        newState.setDepartureRoomCode(departureLocation.getLocationID());
-        newState.setDestinationRoomCode(destinationLocation.getLocationID());
-
-        // Update the InputRoomsViewModel and fire property change
-        inputRoomsViewModel.setState(newState);
     }
 
     @Override

@@ -5,7 +5,7 @@ package use_case.navigation.maplocation;
  */
 public class ImageMapLocationFactory implements MapLocationFactory {
     @Override
-    public MapLocation createMapLocation(String id, double mapX, double mapY, int floor) {
+    public MapLocation createMapLocation(String id, int mapX, int mapY, int floor) {
         return new ImageMapLocation(id, mapX, mapY, floor);
     }
 }
