@@ -1,16 +1,24 @@
 package use_case.navigation.pathfinder;
 
+import data_access.LocationDataAccess;
+import data_access.MapLocationDataAccess;
 import entity.Location;
 
 /**
  * Pathfinder class that allow for filtering which locations to visit by class name by adjusting the edge weights of
  * the filtered locations to be positive infinity.
  */
-public class FilteredJgraphtPathfinder extends JgraphtPathFinder implements ClassNameFilterStrategy {
+public class FilteredJgraphtPathfinder extends AbstractJgraphtPathFinder implements ClassNameFilterStrategy {
     public static final double DEFAULT_WEIGHT = 1.0;
     private ClassNameFilter filter;
 
     public FilteredJgraphtPathfinder(ClassNameFilter filter) {
+        setFilter(filter);
+    }
+
+    public FilteredJgraphtPathfinder(LocationDataAccess locationDataAccess, MapLocationDataAccess mapLocationDataAccess,
+                                     ClassNameFilter filter) {
+        super(locationDataAccess, mapLocationDataAccess);
         setFilter(filter);
     }
 

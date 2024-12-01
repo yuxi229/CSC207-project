@@ -16,7 +16,7 @@ import use_case.navigation.maplocation.MapLocation;
 /**
  * A class that finds the shortest path between two locations on the map.
  */
-public class JgraphtPathFinder implements PathFinder {
+public abstract class AbstractJgraphtPathFinder implements PathFinder {
     private static final double DEFAULT_WEIGHT = 1.0;
     private final SimpleWeightedGraph<MapLocation, DefaultWeightedEdge> map =
             new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
@@ -26,7 +26,7 @@ public class JgraphtPathFinder implements PathFinder {
     /**
      * Default constructor. Initializes the pathfinder with no data.
      */
-    public JgraphtPathFinder() {
+    AbstractJgraphtPathFinder() {
     }
 
     /**
@@ -34,19 +34,15 @@ public class JgraphtPathFinder implements PathFinder {
      * @param locationDao the data access object to use for locations
      * @param mapLocationDao the map location data access object to use for map locations
      */
-    public JgraphtPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
-        this.locationDao = locationDao;
-        this.mapLocationDao = mapLocationDao;
+    AbstractJgraphtPathFinder(LocationDataAccess locationDao, MapLocationDataAccess mapLocationDao) {
+        loadData(locationDao, mapLocationDao);
     }
 
-    /**
-     * Initializes the pathfinder with the given data.
-     * @param inMemoryDao the data access object to use
-     */
     @Override
-    public void loadData(LocationDataAccess inMemoryDao) {
-        locationDao = inMemoryDao;
-        for (int floor: locationDao.getFloorIds()) {
+    public void loadData(LocationDataAccess entityDao, MapLocationDataAccess mapDao) {
+        this.locationDao = entityDao;
+        this.mapLocationDao = mapDao;
+        for (int floor: this.locationDao.getFloorIds()) {
             buildFloor(floor);
         }
         linkFloors();

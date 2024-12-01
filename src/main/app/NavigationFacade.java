@@ -7,11 +7,12 @@ import interface_adapter.beginnavigation.BeginNavigationViewModel;
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.InputRoomsPresenter;
 import interface_adapter.inputrooms.InputRoomsViewModel;
-import use_case.navigation.JgraphtPathFinder;
 import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInteractor;
 import use_case.navigation.NavigationOutputBoundary;
-import use_case.navigation.PathFinder;
+import use_case.navigation.pathfinder.ClassNameFilter;
+import use_case.navigation.pathfinder.FilteredJgraphtPathfinder;
+import use_case.navigation.pathfinder.PathFinder;
 
 /**
  * A facade taking care of the subsystem of setting up the map navigation use case.
@@ -35,7 +36,9 @@ public class NavigationFacade {
     private static NavigationInputBoundary setUpInteractor(LocationDataAccess locationData,
                                                            MapLocationDataAccess mapLocationData,
                                                            NavigationOutputBoundary naviPresenter) {
-        final PathFinder pathFinder = new JgraphtPathFinder(locationData, mapLocationData);
+        // TODO: Retreive filter from a related interactor.
+        final ClassNameFilter filter = new ClassNameFilter();
+        final PathFinder pathFinder = new FilteredJgraphtPathfinder(locationData, mapLocationData, filter);
         return new NavigationInteractor(locationData, pathFinder, naviPresenter);
     }
 

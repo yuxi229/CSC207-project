@@ -10,7 +10,7 @@ import entity.Location;
 public class ClassNameFilter implements LocationFilter<Class<?>> {
     private Set<Class<?>> excluded;
 
-    ClassNameFilter() {
+    public ClassNameFilter() {
         this.excluded = null;
     }
 

@@ -3,6 +3,7 @@ package use_case.navigation.pathfinder;
 import java.util.List;
 
 import data_access.LocationDataAccess;
+import data_access.MapLocationDataAccess;
 import use_case.navigation.maplocation.MapLocation;
 
 /**
@@ -11,9 +12,10 @@ import use_case.navigation.maplocation.MapLocation;
 public interface PathFinder {
     /**
      * Initializes the pathfinder with the given data.
-     * @param inMemoryDao The data access object to use.
+     * @param inMemoryDao The data access object to use for locations.
+     * @param mapLocationDao The data access object to use for map locations.
      */
-    void loadData(LocationDataAccess inMemoryDao);
+    void loadData(LocationDataAccess inMemoryDao, MapLocationDataAccess mapLocationDao);
 
     /**
      * Returns the path from the start room to the end room as a list of ids.
