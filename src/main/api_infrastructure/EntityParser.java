@@ -73,15 +73,15 @@ public class EntityParser {
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     (List<String>) data.get(CONNECTED),
-                    (int) data.get(FLOOR),
-                    (int) data.get(SIZE),
+                    (int) (double) data.get(FLOOR),
+                    (int) (double) data.get(SIZE),
                     IS_RESTRICTED.equals(data.get(RESTRICTED))
             ));
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(X_POS_KEY),
-                    (int) data.get(Y_POS_KEY),
-                    (int) data.get(FLOOR)
+                    (int) (double) data.get(X_POS_KEY),
+                    (int) (double) data.get(Y_POS_KEY),
+                    (int) (double) data.get(FLOOR)
             ));
         }
     }
@@ -95,15 +95,15 @@ public class EntityParser {
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     (List<String>) data.get(CONNECTED),
-                    (int) data.get(FLOOR),
-                    (int) data.get(SIZE),
+                    (int) (double) data.get(FLOOR),
+                    (int) (double) data.get(SIZE),
                     DEFAULT_LENGTH
             ));
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(X_POS_KEY),
-                    (int) data.get(Y_POS_KEY),
-                    (int) data.get(FLOOR)
+                    (int) (double) data.get(X_POS_KEY),
+                    (int) (double) data.get(Y_POS_KEY),
+                    (int) (double) data.get(FLOOR)
             ));
         }
     }
@@ -116,15 +116,15 @@ public class EntityParser {
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     (List<String>) data.get(CONNECTED),
-                    (int) data.get(FLOOR),
-                    (int) data.get(SIZE),
+                    (int) (double) data.get(FLOOR),
+                    (int) (double) data.get(SIZE),
                     (String) data.get("gender")
             ));
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(X_POS_KEY),
-                    (int) data.get(Y_POS_KEY),
-                    (int) data.get(FLOOR)
+                    (int) (double) data.get(X_POS_KEY),
+                    (int) (double) data.get(Y_POS_KEY),
+                    (int) (double) data.get(FLOOR)
             ));
         }
     }
@@ -139,15 +139,15 @@ public class EntityParser {
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     (List<String>) data.get(CONNECTED),
-                    (int) data.get(FLOOR),
-                    (int) data.get(SIZE),
+                    (int) (double) data.get(FLOOR),
+                    (int) (double) data.get(SIZE),
                     DEFAULT_LENGTH
             ));
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(X_POS_KEY),
-                    (int) data.get(Y_POS_KEY),
-                    (int) data.get(FLOOR)
+                    (int) (double) data.get(X_POS_KEY),
+                    (int) (double) data.get(Y_POS_KEY),
+                    (int) (double) data.get(FLOOR)
             ));
         }
     }
@@ -159,23 +159,23 @@ public class EntityParser {
             final Map<String, Object> data = (Map<String, Object>) entry.getValue();
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
-                    (int) data.get(FLOORSTART),
-                    (int) data.get(FLOOREND),
+                    (int) (double) data.get(FLOORSTART),
+                    (int) (double) data.get(FLOOREND),
                     ((List<String>) data.get(CONNECTED)).get(0),
                     ((List<String>) data.get(CONNECTED)).get(1),
-                    (int) data.get(SIZE)
+                    (int) (double) data.get(SIZE)
             ));
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(F1_XPOS),
-                    (int) data.get(F1_YPOS),
-                    (int) data.get(FLOORSTART)
+                    (int) (double) data.get(F1_XPOS),
+                    (int) (double) data.get(F1_YPOS),
+                    (int) (double) data.get(FLOORSTART)
             ));
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(F2_XPOS),
-                    (int) data.get(F2_YPOS),
-                    (int) data.get(FLOOREND)
+                    (int) (double) data.get(F2_XPOS),
+                    (int) (double) data.get(F2_YPOS),
+                    (int) (double) data.get(FLOOREND)
             ));
         }
     }
@@ -188,22 +188,22 @@ public class EntityParser {
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     (List<String>) data.get(CONNECTED),
-                    List.of((int) data.get(FLOORSTART), (int) data.get(FLOOREND)),
-                    (int) data.get(SIZE)
+                    List.of((int) (double) data.get(FLOORSTART), (int) (double) data.get(FLOOREND)),
+                    (int) (double) data.get(SIZE)
             ));
 
             // TODO: Discuss extendability issue of storing different floors under different keys for elevators
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(F1_XPOS),
-                    (int) data.get(F1_YPOS),
-                    (int) data.get(FLOORSTART)
+                    (int) (double) data.get(F1_XPOS),
+                    (int) (double) data.get(F1_YPOS),
+                    (int) (double) data.get(FLOORSTART)
             ));
             mapLocationsBuilder.addMapLocation(mapLocationFactory.createMapLocation(
                     id,
-                    (int) data.get(F2_XPOS),
-                    (int) data.get(F2_YPOS),
-                    (int) data.get(FLOOREND)
+                    (int) (double) data.get(F2_XPOS),
+                    (int) (double) data.get(F2_YPOS),
+                    (int) (double) data.get(FLOOREND)
             ));
         }
     }

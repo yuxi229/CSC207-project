@@ -1,0 +1,21 @@
+{"rooms": {"R1": {"size": 10, "floor" : 2, "imgXpos" : 0, "imgYpos" : 3, "connected" : ["C1"]},
+  "R2": {"size": 11, "floor" : 2, "imgXpos" : 11, "imgYpos" : 3, "connected" : ["C1", "C4"]},
+  "R3": {"size": 12, "floor" : 2, "imgXpos" : 3, "imgYpos" : 9, "connected" : ["C2", "V3"]},
+  "R4": {"size": 13, "floor" : 2, "imgXpos" : 12, "imgYpos" : 6, "connected" : ["C4"]},
+  "R5": {"size": 14, "floor" : 2, "imgXpos" : 1, "imgYpos" : 14, "connected" : ["C6"]}},
+  "corridors" : {"C1":  {"size": 15, "floor" : 2, "imgXpos" : 7, "imgYpos" : 4, "connected" : ["R1", "R2", "C2, C4"]},
+    "C2":  {"size": 16, "floor" : 2, "imgXpos" : 4, "imgYpos" : 7, "connected" : ["R3", "C1", "V3"]},
+    "C4":  {"size": 18, "floor" : 2, "imgXpos" : 11, "imgYpos" : 7,
+      "connected" : [19, "R4", "C1", "V3", "V5"]},
+    "C6":  {"size": 21, "floor" : 2, "imgXpos" : 6, "imgYpos" : 13, "connected" : ["R5", "V5", "C7"]},
+    "C7":  {"size": 22, "floor" : 2, "imgXpos" : 12, "imgYpos" : 13, "connected" : ["V5", "C6"]}},
+  "stairs":
+  {"S1": {"size": 23, "floorstart" : 1, "floorend" : 2, "f1Xpos" : 0, "f1Ypos" : 0, "f2Xpos" : 12, "f2Ypos" : 11, "connected" : ["C01","V5"]},
+    "S2": {"size": 24, "floorstart" : 2, "floorend" : 3, "f1Xpos" : 9, "f1Ypos" : 11, "f2Xpos" : 0, "f2Ypos" : 0, "connected" : ["V5", "C0001"]}},
+  "washrooms": {"W1": {"size": 25, "floor" : 2, "imgXpos" : 0, "imgYpos" : 0, "connected" : ["C1"]},
+    "W2": {"size": 26, "floor" : 2, "imgXpos" : 0, "imgYpos" : 0, "connected" : ["C2"]}},
+  "elevators" : {"E1": {"size": 27, "floorstart" : 1, "floorend" : 2, "f1Xpos" : 0, "f1Ypos" : 0, "f2Xpos" : 12, "f2Ypos" : 11, "connected" : ["C01", "C3"]},
+    "E2": {"size": 28, "floorstart" : 1, "floorend" : 2, "f1Xpos" : 0, "f1Ypos" : 0, "f2Xpos" : 12, "f2Ypos" : 13, "connected" : ["C0001","C3"]}},
+  "valves" : {"V3":  {"size": 17, "floor" : 2, "imgXpos" : 7, "imgYpos" : 9, "connected" : ["R3", "C2", "C4", "V5"]}, 
+    "V5":  {"size": 20, "floor" : 2, "imgXpos" : 11, "imgYpos" : 11, "connected" : ["V3", "C4", "C6", "C7"]}}
+}
