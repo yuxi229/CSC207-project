@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.List;
 
 public class MapPanel extends JPanel {
@@ -31,15 +32,31 @@ public class MapPanel extends JPanel {
 
     private void setupListeners() {
         // Mouse wheel listener for zooming
-        addMouseWheelListener(e -> {
-            double zoomStep = 0.005;
-            double rotation = e.getPreciseWheelRotation();
-            if (rotation < 0) {
-                scale = Math.min(scale + zoomStep, 5.0); // Zoom in
-            } else if (rotation > 0) {
-                scale = Math.max(0.3, scale - zoomStep); // Zoom out
+        addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                double zoomStep = 0.025; // Adjust zoom step for responsiveness
+                double minScale = 0.5; // Minimum zoom scale
+                double maxScale = 5; // Maximum zoom scale
+
+                double oldScale = scale;
+                if (e.getPreciseWheelRotation() < 0) {
+                    // Zoom in
+                    scale = Math.min(scale + zoomStep, maxScale);
+                } else {
+                    // Zoom out
+                    scale = Math.max(minScale, scale - zoomStep);
+                }
+
+                // Adjust image offset to center zoom around mouse pointer
+                double scaleChange = scale / oldScale;
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+                imageOffset.x = (int) (mouseX - scaleChange * (mouseX - imageOffset.x));
+                imageOffset.y = (int) (mouseY - scaleChange * (mouseY - imageOffset.y));
+
+                repaint();
             }
-            repaint();
         });
 
         // Mouse listeners for panning
@@ -55,7 +72,7 @@ public class MapPanel extends JPanel {
             }
         });
 
-        addMouseMotionListener(new MouseMotionAdapter() {
+        addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (lastDragPoint != null) {
@@ -125,5 +142,10 @@ public class MapPanel extends JPanel {
         int scaledY = (int) (original.y * yRatio) + offsetY;
 
         return new Point(scaledX, scaledY);
+    }
+
+    public void updateBlueprint(String imagePath) {
+        loadImage(imagePath);
+        repaint();
     }
 }
