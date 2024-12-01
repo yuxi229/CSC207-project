@@ -1,5 +1,6 @@
 package interface_adapter.inputrooms;
 
+import use_case.navigation.NavigationFacade;
 import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInputData;
 
@@ -21,7 +22,7 @@ public class InputRoomsController {
      */
     public void execute(String departure_room, String destination_room) {
         final NavigationInputData navigationInputData = new NavigationInputData(departure_room, destination_room);
-
-        navigationUseCaseInteractor.execute(navigationInputData);
+        NavigationFacade navigationFacade = new NavigationFacade(navigationInputData);
+        navigationFacade.execute(navigationInputData);
     }
 }
