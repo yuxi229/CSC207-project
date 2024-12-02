@@ -4,8 +4,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * TODO: Add javadoc.
- * @param <T> The type of the state.
+ * A generic ViewModel class to manage state and notify listeners about changes.
+ * This class is designed to handle a specific type of state and can be used in various UI contexts.
+ *
+ * @param <T> The type of the state managed by this ViewModel.
  */
 public class ViewModel<T> {
     private T state;
@@ -22,8 +24,8 @@ public class ViewModel<T> {
     }
 
     /**
-     * TODO: Add javadoc.
-     * @param state The new state.
+     * Sets a new state for the ViewModel and notifies listeners if the state changes.
+     * @param state The new state to set.
      */
     public void setState(T state) {
         final T oldState = this.state;

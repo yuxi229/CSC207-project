@@ -21,7 +21,7 @@ public class InputRoomsController {
      */
     public void execute(String departureRoom, String destinationRoom) {
         // Create the input data for navigation use case
-        NavigationInputData navigationInputData = new NavigationInputData(departureRoom, destinationRoom);
+        final NavigationInputData navigationInputData = new NavigationInputData(departureRoom, destinationRoom);
 
         // Pass the input data to the interactor for execution
         navigationInteractor.execute(navigationInputData);

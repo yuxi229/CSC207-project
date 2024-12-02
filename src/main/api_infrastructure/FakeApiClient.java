@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 /**
  * Fake implementation of the APIClient interface for testing purposes.
  */
-public class FakeApiClient implements APIClient {
+public class FakeApiClient implements ApiCilent {
     private Map<String, Object> data;
 
     public FakeApiClient() {

@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.CardLayout;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,8 +14,6 @@ import interface_adapter.ViewManagerModel;
 import view.BlueprintSelectionView;
 import view.InputRoomsView;
 import view.ViewManager;
-
-import java.util.Arrays;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of our CA architecture.
@@ -65,7 +64,8 @@ public class AppBuilder {
     }
 
     /**
-     * \\TODO: Add javadoc.
+     * Adds the BluePrintSelectionView to the card panel.
+     * The view provides a user interface for selecting blueprints and navigating back the input rooms view.
      */
     public void addBlueprintSelectionView() {
         blueprintSelectionView = new BlueprintSelectionView(
@@ -77,7 +77,8 @@ public class AppBuilder {
     }
 
     /**
-     * TODO: Add javadoc.
+     * Builds and displays the main application window with all views.
+     * Initializes the JFrame, sets the properties, and makes it visible to the user.
      */
     public void build() {
         final JFrame application = new JFrame("Navigation");
@@ -91,6 +92,5 @@ public class AppBuilder {
         application.pack();
         application.setVisible(true);
     }
-
 
 }

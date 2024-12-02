@@ -29,12 +29,12 @@ public class EntityParser {
     public static final String FLOORSTART = "floorstart";
     public static final String FLOOREND = "floorend";
 
-    private final APIClient apiClient;
+    private final ApiCilent apiClient;
     private final LocationDaoBuilder locationsBuilder;
     private final MapLocationDaoBuilder mapLocationsBuilder;
     private final MapLocationFactory mapLocationFactory;
 
-    public EntityParser(APIClient apiClient, LocationDaoBuilder locationsBuilder,
+    public EntityParser(ApiCilent apiClient, LocationDaoBuilder locationsBuilder,
                         MapLocationDaoBuilder mapLocationsBuilder, MapLocationFactory mapLocationFactory) {
         this.apiClient = apiClient;
         this.locationsBuilder = locationsBuilder;
