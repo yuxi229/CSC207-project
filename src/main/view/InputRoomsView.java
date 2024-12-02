@@ -216,6 +216,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     // Property change listener to react to updates in the InputRoomsViewModel
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
         if ("state".equals(evt.getPropertyName())) {
             final NavigationState state = (NavigationState) evt.getNewValue();
 
@@ -223,19 +224,15 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
             departureRoomField.setText(state.getDepartureRoomCode());
             destinationRoomField.setText(state.getDestinationRoomCode());
 
+            String departureError = state.getDepartureRoomCodeError();
+            String destinationError = state.getDestinationRoomCodeError();
+
             // Handle errors (if any)
             if (state.getDepartureRoomCodeError() != null) {
-                departureRoomField.setForeground(Color.RED);
-                departureRoomField.setToolTipText(state.getDepartureRoomCodeError());
+                JOptionPane.showMessageDialog(null, state.getDepartureRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-            else {
-                departureRoomField.setForeground(Color.BLACK);
-                departureRoomField.setToolTipText(null);
-            }
-
-            if (state.getDestinationRoomCodeError() != null) {
-                destinationRoomField.setForeground(Color.RED);
-                destinationRoomField.setToolTipText(state.getDestinationRoomCodeError());
+            else if (state.getDestinationRoomCodeError() != null) {
+                JOptionPane.showMessageDialog(null, state.getDestinationRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
                 destinationRoomField.setForeground(Color.BLACK);
@@ -249,6 +246,10 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
                 textPromptPanel.updatePrompt(state.getPath().toString());
             }
         }
+    }
+
+    private void showErrorPopup(String errorMessage) {
+        JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void openFreeViewScreen() {

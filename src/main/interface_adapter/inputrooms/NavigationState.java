@@ -12,6 +12,7 @@ public class NavigationState {
     private String departureRoomCodeError;
     private String destinationRoomCodeError;
     private List<Point> path;
+    private String roomCodeError;
 
     public String getDepartureRoomCode() {
         return departureRoomCode;
@@ -37,6 +38,10 @@ public class NavigationState {
     public void setDestinationRoomCode(String destinationRoomCode) {
         // Correct assignment
         this.destinationRoomCode = destinationRoomCode;
+    }
+
+    public void setRoomCodeError(String roomCodeError) {
+        this.roomCodeError = roomCodeError;
     }
 
     public void setDepartureRoomCodeError(String departureRoomCodeError) {

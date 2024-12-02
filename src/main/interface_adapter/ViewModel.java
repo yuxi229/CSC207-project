@@ -11,6 +11,8 @@ public class ViewModel<T> {
     private T state;
     private final String name;
     private final PropertyChangeSupport pcs;
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
 
     public ViewModel(String name) {
         this.name = name;
@@ -28,7 +30,7 @@ public class ViewModel<T> {
     public void setState(T state) {
         final T oldState = this.state;
         this.state = state;
-        firePropertyChange("state", oldState, state);
+        firePropertyChanged();
     }
 
     public String getName() {
@@ -52,12 +54,10 @@ public class ViewModel<T> {
     }
 
     /**
-     * Fire a property change.
-     * @param propertyName The name of the property.
-     * @param oldValue The old value.
-     * @param newValue The new value.
+     * Fires a property changed event for the state of this ViewModel.
      */
-    private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        pcs.firePropertyChange(propertyName, oldValue, newValue);
+    public void firePropertyChanged() {
+        this.support.firePropertyChange("state", null, this.state);
     }
+
 }
