@@ -1,9 +1,24 @@
 package view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+/**
+ * Text Prompt Panel.
+ */
 public class TextPromptPanel extends JPanel {
+    public static final Dimension DIMENSION = new Dimension(300, 100);
+    public static final Color LIGHT_GREY = new Color(240, 240, 240);
+    public static final int FONT_SIZE = 14;
+    public static final int BORDER_MARGINS = 5;
+    public static final Color TORY_BLUE = new Color(48, 63, 159);
     private final JTextArea promptTextArea;
 
     public TextPromptPanel() {
@@ -11,26 +26,33 @@ public class TextPromptPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBackground(Color.WHITE);
         this.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(48, 63, 159), 2), // Blue border
-                BorderFactory.createEmptyBorder(5, 5, 5, 5) // Padding
+                // Blue border
+                BorderFactory.createLineBorder(TORY_BLUE, 2),
+                // Padding
+                BorderFactory.createEmptyBorder(BORDER_MARGINS, BORDER_MARGINS, BORDER_MARGINS, BORDER_MARGINS)
         ));
 
         // Create and configure the text area
         promptTextArea = new JTextArea();
-        promptTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        promptTextArea.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
         promptTextArea.setForeground(Color.BLACK);
         promptTextArea.setLineWrap(true);
         promptTextArea.setWrapStyleWord(true);
-        promptTextArea.setEditable(false); // Make text area read-only
-        promptTextArea.setBackground(new Color(240, 240, 240)); // Light grey background
+        // Make text area read-only
+        promptTextArea.setEditable(false); 
+        // Light grey background
+        promptTextArea.setBackground(LIGHT_GREY);
 
         // Add the text area to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(promptTextArea);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // Remove default scroll pane border
+        final JScrollPane scrollPane = new JScrollPane(promptTextArea);
+        
+        // Remove default scroll pane border
+        scrollPane.setBorder(BorderFactory.createEmptyBorder()); 
         this.add(scrollPane, BorderLayout.CENTER);
 
         // Set the preferred size for the panel
-        this.setPreferredSize(new Dimension(300, 100)); // Reasonable width and height for display
+        // Reasonable width and height for display
+        this.setPreferredSize(DIMENSION); 
     }
 
     /**

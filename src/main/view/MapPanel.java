@@ -1,66 +1,82 @@
 package view;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+/**
+ * Represents a panel for displaying a map with zoom and pan functionality.
+ */
+
 public class MapPanel extends JPanel {
+    public static final int N_POINTS = 3;
+    public static final int FIFTY = 50;
+    public static final Dimension MAP_DIMENSION = new Dimension(1200, 900);
+    public static final BasicStroke BASIC_STROKE = new BasicStroke(3);
     private Image mapImage;
     private List<Point> path;
-    private double scale = 1.0; // Initial zoom scale
-    private Point imageOffset = new Point(0, 0); // Offset for panning
-    private Point lastDragPoint = null; // Track the last drag point
+    // Initial zoom scale
+    private double scale = 1.0;
+    // Offset for panning
+    private Point imageOffset = new Point(0, 0);
+    // Track the last drag point
+    private Point lastDragPoint;
 
     public MapPanel(String imagePath) {
         loadImage(imagePath);
         setupListeners();
-        setPreferredSize(new Dimension(1200, 900));
+        setPreferredSize(MAP_DIMENSION);
     }
 
     private void loadImage(String imagePath) {
         try {
             mapImage = ImageIO.read(getClass().getClassLoader().getResource(imagePath));
-        } catch (Exception e) {
+        }
+        catch (Exception exception) {
             System.err.println("Image not found at path: " + imagePath);
-            mapImage = null; // Fallback if image is not found
+            // Fallback if image is not found
+            mapImage = null;
         }
     }
 
     private void setupListeners() {
         // Mouse wheel listener for zooming
-        addMouseWheelListener(e -> {
-            double zoomStep = 0.1; // Adjust zoom step as needed
-            double rotation = e.getPreciseWheelRotation();
-            if (rotation < 0) {
-                scale = Math.min(scale + zoomStep, 5.0); // Zoom in
-            } else if (rotation > 0) {
-                scale = Math.max(0.3, scale - zoomStep); // Zoom out
-            }
-            repaint();
-        });
-
         addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                double zoomStep = 0.025; // Adjust zoom step for responsiveness
-                double minScale = 0.5; // Minimum zoom scale
-                double maxScale = 5; // Maximum zoom scale
+                // Adjust zoom step for responsiveness
+                final double zoomStep = 0.025;
+                // Minimum zoom scale
+                final double minScale = 0.5;
+                // Maximum zoom scale
+                final double maxScale = 5;
 
-                double oldScale = scale;
+                final double oldScale = scale;
                 if (e.getPreciseWheelRotation() < 0) {
                     // Zoom in
                     scale = Math.min(scale + zoomStep, maxScale);
-                } else {
+                }
+                else {
                     // Zoom out
                     scale = Math.max(minScale, scale - zoomStep);
                 }
 
                 // Adjust image offset to center zoom around mouse pointer
-                double scaleChange = scale / oldScale;
-                int mouseX = e.getX();
-                int mouseY = e.getY();
+                final double scaleChange = scale / oldScale;
+                final int mouseX = e.getX();
+                final int mouseY = e.getY();
                 imageOffset.x = (int) (mouseX - scaleChange * (mouseX - imageOffset.x));
                 imageOffset.y = (int) (mouseY - scaleChange * (mouseY - imageOffset.y));
 
@@ -85,8 +101,8 @@ public class MapPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (lastDragPoint != null) {
-                    int dx = e.getX() - lastDragPoint.x;
-                    int dy = e.getY() - lastDragPoint.y;
+                    final int dx = e.getX() - lastDragPoint.x;
+                    final int dy = e.getY() - lastDragPoint.y;
                     imageOffset.translate(dx, dy);
                     lastDragPoint = e.getPoint();
                     repaint();
@@ -94,11 +110,19 @@ public class MapPanel extends JPanel {
             }
         });
     }
+
+    /**
+     * Sets the path to be drawn on the map.
+     * @param path the list of points representing the path.
+     */
     public void setPath(List<Point> path) {
         this.path = path;
         repaint();
     }
 
+    /**
+     * Clears the current path displayed on the map.
+     */
     public void clearPath() {
         this.path = null;
         repaint();
@@ -108,12 +132,12 @@ public class MapPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (mapImage != null) {
-            Graphics2D g2d = (Graphics2D) g;
+            final Graphics2D g2d = (Graphics2D) g;
 
-            int imageWidth = (int) (mapImage.getWidth(this) * scale);
-            int imageHeight = (int) (mapImage.getHeight(this) * scale);
-            int x = (getWidth() - imageWidth) / 2 + imageOffset.x;
-            int y = (getHeight() - imageHeight) / 2 + imageOffset.y;
+            final int imageWidth = (int) (mapImage.getWidth(this) * scale);
+            final int imageHeight = (int) (mapImage.getHeight(this) * scale);
+            final int x = (getWidth() - imageWidth) / 2 + imageOffset.x;
+            final int y = (getHeight() - imageHeight) / 2 + imageOffset.y;
 
             // Draw map
             g2d.drawImage(mapImage, x, y, imageWidth, imageHeight, this);
@@ -121,40 +145,44 @@ public class MapPanel extends JPanel {
             // Draw path
             if (path != null && !path.isEmpty()) {
                 g2d.setColor(Color.BLUE);
-                g2d.setStroke(new BasicStroke(3));
+                g2d.setStroke(BASIC_STROKE);
                 for (int i = 0; i < path.size() - 1; i++) {
-                    Point p1 = scalePointToImage(path.get(i), x, y, scale);
-                    Point p2 = scalePointToImage(path.get(i + 1), x, y, scale);
+                    final Point p1 = scalePointToImage(path.get(i), x, y, scale);
+                    final Point p2 = scalePointToImage(path.get(i + 1), x, y, scale);
                     g2d.drawLine(p1.x, p1.y, p2.x, p2.y);
                     drawArrowHead(g2d, p1, p2);
                 }
             }
-        } else {
-            g.drawString("Map image not available.", getWidth() / 2 - 50, getHeight() / 2);
+        }
+        else {
+            g.drawString("Map image not available.", getWidth() / 2 - FIFTY, getHeight() / 2);
         }
     }
 
-    private void drawArrowHead(Graphics2D g2d, Point from, Point to) {
-        double arrowLength = 20 * scale;
-        double arrowWidth = 10 * scale;
-        double theta = Math.atan2(to.y - from.y, to.x - from.x);
+    private void drawArrowHead(Graphics2D g2d, Point fromPoint, Point toPoint) {
+        final double arrowLength = 20 * scale;
+        final double theta = Math.atan2(toPoint.y - fromPoint.y, toPoint.x - fromPoint.x);
 
-        double x1 = to.x - arrowLength * Math.cos(theta - Math.PI / 6);
-        double y1 = to.y - arrowLength * Math.sin(theta - Math.PI / 6);
-        double x2 = to.x - arrowLength * Math.cos(theta + Math.PI / 6);
-        double y2 = to.y - arrowLength * Math.sin(theta + Math.PI / 6);
+        final double x1 = toPoint.x - arrowLength * Math.cos(theta - Math.PI / 6);
+        final double y1 = toPoint.y - arrowLength * Math.sin(theta - Math.PI / 6);
+        final double x2 = toPoint.x - arrowLength * Math.cos(theta + Math.PI / 6);
+        final double y2 = toPoint.y - arrowLength * Math.sin(theta + Math.PI / 6);
 
-        int[] xPoints = {(int) to.x, (int) x1, (int) x2};
-        int[] yPoints = {(int) to.y, (int) y1, (int) y2};
-        g2d.fillPolygon(xPoints, yPoints, 3);
+        final int[] xPoints = {(int) toPoint.x, (int) x1, (int) x2};
+        final int[] yPoints = {(int) toPoint.y, (int) y1, (int) y2};
+        g2d.fillPolygon(xPoints, yPoints, N_POINTS);
     }
 
-    private Point scalePointToImage(Point point, int offsetX, int offsetY, double scale) {
-        int scaledX = (int) (point.x * scale) + offsetX;
-        int scaledY = (int) (point.y * scale) + offsetY;
+    private Point scalePointToImage(Point point, int offsetX, int offsetY, double localScale) {
+        final int scaledX = (int) (point.x * localScale) + offsetX;
+        final int scaledY = (int) (point.y * localScale) + offsetY;
         return new Point(scaledX, scaledY);
     }
 
+    /**
+     * Updates the displayed map image with a new blueprint.
+     * @param imagePath the path to the new image file.
+     */
     public void updateBlueprint(String imagePath) {
         loadImage(imagePath);
         repaint();

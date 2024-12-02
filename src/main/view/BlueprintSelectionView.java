@@ -1,9 +1,19 @@
 package view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+/**
+ * A view component for selecting and displaying blueprints.
+ * Provides a dropdown menu for blueprint selection and buttons for navigation and switching blueprints.
+ */
 public class BlueprintSelectionView extends JPanel {
     private final JLabel blueprintLabel;
 
@@ -12,20 +22,21 @@ public class BlueprintSelectionView extends JPanel {
         this.setBackground(Color.WHITE);
 
         // Dropdown for blueprints
-        JComboBox<String> blueprintDropdown = new JComboBox<>(blueprints.toArray(new String[0]));
-        blueprintDropdown.addActionListener(e -> updateBlueprint((String) blueprintDropdown.getSelectedItem()));
+        final JComboBox<String> blueprintDropdown = new JComboBox<>(blueprints.toArray(new String[0]));
+        blueprintDropdown.addActionListener(actionEvent
+                -> updateBlueprint((String) blueprintDropdown.getSelectedItem()));
 
         // Blueprint display
         blueprintLabel = new JLabel("No blueprint selected", SwingConstants.CENTER);
 
         // Buttons
-        JButton goBackButton = new JButton("Go Back");
-        goBackButton.addActionListener(e -> onGoBack.run());
+        final JButton goBackButton = new JButton("Go Back");
+        goBackButton.addActionListener(actionEvent -> onGoBack.run());
 
-        JButton switchBlueprintButton = new JButton("Switch Blueprint");
-        switchBlueprintButton.addActionListener(e -> onSwitchBlueprint.run());
+        final JButton switchBlueprintButton = new JButton("Switch Blueprint");
+        switchBlueprintButton.addActionListener(actionEvent -> onSwitchBlueprint.run());
 
-        JPanel buttonPanel = new JPanel();
+        final JPanel buttonPanel = new JPanel();
         buttonPanel.add(goBackButton);
         buttonPanel.add(switchBlueprintButton);
 
@@ -39,6 +50,10 @@ public class BlueprintSelectionView extends JPanel {
         // Update actual image if needed
     }
 
+    /**
+     * Updates the blueprint image displayed with a new value.
+     * @param newValue the new blueprint image value to display.
+     */
     public void updateBlueprintImage(String newValue) {
     }
 }
