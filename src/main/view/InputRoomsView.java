@@ -12,9 +12,9 @@ import java.util.List;
 
 import javax.swing.*;
 
-import interface_adapter.navigation.NavigationController;
-import interface_adapter.navigation.NavigationState;
-import interface_adapter.navigation.NavigationViewModel;
+import interface_adapter.inputrooms.InputRoomsController;
+import interface_adapter.inputrooms.NavigationState;
+import interface_adapter.inputrooms.NavigationViewModel;
 
 /**
  * TODO: Add javadoc.
@@ -38,10 +38,10 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final MapPanel mapPanel = new MapPanel(IMAGE_PATH);
     private final BeginNavigationView beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
     private final TextPromptPanel textPromptPanel;
-    private final NavigationController controller;
+    private final InputRoomsController controller;
 
     public InputRoomsView(NavigationViewModel navigationViewModel, TextPromptPanel textPromptPanel,
-                          NavigationController controller) {
+                          InputRoomsController controller) {
         this.navigationViewModel = navigationViewModel;
         this.textPromptPanel = textPromptPanel;
         this.controller = controller;

@@ -3,11 +3,11 @@ package app;
 import data_access.LocationDataAccess;
 import data_access.MapLocationDataAccess;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.navigation.NavigationController;
-import interface_adapter.navigation.NavigationPresenter;
+import interface_adapter.inputrooms.InputRoomsController;
+import interface_adapter.inputrooms.InputRoomsPresenter;
+import interface_adapter.inputrooms.NavigationViewModel;
 import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInteractor;
-import interface_adapter.navigation.NavigationViewModel;
 import use_case.navigation.NavigationOutputBoundary;
 import use_case.navigation.pathfinder.ClassNameFilter;
 import use_case.navigation.pathfinder.FilteredJgraphtPathfinder;
@@ -20,7 +20,7 @@ import view.TextPromptPanel;
  */
 public class NavigationSetupFacade {
     private final NavigationViewModel navigationViewModel = new NavigationViewModel();
-    private NavigationController navigationController;
+    private InputRoomsController inputRoomsController;
     private NavigationInputBoundary naviInteractor;
     private NavigationOutputBoundary inputRoomsPresenter;
     private InputRoomsView inputRoomsView;
@@ -38,7 +38,7 @@ public class NavigationSetupFacade {
     }
 
     private void setUpPresenters(ViewManagerModel viewManagerModel) {
-        inputRoomsPresenter = new NavigationPresenter(viewManagerModel, navigationViewModel);
+        inputRoomsPresenter = new InputRoomsPresenter(viewManagerModel, navigationViewModel);
     }
 
     private void setUpInteractors(LocationDataAccess locationData,
@@ -50,11 +50,11 @@ public class NavigationSetupFacade {
     }
 
     private void setUpControllers() {
-        navigationController = new NavigationController(naviInteractor);
+        inputRoomsController = new InputRoomsController(naviInteractor);
     }
 
     private void setUpView() {
         final TextPromptPanel textPromptPanel = new TextPromptPanel();
-        inputRoomsView = new InputRoomsView(navigationViewModel, textPromptPanel, navigationController);
+        inputRoomsView = new InputRoomsView(navigationViewModel, textPromptPanel, inputRoomsController);
     }
 }

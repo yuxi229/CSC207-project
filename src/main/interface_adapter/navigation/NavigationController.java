@@ -1,4 +1,4 @@
-package interface_adapter.navigation;
+package interface_adapter.inputrooms;
 
 import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInputData;
@@ -6,11 +6,11 @@ import use_case.navigation.NavigationInputData;
 /**
  * The controller for the Navigation Use Case.
  */
-public class NavigationController {
+public class InputRoomsController {
 
     private final NavigationInputBoundary navigationInteractor;
 
-    public NavigationController(NavigationInputBoundary navigationInteractor) {
+    public InputRoomsController(NavigationInputBoundary navigationInteractor) {
         this.navigationInteractor = navigationInteractor;
     }
 
