@@ -23,8 +23,7 @@ public class LoadApiDataFacade {
     public static void loadDataIntoMemory() {
         ApiCilent apiClient = null;
         try {
-            // apiClient = fetchApiData();
-            apiClient = fetchFakeData();
+             apiClient = fetchApiData();
         }
         catch (Exception exception) {
             // TODO: Throw/catch appropriate exception and handle it.
@@ -39,7 +38,7 @@ public class LoadApiDataFacade {
      * @return APIClient object with data fetched from the API.
      */
     public static ApiCilent fetchApiData() {
-        final String apiBaseUrl = "https://be2e-138-51-70-251.ngrok-free.app/get-dictionary";
+        final String apiBaseUrl = "https://ea40-138-51-79-29.ngrok-free.app/get-dictionary";
         printSuccessMessageToConsole();
         return new ApiClientImpl(apiBaseUrl);
     }

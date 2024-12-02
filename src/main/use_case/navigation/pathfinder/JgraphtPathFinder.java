@@ -93,7 +93,8 @@ public class JgraphtPathFinder implements PathFinder {
             // Link the location to all the locations it is connected to
             for (String location2Id : location1.getConnectedLocations()) {
                 final Location location2 = locationDao.getLocation(location2Id);
-                if (location2.getFloors().contains(floor)) {
+                //TODO: Discuss stairs that only have one floor
+                if (locationDao.idExists(location2Id) && location2.getFloors().contains(floor)) {
                     final MapLocation mapLocation2 = mapLocationDao.getMapLocation(location2Id, floor);
                     linkLocations(mapLocation1, mapLocation2, calculateWeight(location1, location2));
                 }
