@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implementation of User.
  */
@@ -8,12 +11,14 @@ public class User {
     private String uofTEmail;
     private String passwordHash;
     private String username;
+    private List<String> favourites;
 
     public User(String name, String email, String password, String username) {
         this.name = name;
         this.uofTEmail = email;
         this.passwordHash = password;
         this.username = username;
+        this.favourites = new ArrayList<>();
     }
 
     public String getName() {
@@ -46,5 +51,19 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean addFavourite(String roomID){
+        this.favourites.add(roomID);
+        return true;
+    }
+
+    public boolean removeFavourite(String roomID){
+        this.favourites.remove(roomID);
+        return true;
+    }
+
+    public List<String> getFavourites() {
+        return favourites;
     }
 }

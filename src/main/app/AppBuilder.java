@@ -60,6 +60,7 @@ public class AppBuilder {
     public AppBuilder addNavigationUseCase() {
         final NavigationOutputBoundary navigationOutputBoundary = new InputRoomsPresenter(viewManagerModel,
                 beginNavigationViewModel, inputRoomsViewModel);
+        return this;
     }
 
     /**

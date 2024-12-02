@@ -1,12 +1,51 @@
+# CampusNavigator
 
-# Team Members
+
+## Contributors
 Yuxi Zhang (yuxi229) \
-Bosen Xu () \
+Bosen Xu (xubosen) \
 Nicholas Koh (nicholaskohh) \
 Rishith Singhagra (rishithsinghagra) \
 Jackie Chen (39kie) \
 Carter Hugill (chugill)
 
+## About This Project
+
+CampusNavigator allows you to navigate a building at the University of Toronto. 
+You can start a route from a room, or the entrance, and finish at another room. 
+
+### Purpose
+
+This project was created to combat the difficulty that students of all ages face
+when starting a new school year. 
+
+# Table of Contents
+
+## Software Features
+- Browse the map
+- Start a route, either from the entrance or another room
+- Save rooms
+
+# Installation Instructions
+
+Download, and run FILENAME.
+
+# Using the Software
+
+Start the program by running FILENAME. The software
+opens in a new window.
+
+# Usage Guide
+
+**Screenshots**
+
+# License
+
+The software is free to use, and may be modified.
+
+# Feedback
+
+Provide feedback by emailing carter.hugill@mail.utoronto.ca.
 # User Stories
 
 As a student / professor / visitor:
