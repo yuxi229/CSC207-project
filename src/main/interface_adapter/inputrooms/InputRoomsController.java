@@ -10,13 +10,10 @@ import use_case.favourites.FavouritesInputBoundary;
  */
 public class InputRoomsController {
 
-    private final NavigationInputBoundary navigationInteractor;
-    private final FavouritesInputBoundary favouritesInteractor;
+    private final NavigationInputBoundary navigationFacade;
 
-    public InputRoomsController(NavigationInputBoundary navigationInteractor,
-                                FavouritesInputBoundary favouritesInteractor) {
-        this.navigationInteractor = navigationInteractor;
-        this.favouritesInteractor = favouritesInteractor;
+    public InputRoomsController(NavigationInputBoundary navigationFacade) {
+        this.navigationFacade = navigationFacade;
     }
 
     /**
@@ -30,7 +27,10 @@ public class InputRoomsController {
         final FavouritesInputData favouritesInputData = new FavouritesInputData(departureRoom, destinationRoom);
 
         // Pass the input data to the interactor for execution
+
         navigationInteractor.execute(navigationInputData);
         favouritesInteractor.addRouteToFavourites(favouritesInputData);
+            navigationFacade.execute(navigationInputData);
+
     }
 }
