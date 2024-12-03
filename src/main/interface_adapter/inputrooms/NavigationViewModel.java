@@ -8,7 +8,7 @@ import interface_adapter.ViewModel;
 public class NavigationViewModel extends ViewModel<NavigationState> {
     public NavigationViewModel() {
         // TODO: Edit to a more descriptive name
-        super("Room Input View Model");
+        super("Navigation View Model");
         setState(new NavigationState());
     }
 }

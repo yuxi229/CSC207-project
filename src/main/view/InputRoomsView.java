@@ -304,6 +304,18 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
             // Update text fields
             end_input_field.setText(state.getDepartureRoomCode());
             end_input_field.setText(state.getDestinationRoomCode());
+            // Handle errors (if any)
+            if (state.getDepartureRoomCodeError() != null) {
+                JOptionPane.showMessageDialog(null, state.getDepartureRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+            else if (state.getDestinationRoomCodeError() != null) {
+                JOptionPane.showMessageDialog(null, state.getDestinationRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                // Update text fields
+                departureRoomField.setText(state.getDepartureRoomCode());
+                destinationRoomField.setText(state.getDestinationRoomCode());
 
             // Handle errors (if any)
             if (state.getDepartureRoomCodeError() != null) {
@@ -329,6 +341,11 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
                 // TODO: Update textPromptPanel with output from instructions use case (Likely requires new presenter)
                 textPromptPanel.updatePrompt(state.getPath().toString());
                 updateMapWithPath(state.getPath(), state.getFloors());
+                // Update the map if a path is available
+                if (state.getPath() != null && !state.getPath().isEmpty()) {
+                    updateMapWithPath(state.getPath());
+                    textPromptPanel.updatePrompt(state.getPath().toString());
+                }
             }
         }
     }
@@ -338,6 +355,10 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         mapPanel.setPath(path, floors);
         // Refresh the map panel
         mapPanel.repaint();
+    }
+
+    private void showErrorPopup(String errorMessage) {
+        JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void openFreeViewScreen() {

@@ -8,10 +8,10 @@ import use_case.navigation.NavigationInputData;
  */
 public class InputRoomsController {
 
-    private final NavigationInputBoundary navigationInteractor;
+    private final NavigationInputBoundary navigationFacade;
 
-    public InputRoomsController(NavigationInputBoundary navigationInteractor) {
-        this.navigationInteractor = navigationInteractor;
+    public InputRoomsController(NavigationInputBoundary navigationFacade) {
+        this.navigationFacade = navigationFacade;
     }
 
     /**
@@ -24,6 +24,6 @@ public class InputRoomsController {
         final NavigationInputData navigationInputData = new NavigationInputData(departureRoom, destinationRoom);
 
         // Pass the input data to the interactor for execution
-        navigationInteractor.execute(navigationInputData);
+            navigationFacade.execute(navigationInputData);
     }
 }

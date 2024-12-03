@@ -12,6 +12,7 @@ public class NavigationState {
     private String departureRoomCodeError;
     private String destinationRoomCodeError;
     private List<Point> path;
+    private String roomCodeError;
     private List<Integer> floors;
 
     public String getDepartureRoomCode() {
@@ -20,14 +21,6 @@ public class NavigationState {
 
     public String getDestinationRoomCode() {
         return destinationRoomCode;
-    }
-
-    public String getDepartureRoomCodeError() {
-        return departureRoomCodeError;
-    }
-
-    public String getDestinationRoomCodeError() {
-        return destinationRoomCodeError;
     }
 
     public void setDepartureRoomCode(String departureRoomCode) {
@@ -46,6 +39,14 @@ public class NavigationState {
 
     public void setDestinationRoomCodeError(String destinationRoomCodeError) {
         this.destinationRoomCodeError = destinationRoomCodeError;
+    }
+
+    public String getDepartureRoomCodeError() {
+        return this.departureRoomCodeError;
+    }
+
+    public String getDestinationRoomCodeError() {
+        return this.destinationRoomCodeError;
     }
 
     public List<Point> getPath() {
