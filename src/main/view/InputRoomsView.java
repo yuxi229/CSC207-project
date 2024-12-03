@@ -365,6 +365,9 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         mapPanel.updateMap(imgPath);
     }
 
+    @Override
+    public void 
+
 
     // Property change listener to react to updates in the InputRoomsViewModel
     @Override
