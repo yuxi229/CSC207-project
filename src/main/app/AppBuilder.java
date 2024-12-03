@@ -1,16 +1,15 @@
 package app;
 
 import java.awt.CardLayout;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.LocationDataAccess;
-import data_access.MapLocationDataAccess;
+import interface_adapter.BlueprintController;
 import interface_adapter.BlueprintViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.BlueprintSelectionInteractor;
 import view.BlueprintSelectionView;
 import view.InputRoomsView;
 import view.ViewManager;
@@ -22,13 +21,11 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    // TODO: Figure out what viewManager does.
+    // TODO: Figure out what ViewManager does.
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
-    private LocationDataAccess locationDataAccess;
-    private MapLocationDataAccess mapLocationDataAccess;
 
-    private BlueprintSelectionView blueprintSelectionView;
     private BlueprintViewModel blueprintViewModel;
+    private BlueprintController blueprintController;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -39,14 +36,11 @@ public class AppBuilder {
      */
     public void loadData() {
         loadApiLocationData();
-        // TODO: Load user data.
+        // TODO: Load user data
     }
 
     private void loadApiLocationData() {
-        // Load location data from the API
         LoadApiDataFacade.loadDataIntoMemory();
-        locationDataAccess = LoadApiDataFacade.getLocationDao();
-        mapLocationDataAccess = LoadApiDataFacade.getMapLocationDao();
     }
 
     /**
@@ -54,12 +48,12 @@ public class AppBuilder {
      */
     public void addNavigationView() {
         final NavigationSetupFacade navigationSetupFacade = new NavigationSetupFacade(
-                locationDataAccess, mapLocationDataAccess, viewManagerModel);
+                LoadApiDataFacade.getLocationDao(),
+                LoadApiDataFacade.getMapLocationDao(),
+                viewManagerModel
+        );
 
-        // Create the InputRoomsView with all required dependencies
         final InputRoomsView inputRoomsView = navigationSetupFacade.getInputRoomsView();
-
-        // Add InputRoomsView to card panel
         cardPanel.add(inputRoomsView, "InputRoomsView");
     }
 
@@ -68,11 +62,22 @@ public class AppBuilder {
      * The view provides a user interface for selecting blueprints and navigating back the input rooms view.
      */
     public void addBlueprintSelectionView() {
-        blueprintSelectionView = new BlueprintSelectionView(
-                Arrays.asList("floor1.jpg", "floor2.jpg"),
+        // Set up interactor, view model, and controller
+        final BlueprintSelectionInteractor interactor = new BlueprintSelectionInteractor();
+        blueprintViewModel = new BlueprintViewModel();
+        blueprintController = new BlueprintController(interactor, blueprintViewModel);
+
+        // Initialize the view model
+        blueprintController.initializeBlueprints();
+
+        // Set up the view using the controller and view model
+        final BlueprintSelectionView blueprintSelectionView = new BlueprintSelectionView(
+                blueprintViewModel,
                 () -> viewManagerModel.setState("inputRoomsView"),
-                () -> System.out.println("Switch blueprint logic here")
+                blueprintController::onBlueprintSelected
         );
+
+        // Add the view to the card panel
         cardPanel.add(blueprintSelectionView, "blueprintSelectionView");
     }
 
@@ -85,12 +90,8 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
 
-        // Centers the frame on the screen
         application.setLocationRelativeTo(null);
-
-        // Display the application
         application.pack();
         application.setVisible(true);
     }
-
 }

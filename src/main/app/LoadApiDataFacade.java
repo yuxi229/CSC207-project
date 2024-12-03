@@ -23,7 +23,7 @@ public class LoadApiDataFacade {
     public static void loadDataIntoMemory() {
         ApiCilent apiClient = null;
         try {
-             apiClient = fetchApiData();
+            apiClient = fetchApiData();
         }
         catch (Exception exception) {
             // TODO: Throw/catch appropriate exception and handle it.
