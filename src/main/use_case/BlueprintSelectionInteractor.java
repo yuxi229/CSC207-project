@@ -41,4 +41,8 @@ public class BlueprintSelectionInteractor {
             throw new IllegalArgumentException("Blueprint not found: " + blueprintName);
         }
     }
+
+    public String getActiveBlueprint() {
+        return activeBlueprint;
+    }
 }
