@@ -24,7 +24,6 @@ public class RoomValidationPresenter implements RoomValidationOutputBoundary {
             newState.setDestinationRoomCodeError(errorMessage);
         }
         naviViewModel.setState(newState);
-//        JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
 
     }
 

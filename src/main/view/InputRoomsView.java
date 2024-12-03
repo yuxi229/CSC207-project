@@ -256,7 +256,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
                 // Update the map if a path is available
                 if (state.getPath() != null && !state.getPath().isEmpty()) {
                     updateMapWithPath(state.getPath());
-                    // TODO: Update textPromptPanel with output from instructions use case (Likely requires new presenter)
                     textPromptPanel.updatePrompt(state.getPath().toString());
                 }
             }
