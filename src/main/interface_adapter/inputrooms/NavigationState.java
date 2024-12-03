@@ -12,6 +12,7 @@ public class NavigationState {
     private String departureRoomCodeError;
     private String destinationRoomCodeError;
     private List<Point> path;
+    private List<Integer> floors;
 
     public String getDepartureRoomCode() {
         return departureRoomCode;
@@ -21,21 +22,11 @@ public class NavigationState {
         return destinationRoomCode;
     }
 
-    public String getDepartureRoomCodeError() {
-        return departureRoomCodeError;
-    }
-
-    public String getDestinationRoomCodeError() {
-        return destinationRoomCodeError;
-    }
-
     public void setDepartureRoomCode(String departureRoomCode) {
-        // Correct assignment
         this.departureRoomCode = departureRoomCode;
     }
 
     public void setDestinationRoomCode(String destinationRoomCode) {
-        // Correct assignment
         this.destinationRoomCode = destinationRoomCode;
     }
 
@@ -43,15 +34,31 @@ public class NavigationState {
         this.departureRoomCodeError = departureRoomCodeError;
     }
 
+    public String getDepartureRoomCodeError() {
+        return this.departureRoomCodeError;
+    }
+
     public void setDestinationRoomCodeError(String destinationRoomCodeError) {
         this.destinationRoomCodeError = destinationRoomCodeError;
     }
 
+    public String getDestinationRoomCodeError() {
+        return this.destinationRoomCodeError;
+    }
+
     public List<Point> getPath() {
-        return path;
+        return List.copyOf(path);
     }
 
     public void setPath(List<Point> path) {
         this.path = path;
+    }
+
+    public void setFloors(List<Integer> floors) {
+        this.floors = List.copyOf(floors);
+    }
+
+    public List<Integer> getFloors() {
+        return List.copyOf(floors);
     }
 }

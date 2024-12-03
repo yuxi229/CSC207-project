@@ -30,8 +30,7 @@ public class ViewModel<T> {
     public void setState(T state) {
         final T oldState = this.state;
         this.state = state;
-        firePropertyChange("state", oldState, state);
-    }
+        firePropertyChange("state", oldState, state);    }
 
     public String getName() {
         return name;
@@ -62,4 +61,5 @@ public class ViewModel<T> {
     private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         pcs.firePropertyChange(propertyName, oldValue, newValue);
     }
+
 }
