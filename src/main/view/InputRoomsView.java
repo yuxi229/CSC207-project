@@ -147,13 +147,20 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         roomDropdown.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         roomDropdown.setMaximumSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
 
+        // chugill
+        FavouritesDataAccess favouritesDataAccess = new FavouritesDataAccess();
+        // chugill
+        updateDropdown(favouritesDataAccess.loadFavourites());
+
 
         // Add an ActionListener to update the JTextField when a value is selected
         roomDropdown.addActionListener(e -> {
             String selectedValue = (String) roomDropdown.getSelectedItem();
-            String[] parts = selectedValue.split(",");
-            departureRoomField.setText(parts[0]);
-            destinationRoomField.setText(parts[1]); // Set the selected value into the JTextField
+            //if (selectedValue != null) {
+                String[] parts = selectedValue.split(",");
+                departureRoomField.setText(parts[0]);
+                destinationRoomField.setText(parts[1]); // Set the selected value into the JTextField
+            //}
         });
 
         final JLabel destinationLabel = new JLabel("Destination Room");
@@ -260,6 +267,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         roomDropdown.removeAllItems();
 
         for (String favourite : favourites){
+            System.out.println(favourite);
             roomDropdown.addItem(favourite);
         }
 
@@ -271,13 +279,16 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         final String departureRoom = departureRoomField.getText();
         final String destinationRoom = destinationRoomField.getText();
 
+        final String departureRoomSave = departureRoom;
+        final String destinationRoomSave = destinationRoom;
+
         FavouritesDataAccess favouritesDataAccess = new FavouritesDataAccess();
 
         updateDropdown(favouritesDataAccess.loadFavourites());
 
 
         // Pass these inputs to the controller to process navigation
-        controller.execute(departureRoom, destinationRoom);
+        controller.execute(departureRoomSave, destinationRoomSave);
     }
 
 
