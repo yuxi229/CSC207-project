@@ -10,6 +10,7 @@ import interface_adapter.BlueprintController;
 import interface_adapter.BlueprintViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.BlueprintSelectionInteractor;
+import use_case.favourites.FavouritesOutputBoundary;
 import view.BlueprintSelectionView;
 import view.InputRoomsView;
 import view.ViewManager;
@@ -55,6 +56,10 @@ public class AppBuilder {
 
         final InputRoomsView inputRoomsView = navigationSetupFacade.getInputRoomsView();
         cardPanel.add(inputRoomsView, "InputRoomsView");
+    }
+
+    public AppBuilder addFavouritesUseCase() {
+        final
     }
 
     /**

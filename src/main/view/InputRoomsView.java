@@ -19,10 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.NavigationState;
 import interface_adapter.inputrooms.NavigationViewModel;
+import use_case.favourites.FavouritesInputData;
 
 /**
  * A view for inputting room navigation details and displaying the map.
@@ -64,6 +66,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final BeginNavigationView beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
     private final TextPromptPanel textPromptPanel;
     private final InputRoomsController controller;
+    private final FavouritesInputData favourites = new FavouritesInputData();
 
     public InputRoomsView(NavigationViewModel navigationViewModel, TextPromptPanel textPromptPanel,
                           InputRoomsController controller) {
@@ -132,6 +135,23 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         // Apply styling to the input field
         styleTextField(departureRoomField);
 
+        // Create JComboBox for room numbers
+        final String[] roomOptions = { "1120", "2", "3" };  // Options for the dropdown
+        final JComboBox<String> roomDropdown = new JComboBox<>(roomOptions);
+        roomDropdown.setEditable(true);  // This allows the dropdown to be used alongside text input
+        roomDropdown.setFont(DEFAULT_FONT);
+        roomDropdown.setBackground(LIGHT_GREY);
+        roomDropdown.setBorder(new EmptyBorder(0, 5, 0, 5));
+        roomDropdown.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
+        roomDropdown.setMaximumSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
+
+
+        // Add an ActionListener to update the JTextField when a value is selected
+        roomDropdown.addActionListener(e -> {
+            String selectedValue = (String) roomDropdown.getSelectedItem();
+            departureRoomField.setText(selectedValue);  // Set the selected value into the JTextField
+        });
+
         final JLabel destinationLabel = new JLabel("Destination Room");
         // Apply styling to the input field
         styleTextField(destinationRoomField);
@@ -154,6 +174,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         leftPanel.add(Box.createVerticalStrut(MAP_PANEL_TITLE_PADDING));
         leftPanel.add(departureLabel);
         leftPanel.add(departureRoomField);
+        leftPanel.add(roomDropdown);
         leftPanel.add(Box.createVerticalStrut(MAP_PANEL_TITLE_PADDING));
         leftPanel.add(destinationLabel);
         leftPanel.add(destinationRoomField);
@@ -236,6 +257,8 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         // Retrieve room inputs from text fields
         final String departureRoom = departureRoomField.getText();
         final String destinationRoom = destinationRoomField.getText();
+
+
 
         // Pass these inputs to the controller to process navigation
         controller.execute(departureRoom, destinationRoom);

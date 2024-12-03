@@ -2,6 +2,8 @@ package interface_adapter.inputrooms;
 
 import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInputData;
+import use_case.favourites.FavouritesInputData;
+import use_case.favourites.FavouritesInputBoundary;
 
 /**
  * The controller for the Navigation Use Case.
@@ -9,9 +11,12 @@ import use_case.navigation.NavigationInputData;
 public class InputRoomsController {
 
     private final NavigationInputBoundary navigationInteractor;
+    private final FavouritesInputBoundary favouritesInteractor;
 
-    public InputRoomsController(NavigationInputBoundary navigationInteractor) {
+    public InputRoomsController(NavigationInputBoundary navigationInteractor,
+                                FavouritesInputBoundary favouritesInteractor) {
         this.navigationInteractor = navigationInteractor;
+        this.favouritesInteractor = favouritesInteractor;
     }
 
     /**
@@ -22,8 +27,10 @@ public class InputRoomsController {
     public void execute(String departureRoom, String destinationRoom) {
         // Create the input data for navigation use case
         final NavigationInputData navigationInputData = new NavigationInputData(departureRoom, destinationRoom);
+        final FavouritesInputData favouritesInputData = new FavouritesInputData(departureRoom, destinationRoom);
 
         // Pass the input data to the interactor for execution
         navigationInteractor.execute(navigationInputData);
+        favouritesInteractor.addRouteToFavourites(favouritesInputData);
     }
 }

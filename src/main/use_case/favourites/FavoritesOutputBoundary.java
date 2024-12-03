@@ -1,4 +1,6 @@
 package use_case.favourites;
 
-public interface FavoritesOutputBoundary {
+public interface FavouritesOutputBoundary {
+
+    void presentFavouriteRooms(FavoritesOutputData outputData);
 }

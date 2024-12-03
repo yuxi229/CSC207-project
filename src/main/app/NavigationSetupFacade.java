@@ -6,6 +6,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.InputRoomsPresenter;
 import interface_adapter.inputrooms.NavigationViewModel;
+import use_case.favourites.FavouritesInteractor;
 import use_case.navigation.NavigationInputBoundary;
 import use_case.navigation.NavigationInteractor;
 import use_case.navigation.NavigationOutputBoundary;
@@ -50,7 +51,7 @@ public class NavigationSetupFacade {
     }
 
     private void setUpControllers() {
-        inputRoomsController = new InputRoomsController(naviInteractor);
+        inputRoomsController = new InputRoomsController(naviInteractor, new FavouritesInteractor());
     }
 
     private void setUpView() {

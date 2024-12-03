@@ -1,5 +1,10 @@
 package use_case.favourites;
 
+import java.util.List;
+
 public interface FavouritesInputBoundary {
-    void saveRoom(FavoritesInputData favoritesInputData);
+
+    public void addRouteToFavourites(FavouritesInputData favouritesInputData);
+
+    public List<String> getFavouriteRooms();
 }
