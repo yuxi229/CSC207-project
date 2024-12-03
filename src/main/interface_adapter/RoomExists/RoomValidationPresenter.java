@@ -29,10 +29,6 @@ public class RoomValidationPresenter implements RoomValidationOutputBoundary {
 
     @Override
     public void prepareRoomSuccessView() {
-        NavigationState newState = new NavigationState();
-        // Clear any previous errors in the NavigationState
-        newState.setDepartureRoomCodeError(null);
-        newState.setDestinationRoomCodeError(null);
-        naviViewModel.setState(newState);
+        // Do nothing
     }
 }

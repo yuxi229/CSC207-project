@@ -59,7 +59,7 @@ public class NavigationSetupFacade {
                 roomValidationPresenter);
         navigationInteractor = new NavigationInteractor(locationData, pathFinder, inputRoomsPresenter);
         naviInteractor = new NavigationInteractor(locationData, pathFinder, inputRoomsPresenter);
-        navigationFacade = new NavigationFacade(roomValidationInteractor, navigationInteractor);
+        navigationFacade = new NavigationFacade(roomValidationInteractor, navigationInteractor, locationData);
     }
 
     private void setUpControllers() {

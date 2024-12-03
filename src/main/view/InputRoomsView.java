@@ -15,12 +15,12 @@ import javax.swing.*;
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.NavigationState;
 import interface_adapter.inputrooms.NavigationViewModel;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A view for inputting room navigation details and displaying the map.
  */
 public class InputRoomsView extends JPanel implements PropertyChangeListener {
-
     // Colours and Fonts
     public static final Color WHITE = new Color(245, 245, 245);
     public static final Color DARKER_GREY = new Color(200, 200, 200);
@@ -31,10 +31,16 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     public static final Color GREY = new Color(150, 150, 150);
 
     // File Paths
-    public static final String IMAGE_PATH = "floor1.jpg";
+    public static final String F1_IMAGE_PATH = "floor1.jpg";
+    public static final String F2_IMAGE_PATH = "floor2.jpg";
+    public static final String F3_IMAGE_PATH = "floor3.jpg";
+    public static final String F4_IMAGE_PATH = "floor4.jpg";
+    public static final String F5_IMAGE_PATH = "floor5.jpg";
+    public static final List<String> IMAGE_PATHS = List.of(F1_IMAGE_PATH, F2_IMAGE_PATH, F3_IMAGE_PATH, F4_IMAGE_PATH,
+            F5_IMAGE_PATH);
 
     // title
-    public static final String HEADER_STRING = "UofT Indoor Navigation";
+    public static final String HEADER_STRING = "Indoor Navigation System";
 
     // Constants for Dimensions
     public static final int FREE_VIEW_HEIGHT = 1100;
@@ -47,15 +53,16 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     public static final int FIELD_HEIGHT = 30;
     public static final int FIELD_WIDTH = 400;
     public static final int BORDER_WIDTH = 5;
+    public static final JTextField start_input_field = new JTextField(15);
+    public static final JTextField end_input_field =  new JTextField(15);
 
-    // Instance variables
-    private final NavigationViewModel navigationViewModel;
-    private final JTextField departureRoomField = new JTextField(15);
-    private final JTextField destinationRoomField = new JTextField(15);
-    private final MapPanel mapPanel = new MapPanel(IMAGE_PATH);
+    private final MapPanel mapPanel = new MapPanel(F1_IMAGE_PATH);
     private final BeginNavigationView beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
     private final TextPromptPanel textPromptPanel;
     private final InputRoomsController controller;
+    private final NavigationViewModel navigationViewModel;
+    private Integer curMapId = 0;
+
 
     public InputRoomsView(NavigationViewModel navigationViewModel, TextPromptPanel textPromptPanel,
                           InputRoomsController controller) {
@@ -69,7 +76,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private void makeView() {
         // Layout and design improvements
         this.setLayout(new BorderLayout());
-
         // Soft light grey
         this.setBackground(WHITE);
 
@@ -82,13 +88,16 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         this.add(leftPanel, BorderLayout.WEST);
 
         // Map panel for rendering routes
+        formatMapPanel();
+    }
+
+    private void formatMapPanel() {
         mapPanel.setBorder(BorderFactory.createLineBorder(DARKER_GREY));
         mapPanel.setLayout(new BorderLayout());
 
         // Add "Displaying Bahen Centre" title to MapPanel
         final JPanel mapTitlePanel = createMapTitlePanel();
         mapPanel.add(mapTitlePanel, BorderLayout.NORTH);
-
         this.add(mapPanel, BorderLayout.CENTER);
     }
 
@@ -98,9 +107,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         headerPanel.setBackground(SOFT_BLUE);
         headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        final JLabel headerLabel = new JLabel(HEADER_STRING);
-        headerLabel.setFont(HEADER_STYLE);
-        headerLabel.setForeground(Color.WHITE);
+        final JLabel headerLabel = makeLabel(HEADER_STRING, HEADER_STYLE, Color.WHITE);
         headerPanel.add(headerLabel);
 
         return headerPanel;
@@ -108,61 +115,85 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
 
     private JPanel createLeftPanel() {
         final JPanel leftPanel = new JPanel();
-        // Restrict width
-        leftPanel.setPreferredSize(new Dimension(LEFT_PANEL_WIDTH, 0));
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.setBackground(Color.WHITE);
-        // Add padding
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(MAP_PANEL_TITLE_PADDING, FIELD_PADDING,
-                MAP_PANEL_TITLE_PADDING, FIELD_PADDING));
 
-        final JLabel title = new JLabel("Where To?");
-        title.setFont(HEADER_STYLE);
-        title.setForeground(SOFT_BLUE);
-
-        final JLabel departureLabel = new JLabel("Departure Room");
+        // Format the left panel
+        formatLeftPanel(leftPanel);
         // Apply styling to the input field
-        styleTextField(departureRoomField);
-
-        final JLabel destinationLabel = new JLabel("Destination Room");
+        styleTextField(start_input_field);
         // Apply styling to the input field
-        styleTextField(destinationRoomField);
+        styleTextField(end_input_field);
+        // Format the TextPromptPanel
+        formatTextPromptPanel();
 
+        // Add components to the left panel
+        addComponents(leftPanel);
+        return leftPanel;
+    }
+
+    private void addComponents(JPanel leftPanel) {
+        leftPanel.add(makeLabel("Where To?", HEADER_STYLE, SOFT_BLUE));
+        leftPanel.add(Box.createVerticalStrut(MAP_PANEL_TITLE_PADDING));
+        leftPanel.add(new JLabel("Departure Room"));
+        leftPanel.add(start_input_field);
+        leftPanel.add(Box.createVerticalStrut(MAP_PANEL_TITLE_PADDING));
+        leftPanel.add(new JLabel("Destination Room"));
+        leftPanel.add(end_input_field);
+        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
+        // Add begin navigation button
+        leftPanel.add(beginNavigationView.getButton());
+        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
+        // Add label for the TextPromptPanel
+        leftPanel.add(new JLabel("Text Prompt"));
+        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
+        // Add the TextPromptPanel
+        leftPanel.add(textPromptPanel);
+        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
+        // Add the previous and next buttons
+        leftPanel.add(makePreviousNextPanel());
+        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
+        // Add the "View Freely" button panel
+        leftPanel.add(makeViewFreelyPanel());
+    }
+
+    @NotNull
+    private JPanel makePreviousNextPanel() {
+        final JButton previous = new JButton("Previous");
+        previous.addActionListener(event -> showPreviousInstruction());
+        final JButton next = new JButton("Next");
+        next.addActionListener(event -> showNextInstruction());
+
+        final JPanel previousNextPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        previousNextPanel.setBackground(Color.WHITE);
+        previousNextPanel.add(previous);
+        previousNextPanel.add(next);
+        return previousNextPanel;
+    }
+
+    @NotNull
+    private JPanel makeViewFreelyPanel() {
+        final JButton viewFreelyButton = createViewFreelyScreen();
+        final JPanel viewFreelyPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        viewFreelyPanel.setBackground(Color.WHITE);
+        viewFreelyPanel.add(viewFreelyButton);
+        return viewFreelyPanel;
+    }
+
+    private void formatTextPromptPanel() {
         // Set a preferred size for the TextPromptPanel
         // Adjust height as needed
         textPromptPanel.setPreferredSize(new Dimension(TEXT_PROMPT_WIDTH, TEXT_PROMPT_HEIGHT));
         // Prevent expansion
         textPromptPanel.setMaximumSize(new Dimension(TEXT_PROMPT_WIDTH, TEXT_PROMPT_HEIGHT));
+    }
 
-        // Add "View Freely" button with right alignment
-        final JButton viewFreelyButton = createViewFreelyScreen();
-
-        final JPanel viewFreelyPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        viewFreelyPanel.setBackground(Color.WHITE);
-        viewFreelyPanel.add(viewFreelyButton);
-
-        // Add components to the left panel
-        leftPanel.add(title);
-        leftPanel.add(Box.createVerticalStrut(MAP_PANEL_TITLE_PADDING));
-        leftPanel.add(departureLabel);
-        leftPanel.add(departureRoomField);
-        leftPanel.add(Box.createVerticalStrut(MAP_PANEL_TITLE_PADDING));
-        leftPanel.add(destinationLabel);
-        leftPanel.add(destinationRoomField);
-        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
-        // Add the button
-        leftPanel.add(beginNavigationView.getButton());
-        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
-        // Label for the TextPromptPanel
-        leftPanel.add(new JLabel("Text Prompt"));
-        leftPanel.add(Box.createVerticalStrut(BORDER_WIDTH));
-        // Add the TextPromptPanel
-        leftPanel.add(textPromptPanel);
-        leftPanel.add(Box.createVerticalStrut(FIELD_PADDING));
-        // Add the "View Freely" button panel
-        leftPanel.add(viewFreelyPanel);
-
-        return leftPanel;
+    private static void formatLeftPanel(JPanel leftPanel) {
+        // Restrict width
+        leftPanel.setPreferredSize(new Dimension(LEFT_PANEL_WIDTH, FREE_VIEW_HEIGHT));
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        leftPanel.setBackground(Color.WHITE);
+        // Add padding
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(MAP_PANEL_TITLE_PADDING, FIELD_PADDING,
+                MAP_PANEL_TITLE_PADDING, FIELD_PADDING));
     }
 
     private JButton createViewFreelyScreen() {
@@ -185,14 +216,10 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
                 MAP_PANEL_TITLE_PADDING, FIELD_PADDING));
 
         // Label for "Displaying"
-        final JLabel displayingLabel = new JLabel("Displaying ");
-        displayingLabel.setFont(DEFAULT_FONT);
-        displayingLabel.setForeground(GREY);
+        final JLabel displayingLabel = makeLabel("Displaying ", DEFAULT_FONT, GREY);
 
         // Label for "Bahen Centre"
-        final JLabel bahenLabel = new JLabel("Bahen Centre");
-        bahenLabel.setFont(DEFAULT_FONT);
-        bahenLabel.setForeground(SOFT_BLUE);
+        final JLabel bahenLabel = makeLabel("Bahen Centre", DEFAULT_FONT, SOFT_BLUE);
 
         // Use a FlowLayout to group "Displaying" and "Bahen Centre"
         // Align fully left, no gaps
@@ -206,6 +233,14 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         mapTitlePanel.add(textPanel, BorderLayout.WEST);
 
         return mapTitlePanel;
+    }
+
+    @NotNull
+    private static JLabel makeLabel(String text, Font name, Color color) {
+        final JLabel displayingLabel = new JLabel(text);
+        displayingLabel.setFont(name);
+        displayingLabel.setForeground(color);
+        return displayingLabel;
     }
 
     private void styleTextField(JTextField textField) {
@@ -226,11 +261,30 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     // Method triggered by the "Begin Navigation" button
     private void onBeginNavigation() {
         // Retrieve room inputs from text fields
-        final String departureRoom = departureRoomField.getText();
-        final String destinationRoom = destinationRoomField.getText();
+        final String departureRoom = start_input_field.getText();
+        final String destinationRoom = end_input_field.getText();
 
         // Pass these inputs to the controller to process navigation
         controller.execute(departureRoom, destinationRoom);
+    }
+
+    // Method triggered by the previous button
+    private void showPreviousInstruction() {
+        mapPanel.previousInstruction();
+        updateFloor();
+        mapPanel.repaint();
+    }
+
+    // Method triggered by the next button
+    private void showNextInstruction() {
+        mapPanel.nextInstruction();
+        updateFloor();
+        mapPanel.repaint();
+    }
+
+    private void updateFloor() {
+        String imgPath = IMAGE_PATHS.get(mapPanel.getCurrentFloor() - 1);
+        mapPanel.updateMap(imgPath);
     }
 
     // Property change listener to react to updates in the InputRoomsViewModel
@@ -239,31 +293,29 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         if ("state".equals(evt.getPropertyName())) {
             final NavigationState state = (NavigationState) evt.getNewValue();
 
+            // Update text fields
+            start_input_field.setText(state.getDepartureRoomCode());
+            end_input_field.setText(state.getDestinationRoomCode());
+
             // Handle errors (if any)
             if (state.getDepartureRoomCodeError() != null) {
-                JOptionPane.showMessageDialog(null, state.getDepartureRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
-
+                JOptionPane.showMessageDialog(null, state.getDepartureRoomCodeError(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
             else if (state.getDestinationRoomCodeError() != null) {
-                JOptionPane.showMessageDialog(null, state.getDestinationRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, state.getDestinationRoomCodeError(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
             else {
-                // Update text fields
-                departureRoomField.setText(state.getDepartureRoomCode());
-                destinationRoomField.setText(state.getDestinationRoomCode());
-
-
-                // Update the map if a path is available
-                if (state.getPath() != null && !state.getPath().isEmpty()) {
-                    updateMapWithPath(state.getPath());
-                    textPromptPanel.updatePrompt(state.getPath().toString());
-                }
+                // TODO: Update textPromptPanel with output from instructions use case (Likely requires new presenter)
+                textPromptPanel.updatePrompt(state.getPath().toString());
+                List<Point> path = state.getPath();
+                // Directly pass the List<Point>
+                mapPanel.setPath(path, state.getFloors());
+                // Refresh the map panel
+                mapPanel.repaint();
             }
         }
-    }
-
-    private void showErrorPopup(String errorMessage) {
-        JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void openFreeViewScreen() {
@@ -275,7 +327,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         final JPanel blueprintPanel = new JPanel(new BorderLayout());
 
         // Dropdown for selecting blueprints
-        final String[] blueprints = {"floor1.jpg", "floor2.jpg"};
+        final String[] blueprints = {F1_IMAGE_PATH, F2_IMAGE_PATH};
         final JComboBox<String> blueprintDropdown = new JComboBox<>(blueprints);
 
         // Map panel to show the selected blueprint
@@ -284,7 +336,7 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         // Update the map when a new blueprint is selected
         blueprintDropdown.addActionListener(actionEvent -> {
             final String selectedBlueprint = (String) blueprintDropdown.getSelectedItem();
-            blueprintMapPanel.updateBlueprint(selectedBlueprint);
+            blueprintMapPanel.updateMap(selectedBlueprint);
         });
 
         // Add components to the blueprint panel
@@ -293,12 +345,5 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
 
         freeViewFrame.add(blueprintPanel);
         freeViewFrame.setVisible(true);
-    }
-
-    private void updateMapWithPath(List<Point> path) {
-        // Directly pass the List<Point>
-        mapPanel.setPath(path);
-        // Refresh the map panel
-        mapPanel.repaint();
     }
 }
