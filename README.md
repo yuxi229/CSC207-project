@@ -19,14 +19,14 @@ This project was created to combat the difficulty that students of all ages face
 when starting a new semester, and for visitors that want to tour the historic buildings at the university.
 
 # Table of Contents
-- [About This Project](##About This Project)
-- [Software Features](#Software Features)
-- [Installation Instructions](#Installation Instructions)
-- [Usage Guide](#Usage Guide)
-- [License](#License)
-- [Feedback](#Feedback)
-- [Contributions](#Contributions)
-- [User Stories](#User Stories)
+- [About This Project](#about-this-project)  
+- [Software Features](#software-features)  
+- [Installation Instructions](#installation-instructions)  
+- [Usage Guide](#usage-guide)  
+- [License](#license)  
+- [Feedback](#feedback)  
+- [Contributions](#contributions)  
+- [User Stories](#user-stories)
 
 # Software Features
 - Browse all the floors of the building
