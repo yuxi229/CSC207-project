@@ -28,6 +28,7 @@ public class EntityParser {
     public static final String F2_YPOS = "f2y";
     public static final String FLOORSTART = "floorstart";
     public static final String FLOOREND = "floorend";
+    public static final String OUT = "out";
 
     private final ApiCilent apiClient;
     private final LocationDaoBuilder locationsBuilder;
@@ -70,9 +71,9 @@ public class EntityParser {
         for (Map.Entry<String, Object> entry : rawRooms.entrySet()) {
             final String id = entry.getKey();
             final Map<String, Object> data = (Map<String, Object>) entry.getValue();
-            List<String> connected = (List<String>) data.get(CONNECTED);
+            final List<String> connected = (List<String>) data.get(CONNECTED);
             // Remove OUT from connected
-            connected.remove("OUT");
+            connected.remove(OUT);
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     connected,
@@ -94,9 +95,9 @@ public class EntityParser {
         for (Map.Entry<String, Object> entry : rawCorridors.entrySet()) {
             final String id = entry.getKey();
             final Map<String, Object> data = (Map<String, Object>) entry.getValue();
-            List<String> connected = (List<String>) data.get(CONNECTED);
+            final List<String> connected = (List<String>) data.get(CONNECTED);
             // Remove OUT from connected
-            connected.remove("OUT");
+            connected.remove(OUT);
             // For valves, create corridors
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
@@ -119,9 +120,9 @@ public class EntityParser {
         for (Map.Entry<String, Object> entry : rawWashrooms.entrySet()) {
             final String id = entry.getKey();
             final Map<String, Object> data = (Map<String, Object>) entry.getValue();
-            List<String> connected = (List<String>) data.get(CONNECTED);
+            final List<String> connected = (List<String>) data.get(CONNECTED);
             // Remove OUT from connected
-            connected.remove("OUT");
+            connected.remove(OUT);
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     connected,
@@ -144,9 +145,9 @@ public class EntityParser {
         for (Map.Entry<String, Object> entry : rawValves.entrySet()) {
             final String id = entry.getKey();
             final Map<String, Object> data = (Map<String, Object>) entry.getValue();
-            List<String> connected = (List<String>) data.get(CONNECTED);
+            final List<String> connected = (List<String>) data.get(CONNECTED);
             // Remove OUT from connected
-            connected.remove("OUT");
+            connected.remove(OUT);
             // For valves, create corridors
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
@@ -169,9 +170,9 @@ public class EntityParser {
         for (Map.Entry<String, Object> entry : rawStairs.entrySet()) {
             final String id = entry.getKey();
             final Map<String, Object> data = (Map<String, Object>) entry.getValue();
-            List<String> connected = (List<String>) data.get(CONNECTED);
+            final List<String> connected = (List<String>) data.get(CONNECTED);
             // Remove OUT from connected
-            connected.remove("OUT");
+            connected.remove(OUT);
             locationsBuilder.addLocation(LocationFactory.create(
                     id,
                     (int) (double) data.get(FLOORSTART),
