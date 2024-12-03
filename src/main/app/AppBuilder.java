@@ -90,7 +90,6 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
 
-        application.setLocationRelativeTo(null);
         application.pack();
         application.setVisible(true);
     }
