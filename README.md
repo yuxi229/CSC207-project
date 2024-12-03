@@ -28,19 +28,27 @@ when starting a new school year.
 
 # Installation Instructions
 
-Download, and run FILENAME.
+Download the repository. Dependencies are automatically installed!
+
+Check and ensure your Java version is 17+.
 
 # Using the Software
 
-Start the program by running FILENAME. The software
-opens in a new window.
+Start the program by running Main. The software
+opens in a new window. Enter a room to depart from, and a destination.
+
+Routes are saved automatically to the dropdown list.
 
 # Usage Guide
 
 **Screenshots**
 
-# License
+![Choose a Floor to Browse](../../Desktop/Choose%20a%20Floor%20to%20Browse.png)\
+[View Freely](../../Desktop/View%20Freely.png)\
+![Map](../../Desktop/Map.png)\
+![Where To?](../../Desktop/Where%20To%3F.png)
 
+# License
 The software is free to use, and may be modified.
 
 # Feedback
