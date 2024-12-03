@@ -25,19 +25,35 @@ public class MapPanel extends JPanel {
     public static final int FIFTY = 50;
     public static final Dimension MAP_DIMENSION = new Dimension(1200, 900);
     public static final BasicStroke BASIC_STROKE = new BasicStroke(3);
+    public static final BasicStroke BIG_STROKE = new BasicStroke(5);
+
     private Image mapImage;
     private List<Point> path;
+    private List<Integer> floors;
     // Initial zoom scale
     private double scale = 1.0;
     // Offset for panning
-    private Point imageOffset = new Point(0, 0);
+    private final Point imageOffset = new Point(0, 0);
     // Track the last drag point
     private Point lastDragPoint;
+    private Integer currentInstructionIndex = 0;
 
     public MapPanel(String imagePath) {
         loadImage(imagePath);
         setupListeners();
         setPreferredSize(MAP_DIMENSION);
+    }
+
+    public void setCurrentInstructionIndex(Integer currentInstructionIndex) {
+        this.currentInstructionIndex = currentInstructionIndex;
+    }
+
+    public Integer getCurrentFloor() {
+        return this.floors.get(this.currentInstructionIndex);
+    }
+
+    public Integer getCurrentInstructionIndex() {
+        return this.currentInstructionIndex;
     }
 
     private void loadImage(String imagePath) {
@@ -114,9 +130,11 @@ public class MapPanel extends JPanel {
     /**
      * Sets the path to be drawn on the map.
      * @param path the list of points representing the path.
+     * @param floors the list of floors the path traverses.
      */
-    public void setPath(List<Point> path) {
+    public void setPath(List<Point> path, List<Integer> floors) {
         this.path = path;
+        this.floors = floors;
         repaint();
     }
 
@@ -144,19 +162,38 @@ public class MapPanel extends JPanel {
 
             // Draw path
             if (path != null && !path.isEmpty()) {
-                g2d.setColor(Color.BLUE);
-                g2d.setStroke(BASIC_STROKE);
+                Integer curFloor = floors.get(currentInstructionIndex);
                 for (int i = 0; i < path.size() - 1; i++) {
                     final Point p1 = scalePointToImage(path.get(i), x, y, scale);
                     final Point p2 = scalePointToImage(path.get(i + 1), x, y, scale);
-                    g2d.drawLine(p1.x, p1.y, p2.x, p2.y);
-                    drawArrowHead(g2d, p1, p2);
+
+                    if (i == currentInstructionIndex) {
+                        drawBigArrow(g2d, p1, p2);
+                    }
+                    else if (curFloor.equals(floors.get(i+1)) && curFloor.equals(floors.get(i))) {
+                        drawNormalArrow(g2d, p1, p2);
+                    }
                 }
             }
+
         }
         else {
             g.drawString("Map image not available.", getWidth() / 2 - FIFTY, getHeight() / 2);
         }
+    }
+
+    private void drawNormalArrow(Graphics2D g2d, Point p1, Point p2) {
+        g2d.setColor(Color.BLUE);
+        g2d.setStroke(BASIC_STROKE);
+        g2d.drawLine(p1.x, p1.y, p2.x, p2.y);
+        drawArrowHead(g2d, p1, p2);
+    }
+
+    private void drawBigArrow(Graphics2D g2d, Point p1, Point p2) {
+        g2d.setColor(Color.RED);
+        g2d.setStroke(BIG_STROKE);
+        g2d.drawLine(p1.x, p1.y, p2.x, p2.y);
+        drawArrowHead(g2d, p1, p2);
     }
 
     private void drawArrowHead(Graphics2D g2d, Point fromPoint, Point toPoint) {
@@ -168,10 +205,11 @@ public class MapPanel extends JPanel {
         final double x2 = toPoint.x - arrowLength * Math.cos(theta + Math.PI / 6);
         final double y2 = toPoint.y - arrowLength * Math.sin(theta + Math.PI / 6);
 
-        final int[] xPoints = {(int) toPoint.x, (int) x1, (int) x2};
-        final int[] yPoints = {(int) toPoint.y, (int) y1, (int) y2};
+        final int[] xPoints = {toPoint.x, (int) x1, (int) x2};
+        final int[] yPoints = {toPoint.y, (int) y1, (int) y2};
         g2d.fillPolygon(xPoints, yPoints, N_POINTS);
     }
+
 
     private Point scalePointToImage(Point point, int offsetX, int offsetY, double localScale) {
         final int scaledX = (int) (point.x * localScale) + offsetX;
@@ -183,7 +221,7 @@ public class MapPanel extends JPanel {
      * Updates the displayed map image with a new blueprint.
      * @param imagePath the path to the new image file.
      */
-    public void updateBlueprint(String imagePath) {
+    public void updateMap(String imagePath) {
         loadImage(imagePath);
         repaint();
     }

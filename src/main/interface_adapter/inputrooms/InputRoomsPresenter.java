@@ -41,9 +41,18 @@ public class InputRoomsPresenter implements NavigationOutputBoundary {
                 final int y = location.getY();
                 pathPoints.add(new Point(x, y));
             }
-
             // Set the path in the state as List<Point>
             newState.setPath(pathPoints);
+
+            // Convert MapLocations to floors
+            final List<Integer> floors = new ArrayList<>();
+            for (MapLocation location : pathLocations) {
+                final int floor = location.getFloor();
+                floors.add(floor);
+            }
+            // Set the floors in the state as List<Integer>
+            newState.setFloors(floors);
+
 
             // Assume the first and last MapLocations represent the departure and destination
             final MapLocation departureLocation = pathLocations.get(0);

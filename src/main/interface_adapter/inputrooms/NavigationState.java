@@ -12,6 +12,7 @@ public class NavigationState {
     private String departureRoomCodeError;
     private String destinationRoomCodeError;
     private List<Point> path;
+    private List<Integer> floors;
 
     public String getDepartureRoomCode() {
         return departureRoomCode;
@@ -48,10 +49,18 @@ public class NavigationState {
     }
 
     public List<Point> getPath() {
-        return path;
+        return List.copyOf(path);
     }
 
     public void setPath(List<Point> path) {
         this.path = path;
+    }
+
+    public void setFloors(List<Integer> floors) {
+        this.floors = List.copyOf(floors);
+    }
+
+    public List<Integer> getFloors() {
+        return List.copyOf(floors);
     }
 }
