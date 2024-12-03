@@ -10,15 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.NavigationState;
@@ -244,34 +236,29 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     // Property change listener to react to updates in the InputRoomsViewModel
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
         if ("state".equals(evt.getPropertyName())) {
             final NavigationState state = (NavigationState) evt.getNewValue();
-
-            // Update text fields
-            departureRoomField.setText(state.getDepartureRoomCode());
-            destinationRoomField.setText(state.getDestinationRoomCode());
-
-            String departureError = state.getDepartureRoomCodeError();
-            String destinationError = state.getDestinationRoomCodeError();
 
             // Handle errors (if any)
             if (state.getDepartureRoomCodeError() != null) {
                 JOptionPane.showMessageDialog(null, state.getDepartureRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
+
             }
             else if (state.getDestinationRoomCodeError() != null) {
                 JOptionPane.showMessageDialog(null, state.getDestinationRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
-                destinationRoomField.setForeground(Color.BLACK);
-                destinationRoomField.setToolTipText(null);
-            }
+                // Update text fields
+                departureRoomField.setText(state.getDepartureRoomCode());
+                destinationRoomField.setText(state.getDestinationRoomCode());
 
-            // Update the map if a path is available
-            if (state.getPath() != null && !state.getPath().isEmpty()) {
-                updateMapWithPath(state.getPath());
-                // TODO: Update textPromptPanel with output from instructions use case (Likely requires new presenter)
-                textPromptPanel.updatePrompt(state.getPath().toString());
+
+                // Update the map if a path is available
+                if (state.getPath() != null && !state.getPath().isEmpty()) {
+                    updateMapWithPath(state.getPath());
+                    // TODO: Update textPromptPanel with output from instructions use case (Likely requires new presenter)
+                    textPromptPanel.updatePrompt(state.getPath().toString());
+                }
             }
         }
     }

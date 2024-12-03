@@ -22,14 +22,6 @@ public class NavigationState {
         return destinationRoomCode;
     }
 
-    public String getDepartureRoomCodeError() {
-        return departureRoomCodeError;
-    }
-
-    public String getDestinationRoomCodeError() {
-        return destinationRoomCodeError;
-    }
-
     public void setDepartureRoomCode(String departureRoomCode) {
         // Correct assignment
         this.departureRoomCode = departureRoomCode;
@@ -40,16 +32,20 @@ public class NavigationState {
         this.destinationRoomCode = destinationRoomCode;
     }
 
-    public void setRoomCodeError(String roomCodeError) {
-        this.roomCodeError = roomCodeError;
-    }
-
     public void setDepartureRoomCodeError(String departureRoomCodeError) {
         this.departureRoomCodeError = departureRoomCodeError;
     }
 
     public void setDestinationRoomCodeError(String destinationRoomCodeError) {
         this.destinationRoomCodeError = destinationRoomCodeError;
+    }
+
+    public String getDepartureRoomCodeError() {
+        return this.departureRoomCodeError;
+    }
+
+    public String getDestinationRoomCodeError() {
+        return this.destinationRoomCodeError;
     }
 
     public List<Point> getPath() {
