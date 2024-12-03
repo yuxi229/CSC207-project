@@ -58,10 +58,6 @@ public class AppBuilder {
         cardPanel.add(inputRoomsView, "InputRoomsView");
     }
 
-    public AppBuilder addFavouritesUseCase() {
-        final
-    }
-
     /**
      * Adds the BluePrintSelectionView to the card panel.
      * The view provides a user interface for selecting blueprints and navigating back the input rooms view.

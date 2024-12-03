@@ -1,5 +1,7 @@
 package use_case.favourites;
 
+import data_access.FavouritesDataAccess;
+
 import java.util.List;
 
 public class FavouritesInteractor implements FavouritesInputBoundary {
@@ -13,14 +15,12 @@ public class FavouritesInteractor implements FavouritesInputBoundary {
     // Method to add room code to favourites
     @Override
     public void addRouteToFavourites(FavouritesInputData favouritesInputData) {
-        List<String> currentFavourites = favouritesDataAccess.loadFavourites();
-        currentFavourites.add(departureRoom);  // Add new room code to the list
-        favouritesDataAccess.saveFavourites(currentFavourites);  // Save the updated list
+        favouritesDataAccess.saveFavourites(favouritesInputData.getDepartureRoomCode() + "," + favouritesInputData.getDestinationRoomCode());
     }
 
     @Override
     // Method to get all favourite room codes
-    public List<String> getFavouriteRooms() {
-        return favouritesDataAccess.loadFavourites();  // Load and return the list of favourite rooms
+    public FavouritesOutputData getFavouriteRooms() {
+        return new FavouritesOutputData(favouritesDataAccess.loadFavourites());
     }
 }

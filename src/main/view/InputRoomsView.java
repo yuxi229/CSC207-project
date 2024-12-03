@@ -66,7 +66,6 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
     private final BeginNavigationView beginNavigationView = new BeginNavigationView(this::onBeginNavigation);
     private final TextPromptPanel textPromptPanel;
     private final InputRoomsController controller;
-    private final FavouritesInputData favourites = new FavouritesInputData();
 
     public InputRoomsView(NavigationViewModel navigationViewModel, TextPromptPanel textPromptPanel,
                           InputRoomsController controller) {

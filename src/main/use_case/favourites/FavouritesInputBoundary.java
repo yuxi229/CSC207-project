@@ -6,5 +6,5 @@ public interface FavouritesInputBoundary {
 
     public void addRouteToFavourites(FavouritesInputData favouritesInputData);
 
-    public List<String> getFavouriteRooms();
+    public FavouritesOutputData getFavouriteRooms();
 }

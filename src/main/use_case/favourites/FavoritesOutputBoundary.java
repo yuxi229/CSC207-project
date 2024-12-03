@@ -1,6 +1,5 @@
 package use_case.favourites;
 
 public interface FavouritesOutputBoundary {
-
-    void presentFavouriteRooms(FavoritesOutputData outputData);
+    void presentFavourites(FavouritesOutputData outputData);
 }
