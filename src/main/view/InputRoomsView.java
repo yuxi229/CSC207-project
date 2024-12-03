@@ -10,15 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import interface_adapter.inputrooms.InputRoomsController;
 import interface_adapter.inputrooms.NavigationState;
@@ -302,63 +294,28 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
             final NavigationState state = (NavigationState) evt.getNewValue();
 
             // Update text fields
-            end_input_field.setText(state.getDepartureRoomCode());
+            start_input_field.setText(state.getDepartureRoomCode());
             end_input_field.setText(state.getDestinationRoomCode());
+
             // Handle errors (if any)
             if (state.getDepartureRoomCodeError() != null) {
-                JOptionPane.showMessageDialog(null, state.getDepartureRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
-
+                JOptionPane.showMessageDialog(null, state.getDepartureRoomCodeError(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
             else if (state.getDestinationRoomCodeError() != null) {
-                JOptionPane.showMessageDialog(null, state.getDestinationRoomCodeError(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, state.getDestinationRoomCodeError(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
             else {
-                // Update text fields
-                departureRoomField.setText(state.getDepartureRoomCode());
-                destinationRoomField.setText(state.getDestinationRoomCode());
-
-            // Handle errors (if any)
-            if (state.getDepartureRoomCodeError() != null) {
-                end_input_field.setForeground(Color.RED);
-                end_input_field.setToolTipText(state.getDepartureRoomCodeError());
-            }
-            else {
-                end_input_field.setForeground(Color.BLACK);
-                end_input_field.setToolTipText(null);
-            }
-
-            if (state.getDestinationRoomCodeError() != null) {
-                end_input_field.setForeground(Color.RED);
-                end_input_field.setToolTipText(state.getDestinationRoomCodeError());
-            }
-            else {
-                end_input_field.setForeground(Color.BLACK);
-                end_input_field.setToolTipText(null);
-            }
-
-            // Update the map if a path is available
-            if (state.getPath() != null && !state.getPath().isEmpty()) {
                 // TODO: Update textPromptPanel with output from instructions use case (Likely requires new presenter)
                 textPromptPanel.updatePrompt(state.getPath().toString());
-                updateMapWithPath(state.getPath(), state.getFloors());
-                // Update the map if a path is available
-                if (state.getPath() != null && !state.getPath().isEmpty()) {
-                    updateMapWithPath(state.getPath());
-                    textPromptPanel.updatePrompt(state.getPath().toString());
-                }
+                List<Point> path = state.getPath();
+                // Directly pass the List<Point>
+                mapPanel.setPath(path, state.getFloors());
+                // Refresh the map panel
+                mapPanel.repaint();
             }
         }
-    }
-
-    private void updateMapWithPath(List<Point> path, List<Integer> floors) {
-        // Directly pass the List<Point>
-        mapPanel.setPath(path, floors);
-        // Refresh the map panel
-        mapPanel.repaint();
-    }
-
-    private void showErrorPopup(String errorMessage) {
-        JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void openFreeViewScreen() {
@@ -389,6 +346,4 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
         freeViewFrame.add(blueprintPanel);
         freeViewFrame.setVisible(true);
     }
-
-
 }
