@@ -44,8 +44,18 @@ public class MapPanel extends JPanel {
         setPreferredSize(MAP_DIMENSION);
     }
 
-    public void setCurrentInstructionIndex(Integer currentInstructionIndex) {
-        this.currentInstructionIndex = currentInstructionIndex;
+    public void previousInstruction() {
+        if (currentInstructionIndex > 0) {
+            currentInstructionIndex = currentInstructionIndex - 1;
+            repaint();
+        }
+    }
+
+    public void nextInstruction() {
+        if (currentInstructionIndex < path.size() - 1) {
+            currentInstructionIndex = currentInstructionIndex + 1;
+            repaint();
+        }
     }
 
     public Integer getCurrentFloor() {

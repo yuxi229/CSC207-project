@@ -278,19 +278,19 @@ public class InputRoomsView extends JPanel implements PropertyChangeListener {
 
     // Method triggered by the previous button
     private void showPreviousInstruction() {
-        mapPanel.setCurrentInstructionIndex(mapPanel.getCurrentInstructionIndex() - 1);
-        updateMap();
+        mapPanel.previousInstruction();
+        updateFloor();
         mapPanel.repaint();
     }
 
     // Method triggered by the next button
     private void showNextInstruction() {
-        mapPanel.setCurrentInstructionIndex(mapPanel.getCurrentInstructionIndex() + 1);
-        updateMap();
+        mapPanel.nextInstruction();
+        updateFloor();
         mapPanel.repaint();
     }
 
-    private void updateMap() {
+    private void updateFloor() {
         String imgPath = IMAGE_PATHS.get(mapPanel.getCurrentFloor() - 1);
         mapPanel.updateMap(imgPath);
     }
