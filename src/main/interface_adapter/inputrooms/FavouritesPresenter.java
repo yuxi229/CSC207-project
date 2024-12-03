@@ -1,21 +1,17 @@
 package interface_adapter.inputrooms;
 
 import use_case.favourites.FavouritesOutputBoundary;
+import use_case.favourites.FavouritesOutputData;
+import view.InputRoomsView;
+
+import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class FavouritesPresenter implements FavouritesOutputBoundary {
-    private final FavouritesView view;
-
-    public FavouritesPresenter(FavouritesView view) {
-        this.view = view;
-    }
 
     @Override
-    public void presentFavourites(FavouritesOutputData outputData) {
-        if (outputData.isSuccess()) {
-            view.showSuccessMessage("Room added to favourites!");
-            view.showFavourites(outputData.getFavouriteRooms());
-        } else {
-            view.showErrorMessage("Failed to add room to favourites.");
-        }
+    public List<String> presentFavourites(FavouritesOutputData data) {
+        return data.getFavouriteRooms();
     }
+
 }
